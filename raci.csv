@@ -1,0 +1,11 @@
+Activity,Business Owner,AI/Product Team,AI Governance,Privacy,DPO/Security,Executive Sponsor,Internal Audit
+Use-case approval,A/R,C,C,I,I,I,I
+Risk assessment,C,C,A/R,C,C,I,I
+Data quality review,I,R,A,C,C,I,I
+Fairness testing,C,R,A,C,I,I,I
+Privacy assessment,I,C,C,A/R,C,I,I
+Security review,I,C,C,C,A/R,I,I
+Deployment approval,R,C,C,C,C,A,I
+Post-deployment monitoring,A,R,C,C,C,I,I
+AI incident escalation,R,R,A,C,C,I,I
+Independent assurance,I,I,C,I,I,I,A/R

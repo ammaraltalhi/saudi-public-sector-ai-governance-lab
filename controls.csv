@@ -1,0 +1,11 @@
+Control ID,Governance Area,Control,Owner,Evidence,Frequency
+GOV-01,Accountability,Assign a named business owner and accountable governance role for each AI system,AI Governance,RACI and AI inventory,At intake and on role change
+MAP-01,Context,Document intended purpose users affected stakeholders and reasonably foreseeable misuse,Business Owner,Use-case assessment,Before development or procurement
+DAT-01,Privacy & Data Governance,Review lawful and appropriate use of personal data and minimise data to what is necessary,Privacy/DPO,Privacy assessment,Before deployment and on material change
+FAI-01,Fairness,Assess relevant performance disparities and document mitigation for materially affected groups,AI/Product Team,Fairness evaluation report,Before deployment and periodically
+SEC-01,Security,Perform AI-specific security review including third-party and access risks,Security,Security assessment,Before deployment and on material change
+TRN-01,Transparency,Document system purpose limitations human oversight and user-facing disclosure where appropriate,AI Governance,System/model documentation,Before deployment and on material change
+VAL-01,Validation,Define acceptance criteria and validate performance against intended use,AI/Product Team,Validation report,Before deployment
+MON-01,Monitoring,Monitor performance incidents complaints overrides and drift against defined thresholds,Business Owner,Monitoring dashboard,Ongoing
+INC-01,Incident Management,Maintain escalation and response process for AI incidents and material failures,AI Governance,Incident log and response record,Ongoing
+RET-01,Lifecycle,Define conditions for suspension retirement or replacement of the AI system,Business Owner,Retirement decision record,At review or trigger event

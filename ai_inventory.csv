@@ -1,0 +1,5 @@
+AI System,Business Owner,Purpose,Data Categories,Risk Level,Status,Human Oversight,Next Review
+Citizen Request Prioritisation AI,Customer Services,Recommend service-request priority,"Citizen requests; location area; timestamps",High,Governance Review,Required,2026-12-01
+Internal Policy Summariser,Corporate Services,Summarise internal policy documents,Internal documents,Low,Live,Required for final output,2027-01-15
+Customer Service Chatbot,Customer Experience,Answer common service queries,"User questions; service information",Medium,Pilot,Escalation to human agent,2026-11-15
+Road Maintenance Forecasting,Operations,Predict maintenance demand,"Asset history; sensor data; weather data",Medium,Live,Operational review,2026-12-20
