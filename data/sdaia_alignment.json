@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "source": {
+    "title": "AI Ethics Principles",
+    "publisher": "Saudi Data and Artificial Intelligence Authority (SDAIA)",
+    "document_number": "SDAIA-P114E",
+    "version": "1",
+    "date": "May 2025",
+    "url": "https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf",
+    "reference_note": "Printed page numbers and Annexure C checklist IDs refer to the official PDF. Checklist IDs below were verified against Annexure C; they are references, not app control IDs or an official scoring rubric."
+  },
+  "principles": [
+    {
+      "name": "Fairness",
+      "controls": ["MAP-01", "DAT-01", "FAI-01", "VAL-01", "MON-01"],
+      "rationale": "The use-case context, data considerations, fairness assessment, validation plan, and monitoring plan provide places to document potential differential impacts and planned responses.",
+      "references": {
+        "principle": "Principle 1",
+        "printed_pages": [11, 12, 13, 14],
+        "annexure_c": ["PD.10", "PD.11", "PD.12", "PD.13", "PID.9", "PID.10", "BV.8", "BV.9", "BV.12", "DM.8", "DM.9", "DM.10", "DM.11", "DM.12"]
+      },
+      "coverage": "FAI-01 records affected groups, fairness risks, evaluation approach and limitations, observations, mitigations, owner, reviewer, and assessment status. MAP-01 and intake add purpose and affected-people context; MON-01 includes planned disparity monitoring.",
+      "gaps": "No structured field requires fairness metrics, acceptable thresholds, subgroup results, sensitive-attribute or proxy analysis and justification, or dataset representativeness. Monitoring is a plan, not measured operational evidence.",
+      "limitations": "A completed or Reviewed form does not establish that a fairness evaluation was performed or that outcomes are fair."
+    },
+    {
+      "name": "Privacy & Security",
+      "controls": ["MAP-01", "DAT-01", "SEC-01"],
+      "rationale": "Use-case and data context, privacy/data governance documentation, and security assessment prompts support a documentary view of privacy and security considerations.",
+      "references": {
+        "principle": "Principle 2",
+        "printed_pages": [14, 15, 16, 17],
+        "annexure_c": ["PD.16", "PID.1", "PID.2", "PID.3", "PID.4", "PID.5", "PID.6", "DM.2", "DM.5", "DM.19"]
+      },
+      "coverage": "DAT-01 records data categories, purpose and necessity, minimisation, sensitive-data use, access, retention/deletion, risks, mitigations, owner, and reviewer. SEC-01 documents security scope, risks, access controls, data protection, third parties, planned monitoring, and escalation.",
+      "gaps": "There is no structured evidence of data classification or provenance, de-identification, consent or rights handling, completed security testing, or operational privacy/security monitoring.",
+      "limitations": "These records are not a privacy impact assessment, legal review, proof of controls operating, or evidence that security testing occurred."
+    },
+    {
+      "name": "Humanity",
+      "controls": ["MAP-01", "FAI-01", "TRN-01", "VAL-01", "INC-01"],
+      "rationale": "Intake and related assessments capture purpose, affected people, decision role, human oversight, validation planning, and incident correction considerations relevant to human-centered use.",
+      "references": {
+        "principle": "Principle 3",
+        "printed_pages": [18, 19],
+        "annexure_c": ["PD.14", "PD.15", "PID.11", "PID.12", "BV.13", "DM.20"]
+      },
+      "coverage": "Intake records affected people, potential impact, AI role, and oversight. TRN-01 and VAL-01 describe oversight, while INC-01 includes human review and correction of affected decisions.",
+      "gaps": "There is no dedicated assessment of fundamental rights, KSA cultural values, freedom of choice, or documented impact and remedy analysis.",
+      "limitations": "Human-oversight descriptions are proposed governance documentation; they do not demonstrate effective human intervention in an operating system."
+    },
+    {
+      "name": "Social & Environmental Benefits",
+      "controls": ["MAP-01", "FAI-01", "MON-01"],
+      "rationale": "Purpose, affected people, fairness considerations, and planned monitoring can help frame social impacts, but the existing control set does not provide a dedicated social/environmental assessment.",
+      "references": {
+        "principle": "Principle 4",
+        "printed_pages": [19, 20],
+        "annexure_c": ["PID.13", "BV.10", "DM.13"]
+      },
+      "coverage": "Use-case intake captures intended purpose, affected people, and potential impact; FAI-01 and MON-01 provide limited places to describe impacts on affected groups.",
+      "gaps": "No explicit social or environmental benefit/harm assessment, sustainability indicators, resource or energy measures, or rationale for non-applicability is collected.",
+      "limitations": "The mapping does not assert that the example use case produces social benefits or has been assessed for environmental impact."
+    },
+    {
+      "name": "Reliability & Safety",
+      "controls": ["SEC-01", "VAL-01", "MON-01", "INC-01"],
+      "rationale": "Security assessment, validation planning, monitoring plans, and incident-response planning provide documentation points for reliability, safety, escalation, and recovery considerations.",
+      "references": {
+        "principle": "Principle 5",
+        "printed_pages": [21, 22],
+        "annexure_c": ["PID.14", "BV.1", "BV.2", "BV.3", "BV.4", "DM.4"]
+      },
+      "coverage": "VAL-01 captures validation scope, criteria, approach, test-set considerations, findings/evidence, oversight, and limitations. MON-01 records planned metrics, thresholds, frequency, ownership, and escalation; INC-01 describes triage, containment, correction, and recovery.",
+      "gaps": "No structured evidence specifically records unexpected/extreme-scenario testing, fallback tests, system-failure test results, or completed stakeholder sign-off.",
+      "limitations": "Plans and fields do not prove technical robustness, safe operation, completed tests, or production performance."
+    },
+    {
+      "name": "Transparency & Explainability",
+      "controls": ["MAP-01", "TRN-01", "MON-01", "INC-01"],
+      "rationale": "Use-case context, transparency documentation, and planned monitoring and incident records provide limited documentation of system purpose, limitations, communication, feedback, and issue handling.",
+      "references": {
+        "principle": "Principle 6",
+        "printed_pages": [23, 24],
+        "annexure_c": ["PID.7", "BV.5", "BV.6", "BV.7", "DM.6", "DM.7"]
+      },
+      "coverage": "TRN-01 records purpose, AI decision role, users and stakeholders, limitations, oversight, information to communicate, disclosure approach, and outstanding actions. MON-01 includes complaint indicators; INC-01 includes incident documentation.",
+      "gaps": "No evidence establishes delivered disclosures, decision-level explanations or traceability, explanation testing, accessibility, or a user-feedback process and its outcomes.",
+      "limitations": "Recording an intended communication approach is not evidence that affected people were informed or can understand or challenge an outcome."
+    },
+    {
+      "name": "Accountability & Responsibility",
+      "controls": ["GOV-01", "MAP-01", "VAL-01", "MON-01", "INC-01"],
+      "rationale": "The inventory/use-case ownership and RACI baseline, together with named assessment owners/reviewers and lifecycle plans, offer traceability points for responsibility and governance roles.",
+      "references": {
+        "principle": "Principle 7",
+        "printed_pages": [25, 26, 27],
+        "annexure_c": ["PD.1", "PD.2", "PD.3", "PD.4", "PD.5", "PD.6", "PD.7", "PD.8", "PD.9", "PID.8", "BV.11", "DM.1", "DM.3", "DM.14", "DM.15", "DM.16", "DM.17", "DM.18"]
+      },
+      "coverage": "GOV-01 draws on inventory and RACI baselines; intake records a business owner; structured evidence records responsible owners and reviewers. RACI identifies roles for use-case approval, risk, privacy, security, monitoring, incidents, and independent assurance.",
+      "gaps": "The RACI editor is not persisted. The app does not establish appointed entity-level SDAIA roles, completed independent audits, third-party contractual due diligence, training, or implemented redress mechanisms.",
+      "limitations": "A role matrix and readiness result do not evidence approval, audit, legal accountability, effective redress, or conformity with SDAIA requirements."
+    }
+  ]
+}

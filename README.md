@@ -43,6 +43,7 @@ The prototype supports governance documentation and readiness review; it does no
 .
 ├── app.py                         # Streamlit navigation and case-management sidebar
 ├── views/                         # Intake, risk, inventory, RACI, controls and reports
+│   └── sdaia_alignment.py         # Read-only SDAIA alignment page
 ├── src/governance/
 │   ├── control_assessment.py      # Shared applicability and evidence-status logic
 │   ├── deployment_readiness.py    # Shared readiness calculation
@@ -54,6 +55,7 @@ The prototype supports governance documentation and readiness review; it does no
 │   ├── controls.csv               # Control catalogue baseline
 │   ├── ai_inventory.csv           # Inventory sample baseline
 │   ├── raci.csv                   # RACI baseline
+│   ├── sdaia_alignment.json       # SDAIA principles-to-controls crosswalk
 │   └── cases/                     # Local JSON case files
 ├── docs/                           # Portfolio summary
 ├── tests/                          # Unit, persistence, readiness and Streamlit tests
@@ -87,6 +89,12 @@ The mapping below describes points of reference for the case study, not a formal
 | **MANAGE** | Readiness blockers, monitoring and incident-response plans, escalation considerations and lifecycle control |
 
 The app does not implement a formal NIST AI RMF subcategory mapping. The relationship is conceptual and should not be interpreted as evidence of framework alignment or compliance.
+
+### SDAIA AI Ethics Principles crosswalk
+
+The read-only **SDAIA Framework Alignment** page presents a version-controlled analytical mapping from SDAIA's seven AI Ethics Principles to relevant existing control IDs, documented coverage, known evidence gaps, and references to the official *AI Ethics Principles* document. Annexure C checklist IDs are included only where checked against the cited SDAIA PDF. This is a supplementary crosswalk; the existing NIST AI RMF conceptual organization remains unchanged.
+
+The crosswalk describes documentation coverage, not proof of implementation or effectiveness. It is not an SDAIA score, certification, official conformity assessment, legal compliance determination, or deployment approval. It does not change risk scoring, control evidence statuses, or deployment-readiness decisions. See [`data/sdaia_alignment.json`](data/sdaia_alignment.json) and the [official SDAIA AI Ethics Principles](https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf).
 
 ## 7. Governance Control Library
 
