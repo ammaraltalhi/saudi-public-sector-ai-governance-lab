@@ -84,9 +84,9 @@
         "printed_pages": [23, 24],
         "annexure_c": ["PID.7", "BV.5", "BV.6", "BV.7", "DM.6", "DM.7"]
       },
-      "coverage": "TRN-01 records purpose, AI decision role, users and stakeholders, limitations, oversight, information to communicate, disclosure approach, and outstanding actions. MON-01 includes complaint indicators; INC-01 includes incident documentation.",
-      "gaps": "No evidence establishes delivered disclosures, decision-level explanations or traceability, explanation testing, accessibility, or a user-feedback process and its outcomes.",
-      "limitations": "Recording an intended communication approach is not evidence that affected people were informed or can understand or challenge an outcome."
+      "coverage": "TRN-01 records purpose, AI decision role, users and stakeholders, limitations, oversight, information to communicate, disclosure approach, and outstanding actions. Its optional explainability record can document Planned or user-reported Performed synthetic examples, intended audiences, explanation method, human review, challenge/correction processes, and separate accessibility/usefulness feedback records. MON-01 includes complaint indicators; INC-01 includes incident documentation.",
+      "gaps": "The optional explainability record does not generate or verify explanations, prove input-to-output traceability, establish explanation correctness, or establish that disclosures were delivered. Accessibility, usefulness, audience understanding, and feedback quality remain user-reported and unverified.",
+      "limitations": "A completed or Reviewed record does not establish that affected people were informed, that an explanation is accurate or useful, or that an individual can understand or challenge an outcome."
     },
     {
       "name": "Accountability & Responsibility",

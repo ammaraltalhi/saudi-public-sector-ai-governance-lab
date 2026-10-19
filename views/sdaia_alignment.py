@@ -7,6 +7,7 @@ import streamlit as st
 from src.governance.fairness_evaluation import validate_fairness_evaluation
 from src.governance.sdaia_impact import validate_impact_assessments
 from src.governance.validation_evaluation import validate_validation_evaluation
+from src.governance.explainability_evidence import validate_explainability_evidence
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -276,6 +277,45 @@ else:
             f"({validation_evaluation['evaluation_status']}); results are "
             "user-reported and not independently verified for performance, "
             "safety, or compliance."
+        )
+
+st.markdown("### Supplementary TRN-01 explainability documentation")
+control_evidence = st.session_state.get("control_evidence", {})
+has_trn01_record = isinstance(control_evidence, dict) and "TRN-01" in control_evidence
+trn01_evidence = control_evidence.get("TRN-01") if has_trn01_record else None
+has_explainability_evidence = (
+    isinstance(trn01_evidence, dict)
+    and "explainability_evidence" in trn01_evidence
+)
+if not has_trn01_record or (
+    isinstance(trn01_evidence, dict) and not has_explainability_evidence
+):
+    st.caption("Missing — no saved supplementary explainability documentation.")
+else:
+    explainability_evidence = (
+        trn01_evidence.get("explainability_evidence")
+        if isinstance(trn01_evidence, dict)
+        else trn01_evidence
+    )
+    explainability_errors = validate_explainability_evidence(explainability_evidence)
+    if explainability_errors:
+        st.caption(
+            "Invalid — supplementary explainability evidence is excluded from "
+            "valid documentation status. "
+            + "; ".join(explainability_errors)
+        )
+    elif explainability_evidence["evaluation_stage"] == "Planned":
+        st.caption(
+            "Saved explainability documentation: Planned "
+            f"({explainability_evidence['evaluation_status']}); no performed "
+            "examples or completed audience reviews are recorded."
+        )
+    else:
+        st.caption(
+            "Saved explainability documentation: Performed "
+            f"({explainability_evidence['evaluation_status']}); examples are "
+            "user-reported and not independently verified. Audience accessibility "
+            "or usefulness is documented separately and is not inferred from examples."
         )
 
 for principle in alignment["principles"]:
