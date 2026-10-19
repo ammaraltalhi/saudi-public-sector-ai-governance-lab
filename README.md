@@ -42,12 +42,14 @@ The prototype supports governance documentation and readiness review; it does no
 ```text
 .
 ├── app.py                         # Streamlit navigation and case-management sidebar
-├── views/                         # Intake, risk, inventory, RACI, controls and reports
-│   └── sdaia_alignment.py         # Read-only SDAIA alignment page
+├── views/                         # Intake, risk, inventory, RACI and reports
+│   ├── sdaia_alignment.py         # Read-only SDAIA alignment page
+│   └── impact_assessment.py       # Illustrative SDAIA impact documentation
 ├── src/governance/
 │   ├── control_assessment.py      # Shared applicability and evidence-status logic
 │   ├── deployment_readiness.py    # Shared readiness calculation
 │   ├── case_persistence.py        # Case JSON validation, save/load and restoration
+│   ├── sdaia_impact.py            # Impact-assessment field validation
 │   ├── risk.py                    # Illustrative risk heuristic
 │   ├── framework.py               # NIST AI RMF functions and case-study principles
 │   └── constants.py               # Pre-deployment blocker identifiers
@@ -96,6 +98,12 @@ The read-only **SDAIA Framework Alignment** page presents a version-controlled a
 
 The crosswalk describes documentation coverage, not proof of implementation or effectiveness. It is not an SDAIA score, certification, official conformity assessment, legal compliance determination, or deployment approval. It does not change risk scoring, control evidence statuses, or deployment-readiness decisions. See [`data/sdaia_alignment.json`](data/sdaia_alignment.json) and the [official SDAIA AI Ethics Principles](https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf).
 
+### SDAIA Human & Social Impact Assessment
+
+The **SDAIA Impact Assessment** page provides separate, explicitly saved documentation forms for the Humanity and Social & Environmental Benefits principles. They capture affected stakeholders, potential effects and harms, oversight or remedy, intended benefits, environmental applicability and rationale, proposed indicators, follow-up, evidence references/type/limitations, owner, reviewer, review date, and Draft/Reviewed status. A Reviewed record requires the applicable fields; blank and obvious placeholder-only values are rejected, but this is not a semantic assessment of governance quality. An incomplete Draft may still be saved and remains documentation only.
+
+Saved assessments are stored in the case JSON as the optional `sdaia_impact_assessments` property. Existing schema-version-1 cases without this property remain loadable and restore with no impact assessments. Invalid optional assessment entries are preserved as source data but excluded from canonical documentation status; the alignment view labels them Invalid, while valid case data and other valid assessments remain available. Evidence type is user-entered and not verified; Planned activities must not be described as performed or operational. The feature adds no SDAIA control ID or deployment-readiness requirement and does not change risk scoring, control statuses, NIST organization, or case schema version. This workflow is illustrative, not SDAIA conformity or proof of implementation. Use synthetic information only: **do not enter real citizen personal data, confidential details, or actual incident records.**
+
 ## 7. Governance Control Library
 
 The control catalogue in `data/controls.csv` contains these controls:
@@ -137,6 +145,7 @@ Use **Save Case** and **Load Case** in the application sidebar. Cases are writte
 - The eight boolean risk-screening answers.
 - The canonical `control_evidence` mapping, including explicitly saved structured control assessments.
 - Deployment-readiness plan state included in the case format.
+- Optional SDAIA impact assessment documentation, when saved.
 - Case ID, case name and save timestamp.
 
 On load, risk results are recalculated from the saved screening answers and the saved control evidence is restored to the current session. Individual edits in the RACI editor are **not** included in case persistence; the RACI CSV remains the baseline. Inventory and control catalogue CSVs are repository data, not per-case copies.

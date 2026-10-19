@@ -164,6 +164,7 @@ def test_sdaia_alignment_page_renders_read_only_crosswalk_and_disclaimer():
     assert "illustrative analytical crosswalk" in rendered_text
     assert "not proof that a practice was implemented" in rendered_text
     assert "not sdaia certification" in rendered_text
+    assert "principle-specific impact documentation" in rendered_text
 
 
 def test_sdaia_alignment_is_registered_and_renders_through_app_navigation():

@@ -87,6 +87,7 @@ pages = {
         st.Page("views/controls.py", title="Control Library"),
         st.Page("views/dashboard.py", title="Governance Dashboard"),
         st.Page("views/sdaia_alignment.py", title="SDAIA Framework Alignment"),
+        st.Page("views/impact_assessment.py", title="SDAIA Impact Assessment"),
     ]
 }
 
