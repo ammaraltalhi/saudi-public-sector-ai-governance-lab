@@ -4,6 +4,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from src.governance.fairness_evaluation import validate_fairness_evaluation
 from src.governance.sdaia_impact import validate_impact_assessments
 
 
@@ -192,6 +193,48 @@ for assessment_type, principle in (
         f"type: {evidence_type}. Reviewed is a user-recorded attestation, "
         "not independently verified evidence of implementation or effectiveness."
     )
+
+st.markdown("### Supplementary FAI-01 fairness evaluation documentation")
+control_evidence = st.session_state.get("control_evidence", {})
+has_fai01_record = (
+    isinstance(control_evidence, dict) and "FAI-01" in control_evidence
+)
+fai01_evidence = control_evidence.get("FAI-01") if has_fai01_record else None
+has_fairness_evaluation = (
+    isinstance(fai01_evidence, dict)
+    and "fairness_evaluation" in fai01_evidence
+)
+if not has_fai01_record or (
+    isinstance(fai01_evidence, dict) and not has_fairness_evaluation
+):
+    st.caption("Missing — no saved supplementary fairness evaluation.")
+else:
+    fairness_evaluation = (
+        fai01_evidence.get("fairness_evaluation")
+        if isinstance(fai01_evidence, dict)
+        else fai01_evidence
+    )
+    fairness_errors = validate_fairness_evaluation(fairness_evaluation)
+    if fairness_errors:
+        st.caption(
+            "Invalid — supplementary fairness evaluation is excluded from "
+            "valid evaluation documentation. "
+            + "; ".join(fairness_errors)
+        )
+    else:
+        stage = fairness_evaluation["evaluation_stage"]
+        status = fairness_evaluation["evaluation_status"]
+        if stage == "Planned":
+            st.caption(
+                f"Saved evaluation design: Planned ({status}). No performed "
+                "test results are recorded."
+            )
+        else:
+            st.caption(
+                f"Saved evaluation documentation: Performed ({status}); "
+                "test results are user-reported and not independently verified "
+                "for authenticity, implementation, or statistical validity."
+            )
 
 for principle in alignment["principles"]:
     st.subheader(principle["name"])

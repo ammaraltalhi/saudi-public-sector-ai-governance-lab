@@ -19,8 +19,8 @@
         "printed_pages": [11, 12, 13, 14],
         "annexure_c": ["PD.10", "PD.11", "PD.12", "PD.13", "PID.9", "PID.10", "BV.8", "BV.9", "BV.12", "DM.8", "DM.9", "DM.10", "DM.11", "DM.12"]
       },
-      "coverage": "FAI-01 records affected groups, fairness risks, evaluation approach and limitations, observations, mitigations, owner, reviewer, and assessment status. MAP-01 and intake add purpose and affected-people context; MON-01 includes planned disparity monitoring.",
-      "gaps": "No structured field requires fairness metrics, acceptable thresholds, subgroup results, sensitive-attribute or proxy analysis and justification, or dataset representativeness. Monitoring is a plan, not measured operational evidence.",
+      "coverage": "FAI-01 records affected groups, fairness risks, evaluation approach and limitations, observations, mitigations, owner, reviewer, and assessment status. An optional nested evaluation record can document selected groups, dataset context, metric definitions, proposed thresholds and rationale, subgroup results, test outcome, evidence references, limitations, and review roles. MAP-01 and intake add purpose and affected-people context; MON-01 includes planned disparity monitoring.",
+      "gaps": "The optional FAI-01 evaluation record is user-entered documentation, not an independently verified statistical assessment. It does not establish metric suitability, dataset representativeness, threshold appropriateness, subgroup result validity, or operational monitoring outcomes. No official SDAIA score or pass threshold is implemented.",
       "limitations": "A completed or Reviewed form does not establish that a fairness evaluation was performed or that outcomes are fair."
     },
     {
