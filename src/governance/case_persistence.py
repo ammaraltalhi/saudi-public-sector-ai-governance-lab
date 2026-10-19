@@ -10,6 +10,7 @@ from uuid import UUID, uuid4
 from .risk import RISK_WEIGHTS, calculate_risk
 from .fairness_evaluation import FAIRNESS_EVALUATION_WIDGET_KEYS
 from .validation_evaluation import VALIDATION_EVALUATION_WIDGET_KEYS
+from .explainability_evidence import EXPLAINABILITY_WIDGET_KEYS
 from .sdaia_impact import validate_impact_assessments
 
 SCHEMA_VERSION = 1
@@ -127,6 +128,7 @@ TRN01_WIDGET_FIELDS = (
 TRN01_WIDGET_KEYS = {
     field: f"trn01_{field}" for field in TRN01_WIDGET_FIELDS
 }
+TRN01_EXPLAINABILITY_WIDGET_KEYS = EXPLAINABILITY_WIDGET_KEYS
 VAL01_WIDGET_FIELDS = (
     "validation_scope",
     "acceptance_criteria",

@@ -1,5 +1,6 @@
 from pathlib import Path
 import math
+from uuid import UUID, uuid4
 import pandas as pd
 import streamlit as st
 from src.governance.control_assessment import (
@@ -13,6 +14,7 @@ from src.governance.case_persistence import (
     FAI01_EVALUATION_WIDGET_KEYS,
     SEC01_WIDGET_KEYS,
     TRN01_WIDGET_KEYS,
+    TRN01_EXPLAINABILITY_WIDGET_KEYS,
     VAL01_EVALUATION_WIDGET_KEYS,
     VAL01_WIDGET_KEYS,
     MON01_WIDGET_KEYS,
@@ -42,6 +44,17 @@ from src.governance.validation_evaluation import (
     validation_row_widget_key,
     validate_validation_evaluation,
 )
+from src.governance.explainability_evidence import (
+    EXAMPLE_FIELDS,
+    EXAMPLE_WIDGET_DEFAULTS,
+    EXPLAINABILITY_EVIDENCE_FIELDS,
+    EXPLAINABILITY_STATUSES,
+    EXPLAINABILITY_STAGES,
+    REVIEW_FIELDS,
+    REVIEW_WIDGET_DEFAULTS,
+    explainability_row_widget_key,
+    validate_explainability_evidence,
+)
 
 
 def _case_widget_keys(widget_keys):
@@ -52,6 +65,29 @@ def _case_widget_keys(widget_keys):
         field: f"{widget_key}_{generation}"
         for field, widget_key in widget_keys.items()
     }
+
+
+def _initialize_explainability_row_state(
+    row_kind, row_id, saved_row, defaults, generation
+):
+    id_field = "example_id" if row_kind == "example" else "review_id"
+    identity_key = explainability_row_widget_key(
+        row_kind, row_id, "persisted_identity", generation
+    )
+    if identity_key not in st.session_state:
+        saved_identity = (
+            saved_row.get(id_field)
+            if isinstance(saved_row, dict) and id_field in saved_row
+            else row_id
+        )
+        st.session_state[identity_key] = saved_identity
+    for field, default in defaults.items():
+        if field == id_field:
+            continue
+        key = explainability_row_widget_key(row_kind, row_id, field, generation)
+        if key not in st.session_state:
+            value = saved_row.get(field, default) if isinstance(saved_row, dict) else default
+            st.session_state[key] = value if isinstance(value, str) else default
 
 
 def _is_finite_widget_number(value):
@@ -895,6 +931,16 @@ if trn01_result["Applicability"] == "Required":
         save_assessment = st.form_submit_button("Save TRN-01 assessment")
 
     if save_assessment:
+        current_trn01 = control_evidence.get("TRN-01", {})
+        has_explainability = (
+            isinstance(current_trn01, dict)
+            and "explainability_evidence" in current_trn01
+        )
+        saved_explainability = (
+            current_trn01.get("explainability_evidence")
+            if isinstance(current_trn01, dict)
+            else None
+        )
         control_evidence["TRN-01"] = {
             "ai_system_purpose": ai_system_purpose,
             "ai_decision_role": ai_decision_role,
@@ -908,8 +954,333 @@ if trn01_result["Applicability"] == "Required":
             "transparency_reviewer": transparency_reviewer,
             "assessment_status": assessment_status,
         }
+        if has_explainability:
+            control_evidence["TRN-01"]["explainability_evidence"] = (
+                saved_explainability
+            )
         st.session_state["control_evidence"] = control_evidence
         st.success("TRN-01 assessment saved.")
+
+    st.markdown("#### Optional structured explainability evidence")
+    st.caption(
+        "Record synthetic, user-reported examples only. The application does not "
+        "generate or verify explanations. A saved example does not establish "
+        "correctness, accessibility, usefulness, or audience understanding. "
+        "Evidence references are user-reported and are not independently authenticated."
+    )
+    current_trn01 = control_evidence.get("TRN-01", {})
+    if not isinstance(current_trn01, dict):
+        current_trn01 = {}
+    has_saved_explainability = "explainability_evidence" in current_trn01
+    saved_explainability = current_trn01.get("explainability_evidence")
+    explainability_errors = (
+        validate_explainability_evidence(saved_explainability)
+        if has_saved_explainability
+        else []
+    )
+    if explainability_errors:
+        st.warning(
+            "Saved explainability evidence is Invalid and remains unchanged "
+            "unless a valid replacement is explicitly saved. "
+            + "; ".join(explainability_errors)
+        )
+    if not isinstance(saved_explainability, dict):
+        saved_explainability = {}
+    explainability_keys = _case_widget_keys(TRN01_EXPLAINABILITY_WIDGET_KEYS)
+    explainability_defaults = {
+        field: "" for field in EXPLAINABILITY_EVIDENCE_FIELDS
+        if field not in {"examples", "accessibility_usefulness_reviews"}
+    }
+    explainability_defaults.update({
+        "evaluation_stage": "Planned",
+        "evaluation_status": "Draft",
+        "responsible_owner": use_case.get("owner", ""),
+    })
+    explainability_root_keys = {
+        field: explainability_keys[field]
+        for field in explainability_defaults
+    }
+    explainability_saved_root = {
+        field: saved_explainability.get(field, default)
+        for field, default in explainability_defaults.items()
+    }
+    if explainability_saved_root["evaluation_stage"] not in EXPLAINABILITY_STAGES:
+        explainability_saved_root["evaluation_stage"] = "Planned"
+    if explainability_saved_root["evaluation_status"] not in EXPLAINABILITY_STATUSES:
+        explainability_saved_root["evaluation_status"] = "Draft"
+    _hydrate_control_form(
+        explainability_root_keys,
+        explainability_saved_root,
+        explainability_defaults,
+        "TRN-01-explainability",
+    )
+    saved_examples = saved_explainability.get("examples", [])
+    if not isinstance(saved_examples, list):
+        saved_examples = []
+    saved_reviews = saved_explainability.get("accessibility_usefulness_reviews", [])
+    if not isinstance(saved_reviews, list):
+        saved_reviews = []
+    generation = st.session_state.get("_case_load_generation")
+    examples_ids_key = explainability_keys["example_row_ids"]
+    reviews_ids_key = explainability_keys["review_row_ids"]
+    example_sources_key = f"{examples_ids_key}_source_rows"
+    review_sources_key = f"{reviews_ids_key}_source_rows"
+    if examples_ids_key not in st.session_state:
+        example_ids = []
+        for row in saved_examples:
+            example_ids.append(str(uuid4()))
+        st.session_state[examples_ids_key] = example_ids
+        st.session_state[example_sources_key] = dict(zip(example_ids, saved_examples))
+    elif example_sources_key not in st.session_state:
+        st.session_state[example_sources_key] = dict(zip(
+            st.session_state[examples_ids_key], saved_examples
+        ))
+    if reviews_ids_key not in st.session_state:
+        review_ids = []
+        for row in saved_reviews:
+            review_ids.append(str(uuid4()))
+        st.session_state[reviews_ids_key] = review_ids
+        st.session_state[review_sources_key] = dict(zip(review_ids, saved_reviews))
+    elif review_sources_key not in st.session_state:
+        st.session_state[review_sources_key] = dict(zip(
+            st.session_state[reviews_ids_key], saved_reviews
+        ))
+    example_sources = st.session_state[example_sources_key]
+    review_sources = st.session_state[review_sources_key]
+    examples_ids = st.session_state[examples_ids_key]
+    review_ids = st.session_state[reviews_ids_key]
+    for row_kind, row_ids, sources, defaults in (
+        ("example", examples_ids, example_sources, EXAMPLE_WIDGET_DEFAULTS),
+        ("review", review_ids, review_sources, REVIEW_WIDGET_DEFAULTS),
+    ):
+        for row_id in row_ids:
+            _initialize_explainability_row_state(
+                row_kind,
+                row_id,
+                sources.get(row_id, {}),
+                defaults,
+                generation,
+            )
+
+    for field in explainability_defaults:
+        key = explainability_keys[field]
+        label = {
+            "evaluation_stage": "Explainability documentation stage",
+            "evaluation_status": "Explainability documentation status",
+            "explanation_method": "Explanation method",
+            "method_description": "Method description",
+            "intended_audiences": "Intended audiences",
+            "planned_context": "Planned example/context (synthetic)",
+            "planned_feedback_collection": "Planned accessibility/usefulness feedback collection",
+            "human_review_approach": "Human review approach",
+            "challenge_correction_process": "Challenge and correction process",
+            "limitations": "Explainability limitations",
+            "outstanding_actions": "Outstanding actions",
+            "responsible_owner": "Explainability evidence owner",
+            "reviewer": "Explainability evidence reviewer",
+            "review_date": "Documentation review date (YYYY-MM-DD)",
+        }[field]
+        if field == "evaluation_stage":
+            st.selectbox(label, EXPLAINABILITY_STAGES, key=key)
+        elif field == "evaluation_status":
+            st.selectbox(label, EXPLAINABILITY_STATUSES, key=key)
+        elif field in {
+            "method_description", "intended_audiences", "planned_context",
+            "planned_feedback_collection",
+            "human_review_approach", "challenge_correction_process",
+            "limitations", "outstanding_actions",
+        }:
+            st.text_area(label, key=key)
+        else:
+            st.text_input(label, key=key)
+
+    st.markdown("**Synthetic explanation examples**")
+    explainability_stage = st.session_state[
+        explainability_keys["evaluation_stage"]
+    ]
+    if st.button(
+        "Add explanation example",
+        key=f"{examples_ids_key}_add",
+        disabled=explainability_stage == "Planned",
+    ):
+        row_id = str(uuid4())
+        examples_ids.append(row_id)
+        example_sources[row_id] = {}
+        _initialize_explainability_row_state(
+            "example", row_id, {}, EXAMPLE_WIDGET_DEFAULTS, generation
+        )
+        st.rerun()
+    if explainability_stage == "Planned":
+        st.caption(
+            "Planned documentation records example context above; add example "
+            "rows only after documenting a performed example."
+        )
+    example_labels = {
+        "decision_reference_id": "Synthetic decision/reference ID",
+        "intended_audience": "Example intended audience",
+        "input_factor_summary": "Synthetic input / relevant factor summary",
+        "recommendation_output": "Recommendation or decision-support output",
+        "human_readable_explanation": "Human-readable explanation",
+        "evidence_reference": "Example evidence reference",
+        "example_date": "Example date (YYYY-MM-DD)",
+        "human_review_findings_reference": "Human review findings/reference (optional)",
+    }
+    example_records = []
+    example_identity_errors = []
+    example_identity_values = [
+        st.session_state[explainability_row_widget_key(
+            "example", row_id, "persisted_identity", generation
+        )]
+        for row_id in examples_ids
+    ]
+    example_id_counts = {
+        value: example_identity_values.count(value)
+        for value in example_identity_values
+        if isinstance(value, str)
+    }
+    for index, row_id in enumerate(list(examples_ids)):
+        identity_key = explainability_row_widget_key(
+            "example", row_id, "persisted_identity", generation
+        )
+        persisted_id = st.session_state[identity_key]
+        try:
+            valid_id = isinstance(persisted_id, str) and str(UUID(persisted_id)) == persisted_id
+        except ValueError:
+            valid_id = False
+        duplicate_id = (
+            isinstance(persisted_id, str) and example_id_counts[persisted_id] > 1
+        )
+        st.markdown(f"Example {index + 1}")
+        if not valid_id or duplicate_id:
+            issue = "duplicate" if duplicate_id else "invalid"
+            st.warning(
+                f"Example {index + 1} has a {issue} saved ID. Remove this row, "
+                "add a replacement, and re-enter its documentation before saving."
+            )
+            example_identity_errors.append(
+                f"Example {index + 1} has an {issue} saved ID; explicitly "
+                "remove and re-add the row before saving."
+            )
+        if st.button(
+            f"Remove explanation example {index + 1}",
+            key=f"{examples_ids_key}_remove_{row_id}",
+        ):
+            examples_ids.remove(row_id)
+            st.rerun()
+        record = {"example_id": row_id}
+        for field in EXAMPLE_FIELDS:
+            if field == "example_id":
+                continue
+            key = explainability_row_widget_key("example", row_id, field, generation)
+            record[field] = st.text_input(example_labels[field], key=key)
+        record["example_id"] = persisted_id
+        example_records.append(record)
+
+    st.markdown("**Accessibility and usefulness feedback records**")
+    st.caption(
+        "These records document review activity only; their presence does not "
+        "establish accessibility, usefulness, understanding, or acceptance."
+    )
+    if st.button(
+        "Add audience review",
+        key=f"{reviews_ids_key}_add",
+        disabled=explainability_stage == "Planned",
+    ):
+        row_id = str(uuid4())
+        review_ids.append(row_id)
+        review_sources[row_id] = {}
+        _initialize_explainability_row_state(
+            "review", row_id, {}, REVIEW_WIDGET_DEFAULTS, generation
+        )
+        st.rerun()
+    review_labels = {
+        "intended_audience": "Review intended audience",
+        "review_method": "Accessibility / usefulness review method",
+        "findings_feedback_summary": "Synthetic findings / feedback summary",
+        "evidence_reference": "Review evidence reference",
+        "review_date": "Audience review date (YYYY-MM-DD)",
+        "limitations_corrective_actions": "Review limitations / corrective actions",
+    }
+    review_records = []
+    review_identity_errors = []
+    review_identity_values = [
+        st.session_state[explainability_row_widget_key(
+            "review", row_id, "persisted_identity", generation
+        )]
+        for row_id in review_ids
+    ]
+    review_id_counts = {
+        value: review_identity_values.count(value)
+        for value in review_identity_values
+        if isinstance(value, str)
+    }
+    for index, row_id in enumerate(list(review_ids)):
+        identity_key = explainability_row_widget_key(
+            "review", row_id, "persisted_identity", generation
+        )
+        persisted_id = st.session_state[identity_key]
+        try:
+            valid_id = isinstance(persisted_id, str) and str(UUID(persisted_id)) == persisted_id
+        except ValueError:
+            valid_id = False
+        duplicate_id = (
+            isinstance(persisted_id, str) and review_id_counts[persisted_id] > 1
+        )
+        st.markdown(f"Audience review {index + 1}")
+        if not valid_id or duplicate_id:
+            issue = "duplicate" if duplicate_id else "invalid"
+            st.warning(
+                f"Audience review {index + 1} has a {issue} saved ID. Remove "
+                "this row, add a replacement, and re-enter its documentation before saving."
+            )
+            review_identity_errors.append(
+                f"Audience review {index + 1} has an {issue} saved ID; "
+                "explicitly remove and re-add the row before saving."
+            )
+        if st.button(
+            f"Remove audience review {index + 1}",
+            key=f"{reviews_ids_key}_remove_{row_id}",
+        ):
+            review_ids.remove(row_id)
+            st.rerun()
+        record = {"review_id": row_id}
+        for field in REVIEW_FIELDS:
+            if field == "review_id":
+                continue
+            key = explainability_row_widget_key("review", row_id, field, generation)
+            record[field] = st.text_input(review_labels[field], key=key)
+        record["review_id"] = persisted_id
+        review_records.append(record)
+
+    if st.button("Save TRN-01 explainability evidence"):
+        explainability_record = {
+            field: st.session_state[explainability_keys[field]]
+            for field in explainability_defaults
+        }
+        explainability_record["examples"] = example_records
+        explainability_record["accessibility_usefulness_reviews"] = review_records
+        errors = (
+            example_identity_errors
+            + review_identity_errors
+            + validate_explainability_evidence(explainability_record)
+        )
+        if errors:
+            st.error(
+                "Explainability evidence was not saved:\n\n"
+                + "\n".join(f"- {error}" for error in errors)
+            )
+        else:
+            current_trn01 = control_evidence.get("TRN-01", {})
+            if not isinstance(current_trn01, dict):
+                current_trn01 = {}
+            current_trn01 = dict(current_trn01)
+            current_trn01["explainability_evidence"] = explainability_record
+            control_evidence["TRN-01"] = current_trn01
+            st.session_state["control_evidence"] = control_evidence
+            st.success(
+                "TRN-01 explainability documentation saved as "
+                f"{explainability_record['evaluation_stage']}."
+            )
 
 val01_result = assess_control(
     "VAL-01",
