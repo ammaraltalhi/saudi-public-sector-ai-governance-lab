@@ -1,4 +1,5 @@
 from pathlib import Path
+import math
 import pandas as pd
 import streamlit as st
 from src.governance.control_assessment import (
@@ -9,11 +10,23 @@ from src.governance.control_assessment import (
 from src.governance.case_persistence import (
     DAT01_WIDGET_KEYS,
     FAI01_WIDGET_KEYS,
+    FAI01_EVALUATION_WIDGET_KEYS,
     SEC01_WIDGET_KEYS,
     TRN01_WIDGET_KEYS,
     VAL01_WIDGET_KEYS,
     MON01_WIDGET_KEYS,
     INC01_WIDGET_KEYS,
+)
+from src.governance.fairness_evaluation import (
+    EVALUATION_STAGES,
+    EVALUATION_STATUSES,
+    FAIRNESS_EVALUATION_FIELDS,
+    FAIRNESS_EVALUATION_WIDGET_FIELDS,
+    METRIC_SCALES,
+    THRESHOLD_COMPARATORS,
+    evaluation_from_form,
+    fairness_row_widget_key,
+    validate_fairness_evaluation,
 )
 
 
@@ -25,6 +38,15 @@ def _case_widget_keys(widget_keys):
         field: f"{widget_key}_{generation}"
         for field, widget_key in widget_keys.items()
     }
+
+
+def _is_finite_widget_number(value):
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        return False
+    try:
+        return math.isfinite(value)
+    except OverflowError:
+        return False
 
 
 def _hydrate_control_form(widget_keys, saved_assessment, defaults, control_id):
@@ -44,6 +66,9 @@ def _hydrate_control_form(widget_keys, saved_assessment, defaults, control_id):
                 value = "Draft"
         elif field == "sensitive_data_used":
             if type(value) is not bool:
+                value = defaults[field]
+        elif field.endswith("_row_count"):
+            if type(value) is not int or value < 0:
                 value = defaults[field]
         elif not isinstance(value, str):
             value = ""
@@ -249,7 +274,13 @@ if fai01_required:
         save_assessment = st.form_submit_button("Save FAI-01 assessment")
 
     if save_assessment:
-        control_evidence["FAI-01"] = {
+        existing_fai01 = control_evidence.get("FAI-01", {})
+        has_existing_evaluation = (
+            isinstance(existing_fai01, dict)
+            and "fairness_evaluation" in existing_fai01
+        )
+        existing_evaluation = existing_fai01.get("fairness_evaluation")
+        base_assessment = {
             "affected_groups": affected_groups,
             "fairness_risk": fairness_risk,
             "evaluation_approach": evaluation_approach,
@@ -260,8 +291,382 @@ if fai01_required:
             "fairness_reviewer": fairness_reviewer,
             "assessment_status": assessment_status,
         }
+        if has_existing_evaluation:
+            base_assessment["fairness_evaluation"] = existing_evaluation
+        control_evidence["FAI-01"] = base_assessment
         st.session_state["control_evidence"] = control_evidence
         st.success("FAI-01 assessment saved.")
+
+    st.markdown("#### Optional fairness metrics & evaluation documentation")
+    st.caption(
+        "Planned records document a design only. Performed records are user-reported "
+        "test documentation; this app does not verify results or statistical validity. "
+        "Use synthetic information only."
+    )
+    current_fai01 = control_evidence.get("FAI-01", {})
+    if not isinstance(current_fai01, dict):
+        current_fai01 = {}
+    has_saved_evaluation = "fairness_evaluation" in current_fai01
+    saved_evaluation = current_fai01.get("fairness_evaluation", {})
+    saved_evaluation_errors = (
+        validate_fairness_evaluation(saved_evaluation)
+        if has_saved_evaluation
+        else []
+    )
+    if saved_evaluation_errors:
+        st.warning(
+            "Saved fairness evaluation is Invalid and is not treated as valid "
+            "evaluation documentation. Review and explicitly save a corrected "
+            "record to replace it. "
+            + "; ".join(saved_evaluation_errors)
+        )
+    if not isinstance(saved_evaluation, dict):
+        saved_evaluation = {}
+    evaluation_widget_keys = _case_widget_keys(FAI01_EVALUATION_WIDGET_KEYS)
+    saved_thresholds = saved_evaluation.get("thresholds", [])
+    if not isinstance(saved_thresholds, list):
+        saved_thresholds = []
+    saved_subgroup_results = saved_evaluation.get("subgroup_results", [])
+    if not isinstance(saved_subgroup_results, list):
+        saved_subgroup_results = []
+    evaluation_defaults = {
+        field: "" for field in FAIRNESS_EVALUATION_WIDGET_FIELDS
+    }
+    evaluation_defaults.update({
+        "evaluation_stage": "Planned",
+        "evaluation_status": "Draft",
+        "responsible_owner": use_case.get("owner", ""),
+        "threshold_row_count": len(saved_thresholds),
+        "subgroup_result_row_count": len(saved_subgroup_results),
+    })
+    saved_evaluation = dict(saved_evaluation)
+    saved_evaluation.update({
+        "threshold_row_count": len(saved_thresholds),
+        "subgroup_result_row_count": len(saved_subgroup_results),
+    })
+    if saved_evaluation.get("evaluation_stage") not in EVALUATION_STAGES:
+        saved_evaluation["evaluation_stage"] = evaluation_defaults["evaluation_stage"]
+    if saved_evaluation.get("evaluation_status") not in EVALUATION_STATUSES:
+        saved_evaluation["evaluation_status"] = evaluation_defaults["evaluation_status"]
+    _hydrate_control_form(
+        evaluation_widget_keys,
+        saved_evaluation,
+        evaluation_defaults,
+        "FAI-01-evaluation",
+    )
+    generation = st.session_state.get("_case_load_generation")
+    row_defaults = {
+        "threshold": {
+            "kind": "numeric",
+            "comparator": "<=",
+            "value": 0.0,
+            "metric_unit": "",
+            "metric_scale": "unbounded",
+            "rationale": "",
+            "description": "",
+            "human_review_required": False,
+        },
+        "subgroup_result": {
+            "subgroup_label": "",
+            "metric_value": 0.0,
+            "metric_unit": "",
+            "metric_scale": "unbounded",
+            "sample_size": "",
+            "event_numerator": "",
+            "evidence_reference": "",
+        },
+    }
+    saved_rows = {
+        "threshold": saved_thresholds,
+        "subgroup_result": saved_subgroup_results,
+    }
+    count_fields = {
+        "threshold": "threshold_row_count",
+        "subgroup_result": "subgroup_result_row_count",
+    }
+    for row_kind, defaults in row_defaults.items():
+        count = st.session_state[evaluation_widget_keys[count_fields[row_kind]]]
+        for index in range(count):
+            saved_row = (
+                saved_rows[row_kind][index]
+                if index < len(saved_rows[row_kind])
+                else {}
+            )
+            if not isinstance(saved_row, dict):
+                saved_row = {}
+            for field, default in defaults.items():
+                key = fairness_row_widget_key(row_kind, index, field, generation)
+                if key in st.session_state:
+                    continue
+                value = saved_row.get(field, default)
+                if field == "kind" and value not in ("numeric", "documented"):
+                    value = default
+                elif field == "comparator" and value not in THRESHOLD_COMPARATORS:
+                    value = default
+                elif field == "metric_scale" and value not in METRIC_SCALES:
+                    value = default
+                elif field in {"value", "metric_value"} and (
+                    not _is_finite_widget_number(value)
+                ):
+                    value = default
+                elif field == "human_review_required" and type(value) is not bool:
+                    value = default
+                elif field in {"sample_size", "event_numerator"}:
+                    value = "" if value is None else str(value)
+                elif field not in {
+                    "value",
+                    "metric_value",
+                    "human_review_required",
+                } and not isinstance(value, str):
+                    value = default
+                st.session_state[key] = value
+
+    evaluation_text_areas = {
+        "groups_and_selection_basis": "Groups/subgroups and selection basis",
+        "dataset_scope": "Dataset scope",
+        "dataset_population": "Dataset population",
+        "dataset_representativeness_limitations": "Dataset representativeness limitations",
+        "metric_definition": "Metric definition",
+        "calculation_approach": "Calculation approach",
+        "evaluation_outcome": "Evaluation outcome",
+        "evidence_reference": "Evidence reference",
+        "observed_limitations": "Observed limitations",
+        "mitigation_actions": "Mitigation actions",
+    }
+    evaluation_values = {"threshold_rows": [], "subgroup_rows": []}
+    for field in FAIRNESS_EVALUATION_WIDGET_FIELDS:
+        if field.endswith("_row_count"):
+            continue
+        key = evaluation_widget_keys[field]
+        if field == "evaluation_stage":
+            evaluation_values[field] = st.selectbox(
+                "Evaluation stage",
+                EVALUATION_STAGES,
+                key=key,
+            )
+        elif field == "evaluation_status":
+            evaluation_values[field] = st.selectbox(
+                "Evaluation documentation status",
+                EVALUATION_STATUSES,
+                key=key,
+            )
+        elif field in evaluation_text_areas:
+            evaluation_values[field] = st.text_area(
+                evaluation_text_areas[field],
+                key=key,
+            )
+        else:
+            labels = {
+                "dataset_source": "Dataset source",
+                "dataset_timeframe": "Dataset timeframe",
+                "metric_name": "Fairness metric name",
+                "test_date": "Test date (YYYY-MM-DD)",
+                "responsible_owner": "Evaluation responsible owner",
+                "reviewer": "Evaluation reviewer",
+                "review_date": "Evaluation review date (YYYY-MM-DD)",
+            }
+            evaluation_values[field] = st.text_input(
+                labels[field],
+                key=key,
+            )
+
+    st.markdown("**Thresholds for this single declared metric**")
+    st.caption(
+        "Numeric thresholds and subgroup results must use the same metric unit "
+        "and scale. Qualitative criteria require human review."
+    )
+    threshold_count_key = evaluation_widget_keys["threshold_row_count"]
+    if st.button("Add threshold", key=f"{threshold_count_key}_add"):
+        st.session_state[threshold_count_key] += 1
+    threshold_count = st.session_state[threshold_count_key]
+    for index in range(threshold_count):
+        if st.button(
+            f"Remove threshold {index + 1}",
+            key=f"{threshold_count_key}_remove_{index}",
+        ):
+            for next_index in range(index, threshold_count - 1):
+                for field, default in row_defaults["threshold"].items():
+                    target_key = fairness_row_widget_key(
+                        "threshold", next_index, field, generation
+                    )
+                    source_key = fairness_row_widget_key(
+                        "threshold", next_index + 1, field, generation
+                    )
+                    st.session_state[target_key] = st.session_state.get(
+                        source_key, default
+                    )
+            st.session_state[threshold_count_key] -= 1
+            threshold_count -= 1
+            break
+    for index in range(threshold_count):
+        st.markdown(f"**Threshold {index + 1}**")
+        kind_key = fairness_row_widget_key("threshold", index, "kind", generation)
+        kind = st.selectbox(
+            "Threshold type",
+            ("numeric", "documented"),
+            format_func=lambda value: (
+                "Numeric threshold" if value == "numeric" else "Qualitative criterion"
+            ),
+            key=kind_key,
+        )
+        if kind == "numeric":
+            columns = st.columns(3)
+            threshold_row = {
+                "comparator": columns[0].selectbox(
+                    "Comparator",
+                    THRESHOLD_COMPARATORS,
+                    key=fairness_row_widget_key(
+                        "threshold", index, "comparator", generation
+                    ),
+                ),
+                "value": columns[1].number_input(
+                    "Threshold value",
+                    key=fairness_row_widget_key(
+                        "threshold", index, "value", generation
+                    ),
+                ),
+                "metric_unit": columns[2].text_input(
+                    "Metric unit",
+                    key=fairness_row_widget_key(
+                        "threshold", index, "metric_unit", generation
+                    ),
+                ),
+                "metric_scale": st.selectbox(
+                    "Metric scale",
+                    METRIC_SCALES,
+                    key=fairness_row_widget_key(
+                        "threshold", index, "metric_scale", generation
+                    ),
+                ),
+                "rationale": st.text_input(
+                    "Threshold rationale",
+                    key=fairness_row_widget_key(
+                        "threshold", index, "rationale", generation
+                    ),
+                ),
+            }
+        else:
+            threshold_row = {
+                "description": st.text_input(
+                    "Qualitative criterion description",
+                    key=fairness_row_widget_key(
+                        "threshold", index, "description", generation
+                    ),
+                ),
+                "rationale": st.text_input(
+                    "Human-review rationale",
+                    key=fairness_row_widget_key(
+                        "threshold", index, "rationale", generation
+                    ),
+                ),
+                "human_review_required": st.checkbox(
+                    "Human review is required for this criterion",
+                    key=fairness_row_widget_key(
+                        "threshold", index, "human_review_required", generation
+                    ),
+                ),
+            }
+        evaluation_values.setdefault("threshold_rows", []).append({
+            "kind": kind,
+            **threshold_row,
+        })
+
+    st.markdown("**Subgroup results for the declared metric**")
+    subgroup_count_key = evaluation_widget_keys["subgroup_result_row_count"]
+    if st.button("Add subgroup result", key=f"{subgroup_count_key}_add"):
+        st.session_state[subgroup_count_key] += 1
+    subgroup_count = st.session_state[subgroup_count_key]
+    for index in range(subgroup_count):
+        if st.button(
+            f"Remove subgroup result {index + 1}",
+            key=f"{subgroup_count_key}_remove_{index}",
+        ):
+            for next_index in range(index, subgroup_count - 1):
+                for field, default in row_defaults["subgroup_result"].items():
+                    target_key = fairness_row_widget_key(
+                        "subgroup_result", next_index, field, generation
+                    )
+                    source_key = fairness_row_widget_key(
+                        "subgroup_result", next_index + 1, field, generation
+                    )
+                    st.session_state[target_key] = st.session_state.get(
+                        source_key, default
+                    )
+            st.session_state[subgroup_count_key] -= 1
+            subgroup_count -= 1
+            break
+    for index in range(subgroup_count):
+        st.markdown(f"**Subgroup result {index + 1}**")
+        columns = st.columns(3)
+        subgroup_row = {
+            "subgroup_label": columns[0].text_input(
+                "Subgroup name",
+                key=fairness_row_widget_key(
+                    "subgroup_result", index, "subgroup_label", generation
+                ),
+            ),
+            "metric_value": columns[1].number_input(
+                "Metric value",
+                key=fairness_row_widget_key(
+                    "subgroup_result", index, "metric_value", generation
+                ),
+            ),
+            "metric_unit": columns[2].text_input(
+                "Metric unit",
+                key=fairness_row_widget_key(
+                    "subgroup_result", index, "metric_unit", generation
+                ),
+            ),
+            "metric_scale": st.selectbox(
+                "Metric scale",
+                METRIC_SCALES,
+                key=fairness_row_widget_key(
+                    "subgroup_result", index, "metric_scale", generation
+                ),
+            ),
+            "sample_size": st.text_input(
+                "Sample size / denominator (optional)",
+                key=fairness_row_widget_key(
+                    "subgroup_result", index, "sample_size", generation
+                ),
+            ),
+            "event_numerator": st.text_input(
+                "Event numerator (optional)",
+                key=fairness_row_widget_key(
+                    "subgroup_result", index, "event_numerator", generation
+                ),
+            ),
+            "evidence_reference": st.text_input(
+                "Subgroup evidence reference",
+                key=fairness_row_widget_key(
+                    "subgroup_result", index, "evidence_reference", generation
+                ),
+            ),
+        }
+        evaluation_values.setdefault("subgroup_rows", []).append(subgroup_row)
+
+    save_evaluation = st.button("Save FAI-01 fairness evaluation")
+
+    if save_evaluation:
+        normalized_evaluation, errors = evaluation_from_form(evaluation_values)
+        errors.extend(validate_fairness_evaluation(normalized_evaluation))
+        if errors:
+            st.error(
+                "Fairness evaluation was not saved:\n\n"
+                + "\n".join(f"- {error}" for error in errors)
+            )
+        else:
+            current_fai01 = control_evidence.get("FAI-01", {})
+            if not isinstance(current_fai01, dict):
+                current_fai01 = {}
+            current_fai01 = dict(current_fai01)
+            current_fai01["fairness_evaluation"] = normalized_evaluation
+            control_evidence["FAI-01"] = current_fai01
+            st.session_state["control_evidence"] = control_evidence
+            st.success(
+                f"FAI-01 fairness evaluation saved as "
+                f"{normalized_evaluation['evaluation_stage']} documentation."
+            )
 
 sec01_result = assess_control(
     "SEC-01",

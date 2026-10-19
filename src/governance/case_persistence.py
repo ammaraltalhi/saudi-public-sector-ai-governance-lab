@@ -8,6 +8,7 @@ import tempfile
 from uuid import UUID, uuid4
 
 from .risk import RISK_WEIGHTS, calculate_risk
+from .fairness_evaluation import FAIRNESS_EVALUATION_WIDGET_KEYS
 from .sdaia_impact import validate_impact_assessments
 
 SCHEMA_VERSION = 1
@@ -92,6 +93,7 @@ FAI01_WIDGET_FIELDS = (
 FAI01_WIDGET_KEYS = {
     field: f"fai01_{field}" for field in FAI01_WIDGET_FIELDS
 }
+FAI01_EVALUATION_WIDGET_KEYS = FAIRNESS_EVALUATION_WIDGET_KEYS
 SEC01_WIDGET_FIELDS = (
     "security_scope",
     "key_security_risks",
