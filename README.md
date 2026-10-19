@@ -50,6 +50,7 @@ The prototype supports governance documentation and readiness review; it does no
 │   ├── deployment_readiness.py    # Shared readiness calculation
 │   ├── case_persistence.py        # Case JSON validation, save/load and restoration
 │   ├── fairness_evaluation.py     # Optional FAI-01 evaluation-record validation
+│   ├── validation_evaluation.py   # Optional VAL-01 validation-record validation
 │   ├── sdaia_impact.py            # Impact-assessment field validation
 │   ├── risk.py                    # Illustrative risk heuristic
 │   ├── framework.py               # NIST AI RMF functions and case-study principles
@@ -111,6 +112,12 @@ The Control Library includes an optional, separately saved fairness evaluation s
 
 The nested subsection is optional and does not change schema version 1, existing FAI-01 evidence completeness/status logic, or deployment readiness. Cases and FAI-01 records without it remain compatible. Legacy free-text result records are treated as Invalid until explicitly replaced with the structured format; they are not reinterpreted. Structural validation catches malformed shapes, values, counts, scales, and dates, but cannot judge metric appropriateness, dataset representativeness, causal interpretation, fairness, or evidence authenticity. It does not claim SDAIA scoring, compliance, certification, or independent testing. Use synthetic aggregate examples only; do not enter real citizen or sensitive subgroup data.
 
+### VAL-01 Validation Evaluation Documentation
+
+The Control Library provides an optional, explicitly saved `validation_evaluation` nested under the existing `control_evidence["VAL-01"]` record. Planned entries describe dataset/test-set context, objectives, validation method, metric definitions, and documented metric-specific acceptance thresholds. Performed entries add structured measured values, test dates, sample sizes where applicable, result evidence references, outcome, and human-oversight observations. Add/remove metric and result rows use labeled Streamlit inputs; JSON editing is not required. Each metric has an explicit ID, unit, and scale, and each result must reference a known metric and use its declared unit and scale. No official pass threshold is supplied.
+
+The nested record also captures limitations, outstanding actions, owner, reviewer, and review date. A metric cannot be removed while a result references its ID; remove dependent result rows first. Result metric IDs remain explicit across row edits, and stale or unknown references block saving instead of being reassigned by a selectbox. Numeric thresholds use only their declared comparator and metric scale to show a limited per-result “Threshold met” or “Threshold not met” comparison. A missing numeric threshold must be explicitly marked “Human review required.” The form does not infer an overall validation pass or support a global Passed/Failed claim; saved legacy records containing those claims are Invalid until explicitly corrected. This comparison is not a determination of model performance, reliability, safety, or approval. The feature does not create a second VAL-01 control or change base evidence status, applicability, risk scoring, or deployment readiness. Existing schema-version-1 cases and VAL-01 records without the optional field remain compatible. Saving the base VAL-01 form preserves the optional field, including malformed legacy values; malformed records are retained and shown as Invalid rather than Performed. Planned records cannot contain measured results. Performed entries are user-reported documentation only and do not independently verify performance, safety, methodology, evidence authenticity, regulatory compliance, or SDAIA conformity. Use synthetic information only.
+
 ## 7. Governance Control Library
 
 The control catalogue in `data/controls.csv` contains these controls:
@@ -123,7 +130,7 @@ The control catalogue in `data/controls.csv` contains these controls:
 | **FAI-01** | Structured fairness risk and mitigation assessment |
 | **SEC-01** | Structured security assessment |
 | **TRN-01** | Documenting purpose, AI role, limitations and transparency considerations |
-| **VAL-01** | Acceptance criteria and intended-use validation planning |
+| **VAL-01** | Acceptance criteria, validation planning and optional structured evaluation documentation |
 | **MON-01** | Monitoring objectives, planned indicators, thresholds and responsibilities |
 | **INC-01** | Incident definition, triage, escalation and response planning |
 | **RET-01** | Lifecycle control for retirement or decommissioning; shown as Lifecycle / Not Due for initial readiness |
