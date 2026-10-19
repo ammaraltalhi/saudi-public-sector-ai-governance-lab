@@ -167,24 +167,28 @@ def test_incomplete_review_submission_is_rejected_without_saving():
     app.session_state["use_case"] = case_state()["use_case"]
     app.run()
 
+    save = next(
+        item for item in app.button
+        if item.label == "Save Humanity Impact Assessment"
+    )
+    save.click().run()
+    saved_draft = app.session_state["sdaia_impact_assessments"]["humanity"].copy()
+    assert saved_draft["assessment_status"] == "Draft"
+
     status = next(
         widget for widget in app.selectbox
         if widget.label == "Assessment status"
         and widget.key.startswith("sdaia_impact_humanity_")
     )
     status.select("Reviewed")
-    save = next(
-        item for item in app.button
-        if item.label == "Save Humanity Impact Assessment"
-    )
-    app.run()
+    assert status.value == "Reviewed"
     save = next(
         item for item in app.button
         if item.label == "Save Humanity Impact Assessment"
     )
     save.click().run()
 
-    assert app.session_state["sdaia_impact_assessments"] == {}
+    assert app.session_state["sdaia_impact_assessments"]["humanity"] == saved_draft
     assert any(
         "Assessment was not saved" in item.value
         for item in app.error
