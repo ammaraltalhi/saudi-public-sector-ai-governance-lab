@@ -8,6 +8,7 @@ import tempfile
 from uuid import UUID, uuid4
 
 from .risk import RISK_WEIGHTS, calculate_risk
+from .sdaia_impact import validate_impact_assessments
 
 SCHEMA_VERSION = 1
 RISK_ANSWER_KEYS = tuple(RISK_WEIGHTS)
@@ -261,6 +262,11 @@ def validate_case_document(document):
     if not isinstance(control_evidence, dict):
         raise CasePersistenceError("Control evidence must be a mapping.")
     _validate_json_value(control_evidence, "control_evidence")
+    impact_assessments = document.get("sdaia_impact_assessments", {})
+    _validate_json_value(impact_assessments, "sdaia_impact_assessments")
+    # Invalid optional records remain loadable so valid case data is not lost.
+    # The shared validator separates canonical records from invalid entries.
+    validate_impact_assessments(impact_assessments)
 
     plans = document.get("deployment_readiness_plans")
     if not isinstance(plans, dict) or set(plans) != set(PLAN_KEYS):
@@ -282,7 +288,10 @@ def validate_case_document(document):
         "control_evidence",
         "deployment_readiness_plans",
     }
-    if set(document) != expected_fields:
+    if set(document) not in (
+        expected_fields,
+        expected_fields | {"sdaia_impact_assessments"},
+    ):
         raise CasePersistenceError("Case document contains missing or unsupported fields.")
     return document
 
@@ -301,6 +310,21 @@ def build_case_document(session_state, case_id=None, saved_at=None):
         "control_evidence": deepcopy(session_state.get("control_evidence", {})),
         "deployment_readiness_plans": deepcopy(plans),
     }
+    assessments = deepcopy(session_state.get("sdaia_impact_assessments", {}))
+    invalid = deepcopy(session_state.get("_sdaia_impact_assessment_invalid", {}))
+    if not isinstance(assessments, dict):
+        assessments = {}
+    if invalid:
+        if "_root" in invalid:
+            assessments["_invalid_payload"] = invalid["_root"]["record"]
+        else:
+            assessments.update({
+                key: entry["record"]
+                for key, entry in invalid.items()
+                if isinstance(entry, dict) and "record" in entry
+            })
+    if assessments or "sdaia_impact_assessments" in session_state:
+        document["sdaia_impact_assessments"] = assessments
     validate_case_document(document)
     return document
 
@@ -391,6 +415,9 @@ def restore_case(session_state, document):
     use_case = deepcopy(document["use_case"])
     evidence = deepcopy(document["control_evidence"])
     plans = deepcopy(document["deployment_readiness_plans"])
+    impact_assessments, invalid_impact_assessments = validate_impact_assessments(
+        document.get("sdaia_impact_assessments", {})
+    )
     widget_values = {
         **{USE_CASE_WIDGET_KEYS[field]: use_case[field] for field in USE_CASE_KEYS},
         **risk_answers,
@@ -407,6 +434,8 @@ def restore_case(session_state, document):
         "use_case": use_case,
         "risk_answers": risk_answers,
         "control_evidence": evidence,
+        "sdaia_impact_assessments": impact_assessments,
+        "_sdaia_impact_assessment_invalid": invalid_impact_assessments,
         "deployment_readiness_plans": plans,
         "risk_result": result,
         "risk_score": result.score,

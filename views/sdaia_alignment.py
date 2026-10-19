@@ -4,6 +4,8 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
+from src.governance.sdaia_impact import validate_impact_assessments
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ALIGNMENT_PATH = ROOT / "data" / "sdaia_alignment.json"
@@ -145,6 +147,51 @@ st.info(
     "control, completed form, or Reviewed status is not proof that a practice "
     "was implemented, tested, or effective."
 )
+impact_assessments, invalid_impact_assessments = validate_impact_assessments(
+    st.session_state.get("sdaia_impact_assessments", {})
+)
+saved_invalid = st.session_state.get(
+    "_sdaia_impact_assessment_invalid", {}
+)
+if isinstance(saved_invalid, dict):
+    invalid_impact_assessments.update(saved_invalid)
+if "_root" in invalid_impact_assessments:
+    invalid_impact_assessments = {
+        assessment_type: invalid_impact_assessments["_root"]
+        for assessment_type, _ in (
+            ("humanity", "Humanity"),
+            ("social_environmental", "Social & Environmental Benefits"),
+        )
+    }
+st.markdown("### Principle-specific impact documentation")
+st.caption(
+    "Open the SDAIA Impact Assessment page from app navigation to create or "
+    "review these records."
+)
+for assessment_type, principle in (
+    ("humanity", "Humanity"),
+    ("social_environmental", "Social & Environmental Benefits"),
+):
+    assessment = impact_assessments.get(assessment_type)
+    st.markdown(f"**{principle}:**")
+    invalid = invalid_impact_assessments.get(assessment_type)
+    if invalid:
+        st.caption(
+            "Invalid — assessment record is excluded from canonical "
+            "documentation status. Saved source data is retained. "
+            + "; ".join(invalid.get("errors", ["Assessment data is invalid."]))
+        )
+        continue
+    if assessment is None:
+        st.caption("Missing — no saved assessment documentation.")
+        continue
+    status = assessment["assessment_status"]
+    evidence_type = assessment["evidence_type"]
+    st.caption(
+        f"Assessment documentation saved ({status}); user-entered evidence "
+        f"type: {evidence_type}. Reviewed is a user-recorded attestation, "
+        "not independently verified evidence of implementation or effectiveness."
+    )
 
 for principle in alignment["principles"]:
     st.subheader(principle["name"])
