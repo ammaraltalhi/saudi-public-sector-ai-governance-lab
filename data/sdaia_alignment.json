@@ -71,9 +71,9 @@
         "printed_pages": [21, 22],
         "annexure_c": ["PID.14", "BV.1", "BV.2", "BV.3", "BV.4", "DM.4"]
       },
-      "coverage": "VAL-01 captures validation scope, criteria, approach, test-set considerations, findings/evidence, oversight, and limitations. MON-01 records planned metrics, thresholds, frequency, ownership, and escalation; INC-01 describes triage, containment, correction, and recovery.",
-      "gaps": "No structured evidence specifically records unexpected/extreme-scenario testing, fallback tests, system-failure test results, or completed stakeholder sign-off.",
-      "limitations": "Plans and fields do not prove technical robustness, safe operation, completed tests, or production performance."
+      "coverage": "VAL-01 captures validation scope, criteria, approach, test-set considerations, findings/evidence, oversight, and limitations. Its optional nested evaluation record distinguishes Planned work from user-reported Performed validation and can record dataset context, metric-specific thresholds and results, test dates, and evidence references. MON-01 records planned metrics, thresholds, frequency, ownership, and escalation; INC-01 describes triage, containment, correction, and recovery.",
+      "gaps": "The supplementary VAL-01 evaluation is structural documentation only. It does not verify unexpected/extreme-scenario testing, fallback behavior, system-failure results, methodological validity, or completed stakeholder sign-off.",
+      "limitations": "Plans and user-reported results do not prove technical robustness, safe operation, independently validated performance, or production readiness."
     },
     {
       "name": "Transparency & Explainability",

@@ -9,6 +9,7 @@ from uuid import UUID, uuid4
 
 from .risk import RISK_WEIGHTS, calculate_risk
 from .fairness_evaluation import FAIRNESS_EVALUATION_WIDGET_KEYS
+from .validation_evaluation import VALIDATION_EVALUATION_WIDGET_KEYS
 from .sdaia_impact import validate_impact_assessments
 
 SCHEMA_VERSION = 1
@@ -141,6 +142,7 @@ VAL01_WIDGET_FIELDS = (
 VAL01_WIDGET_KEYS = {
     field: f"val01_{field}" for field in VAL01_WIDGET_FIELDS
 }
+VAL01_EVALUATION_WIDGET_KEYS = VALIDATION_EVALUATION_WIDGET_KEYS
 MON01_WIDGET_FIELDS = (
     "monitoring_objectives",
     "performance_metrics",

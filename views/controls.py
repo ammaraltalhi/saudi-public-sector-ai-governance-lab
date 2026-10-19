@@ -13,6 +13,7 @@ from src.governance.case_persistence import (
     FAI01_EVALUATION_WIDGET_KEYS,
     SEC01_WIDGET_KEYS,
     TRN01_WIDGET_KEYS,
+    VAL01_EVALUATION_WIDGET_KEYS,
     VAL01_WIDGET_KEYS,
     MON01_WIDGET_KEYS,
     INC01_WIDGET_KEYS,
@@ -27,6 +28,19 @@ from src.governance.fairness_evaluation import (
     evaluation_from_form,
     fairness_row_widget_key,
     validate_fairness_evaluation,
+)
+from src.governance.validation_evaluation import (
+    VALIDATION_COMPARATORS,
+    VALIDATION_EVALUATION_FIELDS,
+    VALIDATION_EVALUATION_WIDGET_FIELDS,
+    VALIDATION_METRIC_SCALES,
+    VALIDATION_STAGES,
+    VALIDATION_STATUSES,
+    HUMAN_REVIEW_COMPARATOR,
+    metric_comparison_status,
+    validation_evaluation_from_form,
+    validation_row_widget_key,
+    validate_validation_evaluation,
 )
 
 
@@ -990,7 +1004,17 @@ if val01_result["Applicability"] == "Required":
         save_assessment = st.form_submit_button("Save VAL-01 assessment")
 
     if save_assessment:
-        control_evidence["VAL-01"] = {
+        existing_val01 = control_evidence.get("VAL-01", {})
+        has_existing_evaluation = (
+            isinstance(existing_val01, dict)
+            and "validation_evaluation" in existing_val01
+        )
+        existing_evaluation = (
+            existing_val01.get("validation_evaluation")
+            if isinstance(existing_val01, dict)
+            else None
+        )
+        base_assessment = {
             "validation_scope": validation_scope,
             "acceptance_criteria": acceptance_criteria,
             "validation_approach": validation_approach,
@@ -1002,8 +1026,388 @@ if val01_result["Applicability"] == "Required":
             "validation_reviewer": validation_reviewer,
             "assessment_status": assessment_status,
         }
+        if has_existing_evaluation:
+            base_assessment["validation_evaluation"] = existing_evaluation
+        control_evidence["VAL-01"] = base_assessment
         st.session_state["control_evidence"] = control_evidence
         st.success("VAL-01 assessment saved.")
+
+    st.markdown("#### Optional structured validation evaluation")
+    st.caption(
+        "Planned records describe intended validation. Performed records are "
+        "user-reported documentation and do not independently verify model "
+        "performance, safety, or compliance. Use synthetic information only."
+    )
+    current_val01 = control_evidence.get("VAL-01", {})
+    if not isinstance(current_val01, dict):
+        current_val01 = {}
+    has_saved_validation = "validation_evaluation" in current_val01
+    saved_validation = current_val01.get("validation_evaluation", {})
+    validation_errors = (
+        validate_validation_evaluation(saved_validation)
+        if has_saved_validation
+        else []
+    )
+    if validation_errors:
+        st.warning(
+            "Saved validation evaluation is Invalid and is not treated as valid "
+            "validation documentation. Correct it and explicitly save to replace "
+            "the saved record. " + "; ".join(validation_errors)
+        )
+    if not isinstance(saved_validation, dict):
+        saved_validation = {}
+    validation_widget_keys = _case_widget_keys(VAL01_EVALUATION_WIDGET_KEYS)
+    saved_metrics = saved_validation.get("metrics", [])
+    if not isinstance(saved_metrics, list):
+        saved_metrics = []
+    saved_results = saved_validation.get("results", [])
+    if not isinstance(saved_results, list):
+        saved_results = []
+    validation_defaults = {
+        field: "" for field in VALIDATION_EVALUATION_WIDGET_FIELDS
+    }
+    validation_defaults.update({
+        "evaluation_stage": "Planned",
+        "evaluation_status": "Draft",
+        "metric_row_count": len(saved_metrics),
+        "result_row_count": len(saved_results),
+        "responsible_owner": use_case.get("owner", ""),
+        "reviewer": "",
+    })
+    saved_validation = dict(saved_validation)
+    saved_validation.update({
+        "metric_row_count": len(saved_metrics),
+        "result_row_count": len(saved_results),
+    })
+    if saved_validation.get("evaluation_stage") not in VALIDATION_STAGES:
+        saved_validation["evaluation_stage"] = validation_defaults["evaluation_stage"]
+    if saved_validation.get("evaluation_status") not in VALIDATION_STATUSES:
+        saved_validation["evaluation_status"] = validation_defaults["evaluation_status"]
+    _hydrate_control_form(
+        validation_widget_keys,
+        saved_validation,
+        validation_defaults,
+        "VAL-01-evaluation",
+    )
+    generation = st.session_state.get("_case_load_generation")
+    metric_row_defaults = {
+        "metric_id": "",
+        "metric_name": "",
+        "definition": "",
+        "unit": "",
+        "scale": "unbounded",
+        "threshold_comparator": "<=",
+        "threshold_value": 0.0,
+        "threshold_rationale": "",
+    }
+    result_row_defaults = {
+        "metric_id": "",
+        "measured_value": 0.0,
+        "unit": "",
+        "scale": "unbounded",
+        "sample_size": "",
+        "test_date": "",
+        "evidence_reference": "",
+    }
+    row_defaults = {"metric": metric_row_defaults, "result": result_row_defaults}
+    saved_rows = {"metric": saved_metrics, "result": saved_results}
+    for row_kind, defaults in row_defaults.items():
+        count_field = f"{row_kind}_row_count"
+        count = st.session_state[validation_widget_keys[count_field]]
+        for index in range(count):
+            saved_row = saved_rows[row_kind][index] if index < len(saved_rows[row_kind]) else {}
+            if not isinstance(saved_row, dict):
+                saved_row = {}
+            for field, default in defaults.items():
+                key = validation_row_widget_key(row_kind, index, field, generation)
+                if key in st.session_state:
+                    continue
+                value = saved_row.get(field, default)
+                if field in {"scale"} and value not in VALIDATION_METRIC_SCALES:
+                    value = default
+                elif field == "threshold_comparator" and value not in (
+                    *VALIDATION_COMPARATORS,
+                    HUMAN_REVIEW_COMPARATOR,
+                ):
+                    value = default
+                elif field in {"threshold_value", "measured_value"} and (
+                    not _is_finite_widget_number(value)
+                ):
+                    value = default
+                elif field == "sample_size":
+                    value = "" if value is None else str(value)
+                elif field not in {"threshold_value", "measured_value"} and not isinstance(value, str):
+                    value = default
+                st.session_state[key] = value
+
+    validation_form_values = {
+        "metric_rows": [],
+        "result_rows": [],
+    }
+    for field in VALIDATION_EVALUATION_WIDGET_FIELDS:
+        if field.endswith("_row_count"):
+            continue
+        key = validation_widget_keys[field]
+        if field == "evaluation_stage":
+            validation_form_values[field] = st.selectbox(
+                "Validation evaluation stage",
+                VALIDATION_STAGES,
+                key=key,
+            )
+        elif field == "evaluation_status":
+            validation_form_values[field] = st.selectbox(
+                "Validation documentation status",
+                VALIDATION_STATUSES,
+                key=key,
+            )
+        else:
+            labels = {
+                "dataset_source": "Dataset / test-set source",
+                "dataset_purpose": "Dataset / test-set purpose",
+                "dataset_population": "Dataset / test-set population",
+                "dataset_scope": "Dataset / test-set scope",
+                "dataset_timeframe": "Dataset / test-set timeframe",
+                "dataset_limitations": "Dataset limitations",
+                "validation_method": "Validation method",
+                "test_objectives": "Test objectives",
+                "human_oversight_testing": "Human oversight testing approach",
+                "human_oversight_observations": "Human oversight test observations",
+                "validation_outcome": "Validation observations (no overall pass/fail claim)",
+                "limitations": "Validation limitations",
+                "outstanding_actions": "Outstanding actions",
+                "responsible_owner": "Evaluation responsible owner",
+                "reviewer": "Evaluation reviewer",
+                "review_date": "Evaluation review date (YYYY-MM-DD)",
+            }
+            if field in {
+                "dataset_purpose", "dataset_population", "dataset_scope",
+                "dataset_limitations", "validation_method", "test_objectives",
+                "human_oversight_testing", "human_oversight_observations",
+                "validation_outcome", "limitations", "outstanding_actions",
+            }:
+                validation_form_values[field] = st.text_area(labels[field], key=key)
+            else:
+                validation_form_values[field] = st.text_input(labels[field], key=key)
+
+    st.markdown("**Validation metrics and planned acceptance thresholds**")
+    st.caption(
+        "Each metric has its own identifier, threshold, unit, and scale. Result "
+        "rows select a metric and must match its unit and scale. No official "
+        "pass threshold is supplied."
+    )
+    metric_count_key = validation_widget_keys["metric_row_count"]
+    if st.button("Add validation metric", key=f"{metric_count_key}_add"):
+        st.session_state[metric_count_key] += 1
+    metric_count = st.session_state[metric_count_key]
+    result_count_key = validation_widget_keys["result_row_count"]
+    result_count_for_metrics = st.session_state[result_count_key]
+    linked_metric_ids = {
+        st.session_state.get(
+            validation_row_widget_key("result", result_index, "metric_id", generation),
+            "",
+        )
+        for result_index in range(result_count_for_metrics)
+    }
+    for index in range(metric_count):
+        metric_id_key = validation_row_widget_key(
+            "metric", index, "metric_id", generation
+        )
+        metric_id = st.session_state.get(metric_id_key, "")
+        metric_has_results = bool(metric_id and metric_id in linked_metric_ids)
+        if st.button(
+            f"Remove validation metric {index + 1}",
+            key=f"{metric_count_key}_remove_{index}",
+            disabled=metric_has_results,
+        ):
+            for next_index in range(index, metric_count - 1):
+                for field, default in metric_row_defaults.items():
+                    target = validation_row_widget_key("metric", next_index, field, generation)
+                    source = validation_row_widget_key("metric", next_index + 1, field, generation)
+                    st.session_state[target] = st.session_state.get(source, default)
+            st.session_state[metric_count_key] -= 1
+            metric_count -= 1
+            break
+        if metric_has_results:
+            st.caption(
+                f"Remove linked result rows first, then remove metric '{metric_id}'."
+            )
+    for index in range(metric_count):
+        st.markdown(f"**Metric {index + 1}**")
+        id_key = validation_row_widget_key("metric", index, "metric_id", generation)
+        metric_id = st.text_input("Metric ID", key=id_key)
+        name_key = validation_row_widget_key("metric", index, "metric_name", generation)
+        metric_name = st.text_input("Metric name", key=name_key)
+        definition_key = validation_row_widget_key("metric", index, "definition", generation)
+        definition = st.text_area("Metric definition", key=definition_key)
+        columns = st.columns(3)
+        unit = columns[0].text_input(
+            "Metric unit",
+            key=validation_row_widget_key("metric", index, "unit", generation),
+        )
+        scale = columns[1].selectbox(
+            "Metric scale",
+            VALIDATION_METRIC_SCALES,
+            key=validation_row_widget_key("metric", index, "scale", generation),
+        )
+        comparator_options = (*VALIDATION_COMPARATORS, HUMAN_REVIEW_COMPARATOR)
+        comparator = columns[2].selectbox(
+            "Acceptance comparator",
+            comparator_options,
+            key=validation_row_widget_key(
+                "metric", index, "threshold_comparator", generation
+            ),
+        )
+        if comparator == HUMAN_REVIEW_COMPARATOR:
+            threshold_value = None
+            st.caption(
+                "No numeric threshold is recorded; this metric requires human review."
+            )
+        else:
+            threshold_value = st.number_input(
+                "Planned acceptance threshold",
+                key=validation_row_widget_key(
+                    "metric", index, "threshold_value", generation
+                ),
+            )
+        threshold_rationale = st.text_area(
+            "Acceptance threshold rationale",
+            key=validation_row_widget_key(
+                "metric", index, "threshold_rationale", generation
+            ),
+        )
+        validation_form_values["metric_rows"].append({
+            "metric_id": metric_id,
+            "metric_name": metric_name,
+            "definition": definition,
+            "unit": unit,
+            "scale": scale,
+            "threshold_comparator": comparator,
+            "threshold_value": threshold_value,
+            "threshold_rationale": threshold_rationale,
+        })
+
+    st.markdown("**Performed metric results**")
+    if st.button("Add validation result", key=f"{result_count_key}_add"):
+        st.session_state[result_count_key] += 1
+    result_count = st.session_state[result_count_key]
+    for index in range(result_count):
+        if st.button(
+            f"Remove validation result {index + 1}",
+            key=f"{result_count_key}_remove_{index}",
+        ):
+            for next_index in range(index, result_count - 1):
+                for field, default in result_row_defaults.items():
+                    target = validation_row_widget_key("result", next_index, field, generation)
+                    source = validation_row_widget_key("result", next_index + 1, field, generation)
+                    st.session_state[target] = st.session_state.get(source, default)
+            st.session_state[result_count_key] -= 1
+            result_count -= 1
+            break
+    metric_ids = list(dict.fromkeys(
+        row["metric_id"]
+        for row in validation_form_values["metric_rows"]
+        if row["metric_id"]
+    ))
+    for index in range(result_count):
+        st.markdown(f"**Validation result {index + 1}**")
+        result_id_key = validation_row_widget_key("result", index, "metric_id", generation)
+        selected_metric_id = st.session_state.get(result_id_key, "")
+        metric_options = list(metric_ids)
+        if selected_metric_id and selected_metric_id not in metric_options:
+            metric_options.append(selected_metric_id)
+        if not metric_options:
+            metric_options = [""]
+        result_metric_id = st.selectbox(
+            "Result metric ID",
+            metric_options,
+            key=result_id_key,
+        )
+        matched_metric = next(
+            (row for row in validation_form_values["metric_rows"] if row["metric_id"] == result_metric_id),
+            None,
+        )
+        if matched_metric is not None:
+            st.caption(
+                f"Metric: {matched_metric['metric_name']} · "
+                f"{matched_metric['unit']} · {matched_metric['scale']}"
+            )
+        elif result_metric_id:
+            st.error(
+                f"Result references unknown metric ID '{result_metric_id}'. "
+                "Select a defined metric before saving."
+            )
+        columns = st.columns(3)
+        measured_value = columns[0].number_input(
+            "Measured value",
+            key=validation_row_widget_key("result", index, "measured_value", generation),
+        )
+        result_unit = columns[1].text_input(
+            "Result unit",
+            key=validation_row_widget_key("result", index, "unit", generation),
+        )
+        result_scale = columns[2].selectbox(
+            "Result scale",
+            VALIDATION_METRIC_SCALES,
+            key=validation_row_widget_key("result", index, "scale", generation),
+        )
+        sample_size = st.text_input(
+            "Sample size / denominator (optional)",
+            key=validation_row_widget_key("result", index, "sample_size", generation),
+        )
+        test_date = st.text_input(
+            "Test date (YYYY-MM-DD)",
+            key=validation_row_widget_key("result", index, "test_date", generation),
+        )
+        evidence_reference = st.text_input(
+            "Result evidence reference",
+            key=validation_row_widget_key(
+                "result", index, "evidence_reference", generation
+            ),
+        )
+        validation_form_values["result_rows"].append({
+            "metric_id": result_metric_id,
+            "measured_value": measured_value,
+            "unit": result_unit,
+            "scale": result_scale,
+            "sample_size": sample_size,
+            "test_date": test_date,
+            "evidence_reference": evidence_reference,
+        })
+        if matched_metric is not None:
+            comparison = metric_comparison_status(
+                {
+                    **matched_metric,
+                    "threshold_comparator": matched_metric["threshold_comparator"],
+                    "threshold_value": matched_metric["threshold_value"],
+                },
+                {
+                    "measured_value": measured_value,
+                    "unit": result_unit,
+                    "scale": result_scale,
+                },
+            )
+            st.caption(f"Metric comparison: **{comparison}**. This is not an overall validation result.")
+
+    if st.button("Save VAL-01 validation evaluation"):
+        normalized_validation = validation_evaluation_from_form(validation_form_values)
+        errors = validate_validation_evaluation(normalized_validation)
+        if errors:
+            st.error(
+                "Validation evaluation was not saved:\n\n"
+                + "\n".join(f"- {error}" for error in errors)
+            )
+        else:
+            current_val01 = control_evidence.get("VAL-01", {})
+            if not isinstance(current_val01, dict):
+                current_val01 = {}
+            current_val01 = dict(current_val01)
+            current_val01["validation_evaluation"] = normalized_validation
+            control_evidence["VAL-01"] = current_val01
+            st.session_state["control_evidence"] = control_evidence
+            st.success(
+                "VAL-01 validation evaluation saved as "
+                f"{normalized_validation['evaluation_stage']} documentation."
+            )
 
 mon01_result = assess_control(
     "MON-01",

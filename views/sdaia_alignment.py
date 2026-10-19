@@ -6,6 +6,7 @@ import streamlit as st
 
 from src.governance.fairness_evaluation import validate_fairness_evaluation
 from src.governance.sdaia_impact import validate_impact_assessments
+from src.governance.validation_evaluation import validate_validation_evaluation
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -235,6 +236,47 @@ else:
                 "test results are user-reported and not independently verified "
                 "for authenticity, implementation, or statistical validity."
             )
+
+st.markdown("### Supplementary VAL-01 validation evaluation documentation")
+control_evidence = st.session_state.get("control_evidence", {})
+has_val01_record = (
+    isinstance(control_evidence, dict) and "VAL-01" in control_evidence
+)
+val01_evidence = control_evidence.get("VAL-01") if has_val01_record else None
+has_validation_evaluation = (
+    isinstance(val01_evidence, dict)
+    and "validation_evaluation" in val01_evidence
+)
+if not has_val01_record or (
+    isinstance(val01_evidence, dict) and not has_validation_evaluation
+):
+    st.caption("Missing — no saved supplementary validation evaluation.")
+else:
+    validation_evaluation = (
+        val01_evidence.get("validation_evaluation")
+        if isinstance(val01_evidence, dict)
+        else val01_evidence
+    )
+    validation_errors = validate_validation_evaluation(validation_evaluation)
+    if validation_errors:
+        st.caption(
+            "Invalid — supplementary validation evaluation is excluded from "
+            "valid evaluation documentation. "
+            + "; ".join(validation_errors)
+        )
+    elif validation_evaluation["evaluation_stage"] == "Planned":
+        st.caption(
+            "Saved validation documentation: Planned "
+            f"({validation_evaluation['evaluation_status']}). No measured "
+            "validation results are recorded."
+        )
+    else:
+        st.caption(
+            "Saved validation documentation: Performed "
+            f"({validation_evaluation['evaluation_status']}); results are "
+            "user-reported and not independently verified for performance, "
+            "safety, or compliance."
+        )
 
 for principle in alignment["principles"]:
     st.subheader(principle["name"])
