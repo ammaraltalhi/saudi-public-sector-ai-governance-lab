@@ -1,8 +1,12 @@
 # Saudi Public Sector AI Governance Lab
 
-A self-directed portfolio prototype showing how AI governance principles can be translated into practical use-case documentation, control assessments, evidence records and readiness reporting for a **simulated Saudi public-sector AI use case**.
+**A self-directed portfolio prototype for AI Governance, Responsible AI and GRC workflow design.**
 
-The project is intended to demonstrate governance analysis and workflow design. It is not a live client implementation, production AI system or source of legal advice.
+This Streamlit lab demonstrates how a governance team could organize intake, illustrative risk screening, ownership, control documentation and readiness review for a **fictional Citizen Request Prioritisation AI** scenario. It is a workflow-design exercise—not a live client implementation, operational AI system, government partnership, legal opinion or framework-conformity assessment.
+
+> **Synthetic use only.** Do not enter real citizen information, confidential organizational data or actual agency decisions. Cases are stored as local JSON without application-level encryption, authentication or access controls. Do not expose a shared or public writable instance.
+
+**Portfolio materials:** [Synthetic case study](docs/synthetic_case_study.md) · [Five-minute demo script](docs/demo_script.md) · [Interview talking points](docs/interview_talking_points.md) · [Portfolio summary](docs/portfolio_summary.md)
 
 ## 1. Project Overview and Purpose
 
@@ -12,7 +16,7 @@ The NIST AI Risk Management Framework (AI RMF) is used as a conceptual reference
 
 ## 2. Scope and Prototype Disclaimer
 
-This is a portfolio case study in a simulated environment. It does not represent an organisation's approved governance framework, a legal compliance determination, regulatory approval, certification, or deployment authorization.
+The governance problem explored is how to make responsibilities, evidence expectations and review gates visible across an AI use case's lifecycle. The prototype represents those relationships in forms and reports; it does not implement an organisation's approved governance framework or establish compliance, regulatory approval, certification or deployment authorization.
 
 Assessment forms record proposed governance documentation. An **Available** evidence status means that the prototype's configured record is complete, marked Reviewed and explicitly saved where required. It does not prove that technical validation, monitoring, security testing, incident response, or any other activity has occurred in production.
 
@@ -36,6 +40,19 @@ The example is illustrative. It does not describe a deployed Saudi public-sector
 - **Case Management:** save and load case documents locally as JSON, including across application restarts.
 
 The prototype supports governance documentation and readiness review; it does not execute an approval decision or deploy an AI system.
+
+### Supplementary SDAIA documentation
+
+The prototype includes separately documented impact assessments, structured FAI-01 fairness evaluation records, VAL-01 validation metrics and TRN-01 explainability examples/reviews. These records distinguish Planned and Performed documentation where supported, use explicit save actions, and remain user-reported. The SDAIA page provides a seven-principle analytical crosswalk with references and stated evidence gaps. It is not an official score, compliance evaluation or proof that an activity occurred.
+
+### Demonstration and interview resources
+
+- [Synthetic case study](docs/synthetic_case_study.md) — a fictional scenario and governance lifecycle.
+- [Five-minute demo script](docs/demo_script.md) — a local, synthetic-only interview walkthrough.
+- [Interview talking points](docs/interview_talking_points.md) — concise, truthful project positioning.
+- [Portfolio summary](docs/portfolio_summary.md) — short project description.
+
+For a local walkthrough, use synthetic inputs and a private local environment. A recording can be used instead of hosting an interactive demo. **Do not host the current writable case workflow publicly:** local JSON storage has no authentication, role-based access or per-user isolation.
 
 ## 5. Architecture and Repository Structure
 
@@ -171,7 +188,7 @@ Use **Save Case** and **Load Case** in the application sidebar. Cases are writte
 
 On load, risk results are recalculated from the saved screening answers and the saved control evidence is restored to the current session. Individual edits in the RACI editor are **not** included in case persistence; the RACI CSV remains the baseline. Inventory and control catalogue CSVs are repository data, not per-case copies.
 
-Case JSON is stored locally without application-level encryption or access controls. Protect the workspace accordingly and use synthetic data only.
+Case JSON is stored locally without application-level encryption, authentication, role-based access controls or per-user isolation. Anyone with access to a shared runtime or its filesystem may be able to access case records. Protect the workspace accordingly and use synthetic data only. The current implementation is suitable for a private local walkthrough, not a public shared writable demo.
 
 ## 10. Installation and Run Instructions
 
@@ -214,7 +231,7 @@ Install project dependencies, then run the complete test suite from the reposito
 python -m pytest -q
 ```
 
-The tests cover the illustrative risk heuristic, control applicability and evidence status, case JSON validation and round-trip persistence, readiness rules, Streamlit page execution and dashboard behavior. GitHub Actions runs the tests on pushes and pull requests using Python 3.12 (`.github/workflows/python-app.yml`).
+The tests cover the illustrative risk heuristic, control applicability and evidence status, case JSON validation and round-trip persistence, readiness rules, structured SDAIA records, Streamlit page execution and dashboard behavior. GitHub Actions runs the tests on pushes and pull requests using Python 3.12 (`.github/workflows/python-app.yml`). To keep local test runs away from any saved case storage, run pytest from an isolated source copy that excludes `data/cases/`.
 
 ## 12. Portfolio Demonstration Walkthrough
 
@@ -224,6 +241,8 @@ The tests cover the illustrative risk heuristic, control applicability and evide
 4. Open the Control Library to review control applicability and, if desired, complete a structured assessment using synthetic information only.
 5. Save the case, restart the app, and load it to demonstrate local JSON persistence and evidence restoration.
 6. Review Deployment Readiness and the Executive Governance Dashboard. Show how MON-01 and INC-01 evidence contributes to readiness, and distinguish **Ready for Deployment Approval** from actual human approval.
+
+For a timed interview walkthrough, use [`docs/demo_script.md`](docs/demo_script.md). Save only invented synthetic case details; case saves write JSON under `data/cases/`.
 
 Suggested portfolio description:
 
