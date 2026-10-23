@@ -261,6 +261,25 @@ Potential future work includes controlled multi-user storage and access, version
 
 ## 14. Official References
 
+### Saudi reference used in the current crosswalk
+
+- SDAIA, [AI Ethics Principles](https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf), SDAIA-P114E, version 1, May 2025. The existing analytical mapping records principle, printed-page and Annexure C references in [`data/sdaia_alignment.json`](data/sdaia_alignment.json). Mapping documents coverage and gaps; it does not establish conformity.
+
+### Saudi transition references — detailed applicability and mapping pending
+
+| Official source | Purpose in the planned Saudi transition | Verification / implementation status |
+| --- | --- | --- |
+| SDAIA, [National AI Risk Management Framework — Arabic publication](https://sdaia.gov.sa/ar/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryAr.pdf) and [English executive summary](https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryEn.pdf) | Target reference for risk context, assessment, treatment and review | Official publication links located. Direct full-text access failed during this work. Scale definitions, matrix bands and clause-level mappings are not yet verified; current app scales remain illustrative. |
+| Saudi Press Agency, [official national-framework launch announcement](https://www.spa.gov.sa/en/N2633781), 14 July 2026 | Official confirmation and high-level description of the framework | Announcement consulted; it is not a substitute for reading the framework. |
+| SDAIA, [PDPL Implementing Regulations](https://dgp.sdaia.gov.sa/wps/portal/pdp/knowledgecenter/details/PDPL2) | Privacy impact assessment and processing-record requirements for applicability analysis | Source identified, including Articles 25 and 33. A complete PDPL/implementing-regulations assessment is pending; DAT-01 alone is not a DPIA or proof of compliance. |
+| NDMO, [National Data Management and Personal Data Protection Standards](https://sdaia.gov.sa/ndmo/Files/Policies001.pdf) | Data governance and data-management requirement analysis | Candidate official source; edition, applicable provisions and evidence mappings still require verification. |
+| NCA, [Essential Cybersecurity Controls (ECC 2-2024)](https://nca.gov.sa/en/regulatory-documents/controls-list/ecc/) | Security governance and control applicability | Official controls page identified. Detailed SEC-01/INC-01 mappings and evidence sufficiency have not been assessed. |
+| DGA, [Governance and Compliance Policy](https://dga.gov.sa/sites/default/files/2022-08/%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9%20%D8%A7%D9%84%D8%AD%D9%88%D9%83%D9%85%D8%A9%20%D9%88%D8%A7%D9%84%D8%A7%D9%85%D8%AA%D8%AB%D8%A7%D9%84%20%20-%20%20V1.0.pdf) | Government digital-governance responsibilities and applicability | Official policy source identified. Current edition and detailed requirements need assessment before mapping. |
+
+These sources have different scopes and normative status. Listing a reference does not mean every provision applies or has been implemented. See the [transition gap analysis and access limitations](docs/saudi_transition_gap_analysis.md).
+
+### International conceptual references
+
 - NIST, [Artificial Intelligence Risk Management Framework (AI RMF 1.0)](https://www.nist.gov/itl/ai-risk-management-framework)
 - NIST, [AI RMF Playbook](https://airc.nist.gov/airmf-resources/playbook/)
 - NIST, [AI RMF Resource Center](https://airc.nist.gov/airmf-resources/)
