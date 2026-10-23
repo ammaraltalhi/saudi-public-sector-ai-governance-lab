@@ -998,7 +998,7 @@ def test_inc01_save_restart_load_hydration_navigation_and_readiness(tmp_path, mo
     assert incident_checkbox.value is True
     assert incident_checkbox.disabled is True
     assert any(
-        element.value == "Ready for Deployment Approval"
+        element.value == "Not Ready for Deployment Approval"
         for element in fresh_app.subheader
     )
     assert any(

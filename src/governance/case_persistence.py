@@ -8,6 +8,9 @@ import tempfile
 from uuid import UUID, uuid4
 
 from .risk import RISK_WEIGHTS, calculate_risk
+from .risk_register import validate_register
+from .risk_decisions import validate_decisions
+from .corrective_actions import validate_actions
 from .fairness_evaluation import FAIRNESS_EVALUATION_WIDGET_KEYS
 from .validation_evaluation import VALIDATION_EVALUATION_WIDGET_KEYS
 from .explainability_evidence import EXPLAINABILITY_WIDGET_KEYS
@@ -284,6 +287,24 @@ def validate_case_document(document):
         if any(type(group_value[field]) is not bool for field in fields):
             raise CasePersistenceError(f"Deployment readiness plan '{group}' values must be booleans.")
 
+    register_errors = validate_register(document.get("risk_register", []))
+    if register_errors:
+        raise CasePersistenceError("; ".join(register_errors))
+
+    action_errors = validate_actions(
+        document.get("corrective_actions", []),
+        {record["risk_id"] for record in document.get("risk_register", [])},
+    )
+    if action_errors:
+        raise CasePersistenceError("; ".join(action_errors))
+
+    decision_errors = validate_decisions(
+        document.get("risk_decisions", {}),
+        {record["risk_id"] for record in document.get("risk_register", [])},
+    )
+    if decision_errors:
+        raise CasePersistenceError("; ".join(decision_errors))
+
     expected_fields = {
         "schema_version",
         "case_id",
@@ -294,10 +315,7 @@ def validate_case_document(document):
         "control_evidence",
         "deployment_readiness_plans",
     }
-    if set(document) not in (
-        expected_fields,
-        expected_fields | {"sdaia_impact_assessments"},
-    ):
+    if not expected_fields <= set(document) or set(document) - expected_fields - {"sdaia_impact_assessments", "risk_register", "corrective_actions", "risk_decisions"}:
         raise CasePersistenceError("Case document contains missing or unsupported fields.")
     return document
 
@@ -316,6 +334,12 @@ def build_case_document(session_state, case_id=None, saved_at=None):
         "control_evidence": deepcopy(session_state.get("control_evidence", {})),
         "deployment_readiness_plans": deepcopy(plans),
     }
+    if "risk_register" in session_state:
+        document["risk_register"] = deepcopy(session_state["risk_register"])
+    if "corrective_actions" in session_state:
+        document["corrective_actions"] = deepcopy(session_state["corrective_actions"])
+    if "risk_decisions" in session_state:
+        document["risk_decisions"] = deepcopy(session_state["risk_decisions"])
     assessments = deepcopy(session_state.get("sdaia_impact_assessments", {}))
     invalid = deepcopy(session_state.get("_sdaia_impact_assessment_invalid", {}))
     if not isinstance(assessments, dict):
@@ -438,6 +462,9 @@ def restore_case(session_state, document):
         "_case_load_generation": str(uuid4()),
         "current_case_id": document["case_id"],
         "use_case": use_case,
+        "risk_register": deepcopy(document.get("risk_register", [])),
+        "risk_decisions": deepcopy(document.get("risk_decisions", {})),
+        "corrective_actions": deepcopy(document.get("corrective_actions", [])),
         "risk_answers": risk_answers,
         "control_evidence": evidence,
         "sdaia_impact_assessments": impact_assessments,

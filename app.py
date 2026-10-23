@@ -80,7 +80,11 @@ pages = {
     "Governance Lab": [
         st.Page("views/home.py", title="Overview"),
         st.Page("views/use_case.py", title="AI Use Case Intake"),
-        st.Page("views/risk_assessment.py", title="Risk Assessment"),
+        st.Page("views/risk_assessment.py", title="Risk Screening"),
+        st.Page("views/saudi_risk_method.py", title="Saudi National Risk Method"),
+        st.Page("views/risk_register.py", title="Risk Register & Treatment"),
+        st.Page("views/corrective_actions.py", title="Corrective Actions"),
+        st.Page("views/risk_decisions.py", title="Residual Risk Decisions"),
         st.Page("views/deployment_readiness.py", title="Deployment Readiness"),
         st.Page("views/raci.py", title="RACI Matrix"),
         st.Page("views/inventory.py", title="AI Inventory"),

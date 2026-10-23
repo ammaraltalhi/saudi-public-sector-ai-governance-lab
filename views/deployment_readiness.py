@@ -39,6 +39,7 @@ st.subheader("Current AI use case")
 st.write(f"**AI system name:** {use_case.get('name', 'Not specified')}")
 st.write(f"**Risk score:** {st.session_state.get('risk_score')}")
 st.write(f"**Governance tier:** {st.session_state.get('governance_tier')}")
+st.caption("These summary values are the illustrative screening score and tier, not national-framework per-risk ratings. Readiness does not automatically accept residual risk.")
 
 assessments = {
     row["Control ID"]: assess_control(
@@ -122,12 +123,27 @@ st.checkbox(
 st.subheader("Lifecycle")
 st.write("**RET-01:** Lifecycle / Not Due — Does not block initial deployment readiness.")
 
-readiness = evaluate_readiness(assessments, plans, has_complete_risk_answers(risk_answers))
+readiness = evaluate_readiness(
+    assessments, plans, has_complete_risk_answers(risk_answers),
+    st.session_state.get("corrective_actions", []),
+    st.session_state.get("risk_register", []),
+    st.session_state.get("risk_decisions", {}),
+    use_case,
+)
 st.subheader("Readiness summary")
 st.write(f"**Number of blocking controls:** {len(readiness['blocking_controls'])}")
 st.write(
     f"**Number of incomplete operational requirements:** "
     f"{readiness['incomplete_operational_requirements']}"
 )
+st.write(f"**Open blocking corrective actions:** {len(readiness['blocking_actions'])}")
+if readiness["blocking_actions"]:
+    st.warning("Resolve and verify these actions: " + ", ".join(readiness["blocking_actions"]))
+for error in readiness["action_errors"]:
+    st.error(error)
+st.caption("Action closure and readiness-impact choices are user-recorded attestations. They do not establish regulatory compliance or acceptance of residual risk.")
+st.subheader("Residual-risk review")
+for blocker in readiness["risk_review_blockers"]:
+    st.warning(blocker)
 st.subheader(readiness["status"])
 st.info("Final deployment approval remains a human governance decision.")

@@ -202,21 +202,21 @@ def test_dashboard_derives_operational_readiness_only_from_mon01_and_inc01():
     )
 
 
-def test_dashboard_shows_zero_blockers_for_complete_case_without_claiming_approval():
+def test_dashboard_complete_control_evidence_still_requires_national_risk_decision():
     app = render_dashboard(session_state(complete_case_evidence()))
     metrics = metric_values(app)
 
     assert int(metrics["Blocking controls"]) == 0
     assert int(metrics["Incomplete operational requirements"]) == 0
     assert any(
-        item.value == "Ready for Deployment Approval"
-        for item in app.success
+        item.value == "Not Ready for Deployment Approval"
+        for item in app.warning
     )
     assert not any(
         item.value == "Approved for Deployment"
         for item in (*app.success, *app.warning, *app.subheader)
     )
-    assert any(
+    assert not any(
         "No current governance-readiness blockers are identified."
         in item.value
         for item in app.success

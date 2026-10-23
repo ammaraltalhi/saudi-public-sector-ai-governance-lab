@@ -144,6 +144,7 @@ for column, label, value in zip(
         with st.container(border=True):
             st.metric(label, value)
 st.caption(f"Triggered risk factors: {triggered_factors}")
+st.caption("Risk Score and Governance Tier above refer only to the illustrative eight-factor screening. National matrix results are per-risk assessments in Risk Register & Treatment; they are not inferred from this screening score.")
 
 st.subheader("Deployment Readiness")
 readiness = (
@@ -151,6 +152,10 @@ readiness = (
         control_assessments,
         st.session_state.get("deployment_readiness_plans", {}),
         risk_answers_complete,
+        st.session_state.get("corrective_actions", []),
+        st.session_state.get("risk_register", []),
+        st.session_state.get("risk_decisions", {}),
+        use_case,
     )
     if risk_answers_complete
     else None
@@ -243,6 +248,10 @@ if risk_answers_complete:
                 "Incident response and escalation plan: complete, review, "
                 "and explicitly save INC-01."
             )
+    if readiness:
+        actions.extend(f"{action_id}: corrective action requires verified closure." for action_id in readiness["blocking_actions"])
+        actions.extend(readiness["action_errors"])
+        actions.extend(readiness["risk_review_blockers"])
     lifecycle = control_assessments.get("RET-01")
     if lifecycle and lifecycle["Applicability"] == "Lifecycle":
         lifecycle_actions.append(
@@ -260,6 +269,9 @@ elif (
     readiness is not None
     and not readiness["blocking_controls"]
     and readiness["incomplete_operational_requirements"] == 0
+    and not readiness["blocking_actions"]
+    and not readiness["action_errors"]
+    and not readiness["risk_review_blockers"]
 ):
     st.success(
         "No current governance-readiness blockers are identified. This is not "

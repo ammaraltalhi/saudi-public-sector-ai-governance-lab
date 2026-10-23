@@ -6,13 +6,13 @@ This Streamlit lab demonstrates how a governance team could organize intake, ill
 
 > **Synthetic use only.** Do not enter real citizen information, confidential organizational data or actual agency decisions. Cases are stored as local JSON without application-level encryption, authentication or access controls. Do not expose a shared or public writable instance.
 
-**Portfolio materials:** [Synthetic case study](docs/synthetic_case_study.md) · [Five-minute demo script](docs/demo_script.md) · [Interview talking points](docs/interview_talking_points.md) · [Portfolio summary](docs/portfolio_summary.md)
+**Portfolio materials:** [Synthetic case study](docs/synthetic_case_study.md) · [Five-minute demo script](docs/demo_script.md) · [Governance design decisions](docs/design_decisions.md) · [Portfolio summary](docs/portfolio_summary.md)
 
 ## 1. Project Overview and Purpose
 
 The lab provides a small, interactive Streamlit application for exploring AI governance responsibilities across a use case's lifecycle. It brings together context intake, illustrative risk screening, accountability roles, structured governance assessments, local case persistence and executive reporting.
 
-The NIST AI Risk Management Framework (AI RMF) is used as a conceptual reference for organising the prototype. The implementation does not claim conformity with NIST or any legal or regulatory framework.
+The Saudi National AI Risk Management Framework (SDAIA-P145 v1, April 2026) now provides the primary displayed risk workflow and an explicitly selected per-risk assessment method. Current operational references are Saudi; earlier international design inspiration is attributed separately in the design background. The eight-factor screening is still illustrative and is separate from national matrix assessments. The implementation does not claim complete national-framework conformity or legal compliance.
 
 ## 2. Scope and Prototype Disclaimer
 
@@ -49,7 +49,7 @@ The prototype includes separately documented impact assessments, structured FAI-
 
 - [Synthetic case study](docs/synthetic_case_study.md) — a fictional scenario and governance lifecycle.
 - [Five-minute demo script](docs/demo_script.md) — a local, synthetic-only interview walkthrough.
-- [Interview talking points](docs/interview_talking_points.md) — concise, truthful project positioning.
+- [Governance design decisions](docs/design_decisions.md) — assessment, evidence and decision controls.
 - [Portfolio summary](docs/portfolio_summary.md) — short project description.
 
 For a local walkthrough, use synthetic inputs and a private local environment. A recording can be used instead of hosting an interactive demo. **Do not host the current writable case workflow publicly:** local JSON storage has no authentication, role-based access or per-user isolation.
@@ -71,7 +71,7 @@ For a local walkthrough, use synthetic inputs and a private local environment. A
 │   ├── explainability_evidence.py # Optional TRN-01 explainability-record validation
 │   ├── sdaia_impact.py            # Impact-assessment field validation
 │   ├── risk.py                    # Illustrative risk heuristic
-│   ├── framework.py               # NIST AI RMF functions and case-study principles
+│   ├── saudi_risk_method.py       # National risk scales, categories and matrix
 │   └── constants.py               # Pre-deployment blocker identifiers
 ├── data/
 │   ├── controls.csv               # Control catalogue baseline
@@ -99,22 +99,15 @@ flowchart LR
     D --> V
 ```
 
-## 6. Conceptual Mapping to NIST AI RMF: GOVERN, MAP, MEASURE, MANAGE
+## 6. Saudi Reference Model
 
-The mapping below describes points of reference for the case study, not a formal NIST crosswalk or conformity assessment.
+The operational workflow follows SDAIA-P145 v1: context and scope, identification, assessment, treatment, monitoring and review. The supplied Arabic source's page-25 matrix determines national per-risk labels; pp. 14–16 establish reference pillars and pp. 26–27 describe treatment and residual-risk decisions. [Source-based comparison and remaining gaps](docs/saudi_national_framework_comparison.md).
 
-| NIST AI RMF function | Illustrative prototype relationship |
-|---|---|
-| **GOVERN** | RACI roles, named owners and reviewers, control catalogue, documentation and human oversight |
-| **MAP** | Use-case purpose, intended users, affected people, data, AI role and potential impact |
-| **MEASURE** | Illustrative risk screening and structured fairness, privacy, security and validation-planning records |
-| **MANAGE** | Readiness blockers, monitoring and incident-response plans, escalation considerations and lifecycle control |
-
-The app does not implement a formal NIST AI RMF subcategory mapping. The relationship is conceptual and should not be interpreted as evidence of framework alignment or compliance.
+Control IDs are internal project identifiers. Other Saudi sources require separate applicability and evidence assessment; listing them does not establish implementation or compliance. Earlier conceptual inspiration is recorded in [design background and attribution](docs/design_background.md).
 
 ### SDAIA AI Ethics Principles crosswalk
 
-The read-only **SDAIA Framework Alignment** page presents a version-controlled analytical mapping from SDAIA's seven AI Ethics Principles to relevant existing control IDs, documented coverage, known evidence gaps, and references to the official *AI Ethics Principles* document. Annexure C checklist IDs are included only where checked against the cited SDAIA PDF. This is a supplementary crosswalk; the existing NIST AI RMF conceptual organization remains unchanged.
+The read-only **SDAIA Framework Alignment** page presents a version-controlled analytical mapping from SDAIA's seven AI Ethics Principles to relevant existing control IDs, documented coverage, known evidence gaps, and references to the official *AI Ethics Principles* document. Annexure C checklist IDs are included only where checked against the cited SDAIA PDF. This ethics crosswalk remains supplementary to the national risk workflow. It does not establish a complete regulatory mapping.
 
 The crosswalk describes documentation coverage, not proof of implementation or effectiveness. It is not an SDAIA score, certification, official conformity assessment, legal compliance determination, or deployment approval. It does not change risk scoring, control evidence statuses, or deployment-readiness decisions. See [`data/sdaia_alignment.json`](data/sdaia_alignment.json) and the [official SDAIA AI Ethics Principles](https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf).
 
@@ -122,7 +115,7 @@ The crosswalk describes documentation coverage, not proof of implementation or e
 
 The **SDAIA Impact Assessment** page provides separate, explicitly saved documentation forms for the Humanity and Social & Environmental Benefits principles. They capture affected stakeholders, potential effects and harms, oversight or remedy, intended benefits, environmental applicability and rationale, proposed indicators, follow-up, evidence references/type/limitations, owner, reviewer, review date, and Draft/Reviewed status. A Reviewed record requires the applicable fields; blank and obvious placeholder-only values are rejected, but this is not a semantic assessment of governance quality. An incomplete Draft may still be saved and remains documentation only.
 
-Saved assessments are stored in the case JSON as the optional `sdaia_impact_assessments` property. Existing schema-version-1 cases without this property remain loadable and restore with no impact assessments. Invalid optional assessment entries are preserved as source data but excluded from canonical documentation status; the alignment view labels them Invalid, while valid case data and other valid assessments remain available. Evidence type is user-entered and not verified; Planned activities must not be described as performed or operational. The feature adds no SDAIA control ID or deployment-readiness requirement and does not change risk scoring, control statuses, NIST organization, or case schema version. This workflow is illustrative, not SDAIA conformity or proof of implementation. Use synthetic information only: **do not enter real citizen personal data, confidential details, or actual incident records.**
+Saved assessments are stored in the case JSON as the optional `sdaia_impact_assessments` property. Existing schema-version-1 cases without this property remain loadable and restore with no impact assessments. Invalid optional assessment entries are preserved as source data but excluded from canonical documentation status; the alignment view labels them Invalid, while valid case data and other valid assessments remain available. Evidence type is user-entered and not verified; Planned activities must not be described as performed or operational. The feature adds no SDAIA control ID or deployment-readiness requirement and does not change risk scoring, control statuses, the primary workflow, or case schema version. This workflow is illustrative, not SDAIA conformity or proof of implementation. Use synthetic information only: **do not enter real citizen personal data, confidential details, or actual incident records.**
 
 ### FAI-01 Fairness Metrics & Evaluation Documentation
 
@@ -140,7 +133,7 @@ The nested record also captures limitations, outstanding actions, owner, reviewe
 
 The Control Library includes an optional, separately saved `explainability_evidence` subsection nested in the existing `control_evidence["TRN-01"]` record. It captures Planned or Performed documentation, explanation method and intended audiences, synthetic decision-level examples with stable IDs and evidence references, human-review and challenge/correction approaches, and separate accessibility/usefulness review rows. Planned documentation cannot include performed examples or completed review findings. A Performed example does not imply an accessibility or usefulness review. Draft/Reviewed records only the documentation status.
 
-Example and review rows are entered through labeled add/remove controls, not JSON. Required completed-evidence fields reject common placeholder-only values (including punctuation and pending/later variants) without rejecting substantive narrative that mentions pending work. Invalid or duplicate persisted row IDs are shown as repair warnings, retained in the unsaved form, and block saving until the affected row is explicitly removed and re-added; other rows use separate UI-only keys and retain their values. Evidence references are user-reported and are not independently authenticated. The prototype does not generate or technically verify an explanation, prove traceability or correctness, or establish that an audience understood or found an explanation accessible or useful. It does not create a second TRN-01 control or change base TRN-01 Available/Pending rules, case schema version 1, risk scoring, applicability, NIST organization, or deployment readiness. Schema-v1 cases without the optional extension remain compatible; malformed nested records are retained and shown as Invalid. Save the subsection explicitly; saving the base TRN-01 form preserves the nested value, including null or malformed legacy data. Use synthetic examples only—never enter citizen identifiers, confidential information, or actual agency decisions. The extension is documentation support, not evidence of SDAIA compliance, certification, or approval.
+Example and review rows are entered through labeled add/remove controls, not JSON. Required completed-evidence fields reject common placeholder-only values (including punctuation and pending/later variants) without rejecting substantive narrative that mentions pending work. Invalid or duplicate persisted row IDs are shown as repair warnings, retained in the unsaved form, and block saving until the affected row is explicitly removed and re-added; other rows use separate UI-only keys and retain their values. Evidence references are user-reported and are not independently authenticated. The prototype does not generate or technically verify an explanation, prove traceability or correctness, or establish that an audience understood or found an explanation accessible or useful. It does not create a second TRN-01 control or change base TRN-01 Available/Pending rules, case schema version 1, risk scoring, applicability, the primary workflow, or deployment readiness. Schema-v1 cases without the optional extension remain compatible; malformed nested records are retained and shown as Invalid. Save the subsection explicitly; saving the base TRN-01 form preserves the nested value, including null or malformed legacy data. Use synthetic examples only—never enter citizen identifiers, confidential information, or actual agency decisions. The extension is documentation support, not evidence of SDAIA compliance, certification, or approval.
 
 ## 7. Governance Control Library
 
@@ -246,22 +239,50 @@ For a timed interview walkthrough, use [`docs/demo_script.md`](docs/demo_script.
 
 Suggested portfolio description:
 
-> Designed a self-directed AI governance prototype for a simulated public-sector use case, translating governance concepts into use-case intake, illustrative risk screening, accountability roles, structured control documentation, local case persistence and evidence-derived readiness reporting, with NIST AI RMF used as a conceptual reference.
+> Designed a self-directed AI governance prototype for a simulated public-sector use case, translating governance concepts into use-case intake, illustrative risk screening, accountability roles, structured control documentation, local case persistence and evidence-derived readiness reporting, with a source-referenced Saudi national risk matrix, corrective-action tracking and documented residual-risk review.
 
 ## 13. Known Limitations and Future Improvements
 
-- The risk score is an illustrative eight-factor weighted heuristic defined in `src/governance/risk.py`. NIST AI RMF does not prescribe it, and it is not an official NIST, Saudi government or SDAIA risk score.
+- The screening score is an illustrative eight-factor weighted heuristic defined in `src/governance/risk.py`. It is separate from the national per-risk matrix and is not an official Saudi government or SDAIA risk score.
 - Use-case and assessment content is illustrative and user-entered. The repository does not establish factual performance, model behavior, dataset quality, fairness outcomes, security posture or operational effectiveness.
 - There is no deployed AI model, production integration, live monitoring, tested incident-response operation, formal validation program, authentication, role-based access control or centralized evidence store.
 - Readiness is a prototype workflow output, not legal or regulatory conformity, certification, risk acceptance or deployment approval.
 - Case files are local JSON; RACI edits are not persisted, and inventory/RACI CSVs are baselines rather than controlled registries.
-- The NIST AI RMF relationship is conceptual, not a formal subcategory crosswalk.
+- Historical conceptual sources are attributed in the design background; the current operational reference model is Saudi.
 
 Potential future work includes controlled multi-user storage and access, versioned and auditable evidence records, configurable organization-approved risk methods, evidence provenance, and a formally reviewed mapping to applicable organizational and regulatory requirements. These are future possibilities, not implemented features.
 
 ## 14. Official References
 
-- NIST, [Artificial Intelligence Risk Management Framework (AI RMF 1.0)](https://www.nist.gov/itl/ai-risk-management-framework)
-- NIST, [AI RMF Playbook](https://airc.nist.gov/airmf-resources/playbook/)
-- NIST, [AI RMF Resource Center](https://airc.nist.gov/airmf-resources/)
-- OECD, [OECD AI Principles](https://www.oecd.org/en/topics/ai-principles.html)
+### Saudi references used in the current implementation
+
+- SDAIA, [AI Ethics Principles](https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf), SDAIA-P114E, version 1, May 2025. The existing analytical mapping records principle, printed-page and Annexure C references in [`data/sdaia_alignment.json`](data/sdaia_alignment.json). Mapping documents coverage and gaps; it does not establish conformity.
+
+### Saudi official reference register — source-specific verification status
+
+| Official source | Purpose in the planned Saudi transition | Verification / implementation status |
+| --- | --- | --- |
+| SDAIA, [National AI Risk Management Framework — Arabic publication](https://sdaia.gov.sa/ar/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryAr.pdf) and [English executive summary](https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryEn.pdf) | Target reference for risk context, assessment, treatment and review | The user-supplied 48-page Arabic PDF enabled review of pp. 6–8, 13–20, 22–29 and metadata p. 48. Page-25 matrix and pp. 22–24 scale definitions are verified. Explicit national-method records use that matrix; legacy records and eight-factor screening remain illustrative. See the [source-based comparison](docs/saudi_national_framework_comparison.md); full-framework implementation is incomplete. |
+| Saudi Press Agency, [official national-framework launch announcement](https://www.spa.gov.sa/en/N2633781), 14 July 2026 | Official confirmation and high-level description of the framework | Announcement consulted; it is not a substitute for reading the framework. |
+| SDAIA, [PDPL Implementing Regulations](https://dgp.sdaia.gov.sa/wps/portal/pdp/knowledgecenter/details/PDPL2) | Privacy impact assessment and processing-record requirements for applicability analysis | Source identified, including Articles 25 and 33. A complete PDPL/implementing-regulations assessment is pending; DAT-01 alone is not a DPIA or proof of compliance. |
+| NDMO, [National Data Management and Personal Data Protection Standards](https://sdaia.gov.sa/ndmo/Files/Policies001.pdf) | Data governance and data-management requirement analysis | Candidate official source; edition, applicable provisions and evidence mappings still require verification. |
+| NCA, [Essential Cybersecurity Controls (ECC 2-2024)](https://nca.gov.sa/en/regulatory-documents/controls-list/ecc/) | Security governance and control applicability | Official controls page identified. Detailed SEC-01/INC-01 mappings and evidence sufficiency have not been assessed. |
+| DGA, [Governance and Compliance Policy](https://dga.gov.sa/sites/default/files/2022-08/%D8%B3%D9%8A%D8%A7%D8%B3%D8%A9%20%D8%A7%D9%84%D8%AD%D9%88%D9%83%D9%85%D8%A9%20%D9%88%D8%A7%D9%84%D8%A7%D9%85%D8%AA%D8%AB%D8%A7%D9%84%20%20-%20%20V1.0.pdf) | Government digital-governance responsibilities and applicability | Official policy source identified. Current edition and detailed requirements need assessment before mapping. |
+
+These sources have different scopes and normative status. Listing a reference does not mean every provision applies or has been implemented. See the [transition gap analysis and access limitations](docs/saudi_transition_gap_analysis.md).
+
+## Case-linked risk register (first Saudi transition increment)
+
+The **Risk Register & Treatment** page documents individual risks, treatment owners and dates, methodology-labelled inherent/residual scores, and user-recorded closure attestations. Save Case persists the register; legacy cases load with an empty register. The risk register alone does not change deployment readiness; linked corrective actions can now block readiness until closed. Records explicitly saved with SDAIA-P145-v1-2026 use the verified page-25 matrix and source scale labels; records without the marker remain illustrative. See [transition gap analysis](docs/saudi_transition_gap_analysis.md) for scope, sources and next steps.
+
+### Corrective actions and verification
+
+The **Corrective Actions** page links findings to a risk and/or control, tracks ownership, plan and due date, and records whether the finding blocks readiness and why. Closure requires evidence, reviewer, date and verification notes. Open blocking findings appear in deployment readiness and the executive dashboard; invalid action records also prevent readiness. Save Case persists actions and JSON export provides a case-specific action report. Closure is a user-recorded attestation, not independently verified sign-off or approval of residual risk. See the [synthetic walkthrough](docs/saudi_transition_gap_analysis.md#synthetic-walkthrough).
+
+### Verified national assessment method
+
+The **Saudi National Risk Method** page presents source-defined workflow, categories, treatments, scales and the matrix. **Risk Register & Treatment** defaults new records to `SDAIA-P145-v1-2026`, requires category, assessment horizon, evidence and rating rationales, and distinguishes planned residual estimates from user-reported post-treatment reassessment. Existing illustrative records are not automatically migrated. [Detailed comparison, source pages and remaining gaps](docs/saudi_national_framework_comparison.md) · [source metadata](data/saudi_risk_source.json).
+
+### Residual-risk decision gate
+
+The **Residual Risk Decisions** page records the decision-maker/authority, approved tolerance reference, rationale, evidence, decision date and next review. Application readiness requires national per-risk records, user-reported post-treatment reassessment, current acceptance records and no blocking corrective actions. Empty registers, illustrative legacy records, planned-only residual values, unresolved escalation/rejection and stale or expired decisions block readiness. Risk/context fingerprints invalidate outdated review records without deleting them. Closure and acceptance remain user attestations, not authenticated sign-off or complete framework conformity.
