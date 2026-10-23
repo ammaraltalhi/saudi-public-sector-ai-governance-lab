@@ -151,6 +151,7 @@ readiness = (
         control_assessments,
         st.session_state.get("deployment_readiness_plans", {}),
         risk_answers_complete,
+        st.session_state.get("corrective_actions", []),
     )
     if risk_answers_complete
     else None
@@ -243,6 +244,9 @@ if risk_answers_complete:
                 "Incident response and escalation plan: complete, review, "
                 "and explicitly save INC-01."
             )
+    if readiness:
+        actions.extend(f"{action_id}: corrective action requires verified closure." for action_id in readiness["blocking_actions"])
+        actions.extend(readiness["action_errors"])
     lifecycle = control_assessments.get("RET-01")
     if lifecycle and lifecycle["Applicability"] == "Lifecycle":
         lifecycle_actions.append(
@@ -260,6 +264,8 @@ elif (
     readiness is not None
     and not readiness["blocking_controls"]
     and readiness["incomplete_operational_requirements"] == 0
+    and not readiness["blocking_actions"]
+    and not readiness["action_errors"]
 ):
     st.success(
         "No current governance-readiness blockers are identified. This is not "

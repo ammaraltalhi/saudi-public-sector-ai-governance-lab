@@ -82,6 +82,7 @@ pages = {
         st.Page("views/use_case.py", title="AI Use Case Intake"),
         st.Page("views/risk_assessment.py", title="Risk Screening"),
         st.Page("views/risk_register.py", title="Risk Register & Treatment"),
+        st.Page("views/corrective_actions.py", title="Corrective Actions"),
         st.Page("views/deployment_readiness.py", title="Deployment Readiness"),
         st.Page("views/raci.py", title="RACI Matrix"),
         st.Page("views/inventory.py", title="AI Inventory"),

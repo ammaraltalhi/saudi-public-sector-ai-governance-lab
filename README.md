@@ -268,4 +268,8 @@ Potential future work includes controlled multi-user storage and access, version
 
 ## Case-linked risk register (first Saudi transition increment)
 
-The **Risk Register & Treatment** page documents individual risks, treatment owners and dates, illustrative inherent/residual scores, and evidence-based closure attestations. Save Case persists the register; legacy cases load with an empty register. This optional register does not yet change deployment readiness. Its 1–4 scales are illustrative, not a verified implementation of SDAIA scoring. See [transition gap analysis](docs/saudi_transition_gap_analysis.md) for scope, sources and next steps.
+The **Risk Register & Treatment** page documents individual risks, treatment owners and dates, illustrative inherent/residual scores, and evidence-based closure attestations. Save Case persists the register; legacy cases load with an empty register. The risk register alone does not change deployment readiness; linked corrective actions can now block readiness until closed. Its 1–4 scales are illustrative, not a verified implementation of SDAIA scoring. See [transition gap analysis](docs/saudi_transition_gap_analysis.md) for scope, sources and next steps.
+
+### Corrective actions and verification
+
+The **Corrective Actions** page links findings to a risk and/or control, tracks ownership, plan and due date, and records whether the finding blocks readiness and why. Closure requires evidence, reviewer, date and verification notes. Open blocking findings appear in deployment readiness and the executive dashboard; invalid action records also prevent readiness. Save Case persists actions and JSON export provides a case-specific action report. Closure is a user-recorded attestation, not independently verified sign-off or approval of residual risk. See the [synthetic walkthrough](docs/saudi_transition_gap_analysis.md#synthetic-walkthrough).

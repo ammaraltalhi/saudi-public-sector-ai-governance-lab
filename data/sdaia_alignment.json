@@ -45,21 +45,21 @@
         "printed_pages": [18, 19],
         "annexure_c": ["PD.14", "PD.15", "PID.11", "PID.12", "BV.13", "DM.20"]
       },
-      "coverage": "Intake records affected people, potential impact, AI role, and oversight. TRN-01 and VAL-01 describe oversight, while INC-01 includes human review and correction of affected decisions.",
-      "gaps": "There is no dedicated assessment of fundamental rights, KSA cultural values, freedom of choice, or documented impact and remedy analysis.",
+      "coverage": "Intake records affected people, potential impact, AI role, and oversight. TRN-01 and VAL-01 describe oversight, while INC-01 includes human review and correction of affected decisions. A dedicated optional Humanity assessment records adverse outcomes, dignity/rights/choice/accessibility/cultural considerations, oversight/remedy mechanisms, indicators, evidence limitations, owner and review fields; it distinguishes planned, performed and operational user-entered evidence types.",
+      "gaps": "Dedicated documentary prompts exist, but substantive rights and cultural-impact analysis, effectiveness of remedy mechanisms and operational human intervention remain unverified. These records are not an independent assessment.",
       "limitations": "Human-oversight descriptions are proposed governance documentation; they do not demonstrate effective human intervention in an operating system."
     },
     {
       "name": "Social & Environmental Benefits",
       "controls": ["MAP-01", "FAI-01", "MON-01"],
-      "rationale": "Purpose, affected people, fairness considerations, and planned monitoring can help frame social impacts, but the existing control set does not provide a dedicated social/environmental assessment.",
+      "rationale": "Intake and related controls frame impacts; a separate optional social/environmental assessment provides dedicated documentary prompts.",
       "references": {
         "principle": "Principle 4",
         "printed_pages": [19, 20],
         "annexure_c": ["PID.13", "BV.10", "DM.13"]
       },
-      "coverage": "Use-case intake captures intended purpose, affected people, and potential impact; FAI-01 and MON-01 provide limited places to describe impacts on affected groups.",
-      "gaps": "No explicit social or environmental benefit/harm assessment, sustainability indicators, resource or energy measures, or rationale for non-applicability is collected.",
+      "coverage": "Use-case intake captures intended purpose, affected people, and potential impact; FAI-01 and MON-01 provide limited places to describe impacts on affected groups. The dedicated optional assessment records intended benefits, social harms and mitigations, impact indicators, follow-up responsibilities, environmental applicability, resource impacts or a non-applicability justification, and evidence/review limitations.",
+      "gaps": "The assessment stores user-entered documentation; independently measured benefits, environmental resource consumption, indicator outcomes and mitigation effectiveness are not verified.",
       "limitations": "The mapping does not assert that the example use case produces social benefits or has been assessed for environmental impact."
     },
     {

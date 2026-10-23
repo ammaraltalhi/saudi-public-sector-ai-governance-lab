@@ -122,12 +122,21 @@ st.checkbox(
 st.subheader("Lifecycle")
 st.write("**RET-01:** Lifecycle / Not Due — Does not block initial deployment readiness.")
 
-readiness = evaluate_readiness(assessments, plans, has_complete_risk_answers(risk_answers))
+readiness = evaluate_readiness(
+    assessments, plans, has_complete_risk_answers(risk_answers),
+    st.session_state.get("corrective_actions", []),
+)
 st.subheader("Readiness summary")
 st.write(f"**Number of blocking controls:** {len(readiness['blocking_controls'])}")
 st.write(
     f"**Number of incomplete operational requirements:** "
     f"{readiness['incomplete_operational_requirements']}"
 )
+st.write(f"**Open blocking corrective actions:** {len(readiness['blocking_actions'])}")
+if readiness["blocking_actions"]:
+    st.warning("Resolve and verify these actions: " + ", ".join(readiness["blocking_actions"]))
+for error in readiness["action_errors"]:
+    st.error(error)
+st.caption("Action closure and readiness-impact choices are user-recorded attestations. They do not establish regulatory compliance or acceptance of residual risk.")
 st.subheader(readiness["status"])
 st.info("Final deployment approval remains a human governance decision.")
