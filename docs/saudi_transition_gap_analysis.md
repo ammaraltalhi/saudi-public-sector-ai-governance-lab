@@ -5,13 +5,13 @@ This is a developer gap analysis, not a completed regulatory assessment. The exi
 | Area | Baseline | Change / next evidence |
 | --- | --- | --- |
 | Risk method | Eight weighted screening flags | Keep screening separate; add individual risk records, causes, consequences, owner, treatment, dates and residual estimates |
-| Saudi references | SDAIA AI Ethics crosswalk | Verify full national framework and applicable PDPL/NDMO/NCA/DGA provisions before adding clause-level mappings |
+| Saudi references | SDAIA AI Ethics crosswalk | National matrix/scales now checked against supplied PDF; see the source-based comparison. PDPL/NDMO/NCA/DGA applicability and detailed mappings remain pending |
 | Evidence | Reviewed forms and supplementary planned/performed records | Add substantive acceptance decisions and corrective-action verification |
 | Readiness | Evidence availability and operational plans | Open corrective actions marked as blockers now prevent readiness; residual-risk acceptance decisions remain future work |
 | Responsibility | RACI editor is not saved | Future change: persist case-specific ownership |
 | Privacy | DAT-01 documentation | Future change: processing records and impact-assessment applicability, followed by a documented assessment where relevant |
 
-## First increment
+## First increment (historical baseline)
 
 A case-linked register records individual risks and treatment plans. Closure requires an evidence reference, reviewer and review date. These are user attestations, not authentication or independent verification. A 1–4 illustrative likelihood/impact scale generates products without regulatory tier labels. No claim is made that these values reproduce SDAIA's matrix. Closed treatment records do not imply formal acceptance of residual risk.
 
@@ -35,7 +35,7 @@ The export contains the case name, report date, action records and open/overdue/
 
 The Humanity and Social & Environmental Benefits crosswalk descriptions were corrected to acknowledge the dedicated assessment forms already present. No official checklist IDs or page references were added or changed.
 
-### National framework source status
+### National framework source status (superseded by supplied PDF)
 
 The official Arabic publication was located at https://sdaia.gov.sa/ar/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryAr.pdf and its English summary at https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryEn.pdf. Direct reading/download was blocked during this increment. Neither document's full text, scale definitions nor matrix bands were verified. The project retains illustrative scales and does not claim national-framework conformity. Clause-level comparison remains pending full-text access.
 
@@ -48,3 +48,7 @@ The official Arabic publication was located at https://sdaia.gov.sa/ar/MediaCent
 5. Record a synthetic evidence reference, reviewer, review date and specific verification findings; save Closed.
 6. Confirm that the action blocker clears in both readiness and dashboard. Other missing control evidence continues to block readiness.
 7. Reopen the action: the blocker returns. Save Case, reload and export the corrective-action report.
+
+## Third increment: source-verified national assessment
+
+The supplied 48-page Arabic PDF resolved the previous direct-access limitation. Source metadata, page references, a gap comparison, national-method UI and per-risk methodology markers are now implemented; see [verified comparison](saudi_national_framework_comparison.md). The original access-failure notes above describe the earlier increment only. Existing illustrative records and the eight-factor screening retain their original meaning. The national method implements selected components, not full-framework conformity, regulatory applicability or residual-risk approval.

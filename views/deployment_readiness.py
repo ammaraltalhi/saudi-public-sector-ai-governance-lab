@@ -39,6 +39,7 @@ st.subheader("Current AI use case")
 st.write(f"**AI system name:** {use_case.get('name', 'Not specified')}")
 st.write(f"**Risk score:** {st.session_state.get('risk_score')}")
 st.write(f"**Governance tier:** {st.session_state.get('governance_tier')}")
+st.caption("These summary values are the illustrative screening score and tier, not national-framework per-risk ratings. Readiness does not automatically accept residual risk.")
 
 assessments = {
     row["Control ID"]: assess_control(

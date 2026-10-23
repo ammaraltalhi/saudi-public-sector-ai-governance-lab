@@ -1,0 +1,115 @@
+{
+  "title_ar": "الإطار الوطني لإدارة مخاطر الذكاء الاصطناعي",
+  "publisher": "SDAIA",
+  "document_number": "SDAIA-P145",
+  "version": "1",
+  "document_date": "April 2026",
+  "source_url": "https://sdaia.gov.sa/ar/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryAr.pdf",
+  "verification_basis": "User-supplied Arabic PDF; text extraction and visual inspection of the matrix",
+  "sha256": "2fbc97593406f59f295aa608c84181221887529739af0be8583134a81e3d3c76",
+  "page_count": 48,
+  "printed_page_offset": 0,
+  "reviewed_sections": {
+    "scope": [
+      6,
+      7,
+      8
+    ],
+    "structure_and_pillars": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "context": [
+      17
+    ],
+    "identification": [
+      18,
+      19,
+      20
+    ],
+    "assessment": [
+      22,
+      23,
+      24,
+      25
+    ],
+    "treatment": [
+      26,
+      27
+    ],
+    "monitoring": [
+      28,
+      29
+    ],
+    "metadata": [
+      48
+    ]
+  },
+  "verified_matrix": {
+    "likelihood": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "impact": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rows_likelihood_1_to_4": [
+      [
+        1,
+        2,
+        3,
+        4
+      ],
+      [
+        2,
+        4,
+        6,
+        8
+      ],
+      [
+        3,
+        6,
+        9,
+        12
+      ],
+      [
+        4,
+        8,
+        12,
+        16
+      ]
+    ],
+    "bands": {
+      "Low": [
+        1,
+        2
+      ],
+      "Medium": [
+        3,
+        4,
+        6
+      ],
+      "High": [
+        8,
+        9,
+        12
+      ],
+      "Catastrophic": [
+        16
+      ]
+    },
+    "printed_page": 25
+  },
+  "limitations": [
+    "Implementation of selected scoring and documentation components, not framework-wide conformity.",
+    "English wording is a project translation; Arabic source controls interpretation.",
+    "Ratings and evidence remain user-entered; no automated risk acceptance."
+  ]
+}

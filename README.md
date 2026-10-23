@@ -12,7 +12,7 @@ This Streamlit lab demonstrates how a governance team could organize intake, ill
 
 The lab provides a small, interactive Streamlit application for exploring AI governance responsibilities across a use case's lifecycle. It brings together context intake, illustrative risk screening, accountability roles, structured governance assessments, local case persistence and executive reporting.
 
-The NIST AI Risk Management Framework (AI RMF) is used as a conceptual reference for organising the prototype. The implementation does not claim conformity with NIST or any legal or regulatory framework.
+The Saudi National AI Risk Management Framework (SDAIA-P145 v1, April 2026) now provides the primary displayed risk workflow and an explicitly selected per-risk assessment method. NIST AI RMF remains a complementary conceptual reference. The eight-factor screening is still illustrative and is separate from national matrix assessments. The implementation does not claim conformity with NIST or any legal or regulatory framework.
 
 ## 2. Scope and Prototype Disclaimer
 
@@ -114,7 +114,7 @@ The app does not implement a formal NIST AI RMF subcategory mapping. The relatio
 
 ### SDAIA AI Ethics Principles crosswalk
 
-The read-only **SDAIA Framework Alignment** page presents a version-controlled analytical mapping from SDAIA's seven AI Ethics Principles to relevant existing control IDs, documented coverage, known evidence gaps, and references to the official *AI Ethics Principles* document. Annexure C checklist IDs are included only where checked against the cited SDAIA PDF. This is a supplementary crosswalk; the existing NIST AI RMF conceptual organization remains unchanged.
+The read-only **SDAIA Framework Alignment** page presents a version-controlled analytical mapping from SDAIA's seven AI Ethics Principles to relevant existing control IDs, documented coverage, known evidence gaps, and references to the official *AI Ethics Principles* document. Annexure C checklist IDs are included only where checked against the cited SDAIA PDF. This ethics crosswalk remains supplementary to the national risk workflow. It does not establish a complete regulatory mapping.
 
 The crosswalk describes documentation coverage, not proof of implementation or effectiveness. It is not an SDAIA score, certification, official conformity assessment, legal compliance determination, or deployment approval. It does not change risk scoring, control evidence statuses, or deployment-readiness decisions. See [`data/sdaia_alignment.json`](data/sdaia_alignment.json) and the [official SDAIA AI Ethics Principles](https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf).
 
@@ -261,15 +261,15 @@ Potential future work includes controlled multi-user storage and access, version
 
 ## 14. Official References
 
-### Saudi reference used in the current crosswalk
+### Saudi references used in the current implementation
 
 - SDAIA, [AI Ethics Principles](https://sdaia.gov.sa/en/SDAIA/about/Documents/ai-principles.pdf), SDAIA-P114E, version 1, May 2025. The existing analytical mapping records principle, printed-page and Annexure C references in [`data/sdaia_alignment.json`](data/sdaia_alignment.json). Mapping documents coverage and gaps; it does not establish conformity.
 
-### Saudi transition references — detailed applicability and mapping pending
+### Saudi official reference register — source-specific verification status
 
 | Official source | Purpose in the planned Saudi transition | Verification / implementation status |
 | --- | --- | --- |
-| SDAIA, [National AI Risk Management Framework — Arabic publication](https://sdaia.gov.sa/ar/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryAr.pdf) and [English executive summary](https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryEn.pdf) | Target reference for risk context, assessment, treatment and review | Official publication links located. Direct full-text access failed during this work. Scale definitions, matrix bands and clause-level mappings are not yet verified; current app scales remain illustrative. |
+| SDAIA, [National AI Risk Management Framework — Arabic publication](https://sdaia.gov.sa/ar/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryAr.pdf) and [English executive summary](https://sdaia.gov.sa/en/MediaCenter/KnowledgeCenter/ResearchLibrary/ExecutiveSummaryEn.pdf) | Target reference for risk context, assessment, treatment and review | The user-supplied 48-page Arabic PDF enabled review of pp. 6–8, 13–20, 22–29 and metadata p. 48. Page-25 matrix and pp. 22–24 scale definitions are verified. Explicit national-method records use that matrix; legacy records and eight-factor screening remain illustrative. See the [source-based comparison](docs/saudi_national_framework_comparison.md); full-framework implementation is incomplete. |
 | Saudi Press Agency, [official national-framework launch announcement](https://www.spa.gov.sa/en/N2633781), 14 July 2026 | Official confirmation and high-level description of the framework | Announcement consulted; it is not a substitute for reading the framework. |
 | SDAIA, [PDPL Implementing Regulations](https://dgp.sdaia.gov.sa/wps/portal/pdp/knowledgecenter/details/PDPL2) | Privacy impact assessment and processing-record requirements for applicability analysis | Source identified, including Articles 25 and 33. A complete PDPL/implementing-regulations assessment is pending; DAT-01 alone is not a DPIA or proof of compliance. |
 | NDMO, [National Data Management and Personal Data Protection Standards](https://sdaia.gov.sa/ndmo/Files/Policies001.pdf) | Data governance and data-management requirement analysis | Candidate official source; edition, applicable provisions and evidence mappings still require verification. |
@@ -287,8 +287,12 @@ These sources have different scopes and normative status. Listing a reference do
 
 ## Case-linked risk register (first Saudi transition increment)
 
-The **Risk Register & Treatment** page documents individual risks, treatment owners and dates, illustrative inherent/residual scores, and evidence-based closure attestations. Save Case persists the register; legacy cases load with an empty register. The risk register alone does not change deployment readiness; linked corrective actions can now block readiness until closed. Its 1–4 scales are illustrative, not a verified implementation of SDAIA scoring. See [transition gap analysis](docs/saudi_transition_gap_analysis.md) for scope, sources and next steps.
+The **Risk Register & Treatment** page documents individual risks, treatment owners and dates, methodology-labelled inherent/residual scores, and user-recorded closure attestations. Save Case persists the register; legacy cases load with an empty register. The risk register alone does not change deployment readiness; linked corrective actions can now block readiness until closed. Records explicitly saved with SDAIA-P145-v1-2026 use the verified page-25 matrix and source scale labels; records without the marker remain illustrative. See [transition gap analysis](docs/saudi_transition_gap_analysis.md) for scope, sources and next steps.
 
 ### Corrective actions and verification
 
 The **Corrective Actions** page links findings to a risk and/or control, tracks ownership, plan and due date, and records whether the finding blocks readiness and why. Closure requires evidence, reviewer, date and verification notes. Open blocking findings appear in deployment readiness and the executive dashboard; invalid action records also prevent readiness. Save Case persists actions and JSON export provides a case-specific action report. Closure is a user-recorded attestation, not independently verified sign-off or approval of residual risk. See the [synthetic walkthrough](docs/saudi_transition_gap_analysis.md#synthetic-walkthrough).
+
+### Verified national assessment method
+
+The **Saudi National Risk Method** page presents source-defined workflow, categories, treatments, scales and the matrix. **Risk Register & Treatment** defaults new records to `SDAIA-P145-v1-2026`, requires category, assessment horizon, evidence and rating rationales, and distinguishes planned residual estimates from user-reported post-treatment reassessment. Existing illustrative records are not automatically migrated. [Detailed comparison, source pages and remaining gaps](docs/saudi_national_framework_comparison.md) · [source metadata](data/saudi_risk_source.json).

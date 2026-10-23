@@ -52,6 +52,7 @@ def test_register_page_save_and_export():
     app.session_state['use_case'] = {'name': 'Synthetic intake'}
     app.run()
     assert not app.exception
+    next(field for field in app.selectbox if field.label == "Assessment method").set_value("Illustrative (legacy)").run()
     values = record()
     for field in app.text_area:
         name = field.label.lower().replace(' ', '_')

@@ -144,6 +144,7 @@ for column, label, value in zip(
         with st.container(border=True):
             st.metric(label, value)
 st.caption(f"Triggered risk factors: {triggered_factors}")
+st.caption("Risk Score and Governance Tier above refer only to the illustrative eight-factor screening. National matrix results are per-risk assessments in Risk Register & Treatment; they are not inferred from this screening score.")
 
 st.subheader("Deployment Readiness")
 readiness = (

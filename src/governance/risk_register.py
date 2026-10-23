@@ -1,5 +1,6 @@
-"""Portfolio risk records. Scores are illustrative, not an official SDAIA scale."""
+"""Versioned per-risk assessments; unmarked legacy records remain illustrative."""
 from datetime import date
+from .saudi_risk_method import (METHOD_ID, NATIONAL_FIELDS, CATEGORIES, TREATMENTS, RESIDUAL_BASES, matrix_result)
 
 TEXT_FIELDS = ("risk_id", "description", "cause", "consequence", "owner", "controls", "treatment", "due_date", "status", "evidence", "reviewer", "review_date")
 SCORE_FIELDS = ("likelihood", "impact", "residual_likelihood", "residual_impact")
@@ -12,12 +13,28 @@ def validate_register(records):
     errors, seen = [], set()
     for index, record in enumerate(records):
         prefix = f"Risk {index + 1}"
-        if not isinstance(record, dict) or set(record) != set(TEXT_FIELDS + SCORE_FIELDS):
+        if not isinstance(record, dict) or set(record) not in (
+            set(TEXT_FIELDS + SCORE_FIELDS),
+            set(TEXT_FIELDS + SCORE_FIELDS + NATIONAL_FIELDS),
+        ):
             errors.append(f"{prefix}: unsupported or missing fields.")
             continue
         if any(not isinstance(record[field], str) for field in TEXT_FIELDS):
             errors.append(f"{prefix}: text fields must be strings.")
             continue
+        if "methodology" in record:
+            if record["methodology"] != METHOD_ID:
+                errors.append(f"{prefix}: unsupported methodology.")
+            for field in NATIONAL_FIELDS:
+                value = record[field]
+                if not isinstance(value, str) or value.strip().casefold() in {"", "tbd", "n/a", "pending"}:
+                    errors.append(f"{prefix}: {field} is required for the national method.")
+            if record["category"] not in CATEGORIES:
+                errors.append(f"{prefix}: invalid national risk category.")
+            if record["treatment_strategy"] not in TREATMENTS:
+                errors.append(f"{prefix}: invalid treatment strategy.")
+            if record["residual_basis"] not in RESIDUAL_BASES:
+                errors.append(f"{prefix}: invalid residual assessment basis.")
         if record["risk_id"] in seen:
             errors.append(f"{prefix}: duplicate risk ID.")
         seen.add(record["risk_id"])
@@ -46,5 +63,12 @@ def score_record(record):
     errors = validate_register([record])
     if errors:
         raise ValueError("; ".join(errors))
+    if record.get("methodology") == METHOD_ID:
+        inherent = matrix_result(record["likelihood"], record["impact"])
+        residual = matrix_result(record["residual_likelihood"], record["residual_impact"])
+        return {
+            "inherent_score": inherent["score"], "inherent_level": inherent["level"],
+            "residual_score": residual["score"], "residual_level": residual["level"],
+        }
     return {"inherent_score": record["likelihood"] * record["impact"],
             "residual_score": record["residual_likelihood"] * record["residual_impact"]}
