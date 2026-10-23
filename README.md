@@ -265,3 +265,7 @@ Potential future work includes controlled multi-user storage and access, version
 - NIST, [AI RMF Playbook](https://airc.nist.gov/airmf-resources/playbook/)
 - NIST, [AI RMF Resource Center](https://airc.nist.gov/airmf-resources/)
 - OECD, [OECD AI Principles](https://www.oecd.org/en/topics/ai-principles.html)
+
+## Case-linked risk register (first Saudi transition increment)
+
+The **Risk Register & Treatment** page documents individual risks, treatment owners and dates, illustrative inherent/residual scores, and evidence-based closure attestations. Save Case persists the register; legacy cases load with an empty register. This optional register does not yet change deployment readiness. Its 1–4 scales are illustrative, not a verified implementation of SDAIA scoring. See [transition gap analysis](docs/saudi_transition_gap_analysis.md) for scope, sources and next steps.
