@@ -153,6 +153,9 @@ readiness = (
         st.session_state.get("deployment_readiness_plans", {}),
         risk_answers_complete,
         st.session_state.get("corrective_actions", []),
+        st.session_state.get("risk_register", []),
+        st.session_state.get("risk_decisions", {}),
+        use_case,
     )
     if risk_answers_complete
     else None
@@ -248,6 +251,7 @@ if risk_answers_complete:
     if readiness:
         actions.extend(f"{action_id}: corrective action requires verified closure." for action_id in readiness["blocking_actions"])
         actions.extend(readiness["action_errors"])
+        actions.extend(readiness["risk_review_blockers"])
     lifecycle = control_assessments.get("RET-01")
     if lifecycle and lifecycle["Applicability"] == "Lifecycle":
         lifecycle_actions.append(
@@ -267,6 +271,7 @@ elif (
     and readiness["incomplete_operational_requirements"] == 0
     and not readiness["blocking_actions"]
     and not readiness["action_errors"]
+    and not readiness["risk_review_blockers"]
 ):
     st.success(
         "No current governance-readiness blockers are identified. This is not "

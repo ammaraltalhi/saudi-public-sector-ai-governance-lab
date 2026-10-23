@@ -191,4 +191,5 @@ def test_readiness_views_show_action_blockers(view):
     app.session_state['corrective_actions'] = [closed_action()]
     app.run()
     assert not app.exception
-    assert any(item.value == 'Ready for Deployment Approval' for item in list(app.success) + list(app.subheader))
+    assert any(item.value == 'Not Ready for Deployment Approval' for item in list(app.warning) + list(app.subheader))
+    assert any('national per-risk assessment' in item.value for item in app.warning) if view == 'deployment_readiness.py' else any('Current blockers and actions' in frame.value.columns for frame in app.dataframe)

@@ -52,3 +52,7 @@ The official Arabic publication was located at https://sdaia.gov.sa/ar/MediaCent
 ## Third increment: source-verified national assessment
 
 The supplied 48-page Arabic PDF resolved the previous direct-access limitation. Source metadata, page references, a gap comparison, national-method UI and per-risk methodology markers are now implemented; see [verified comparison](saudi_national_framework_comparison.md). The original access-failure notes above describe the earlier increment only. Existing illustrative records and the eight-factor screening retain their original meaning. The national method implements selected components, not full-framework conformity, regulatory applicability or residual-risk approval.
+
+## Merge-readiness increment
+
+Residual-risk decisions now have a separate documentary gate linked to risk/context state. Empty, legacy, planned-only, unaccepted, stale or expired reviews block both application readiness views. Missing mandatory control assessments also block readiness. The current runtime uses Saudi references; international inspiration is retained only in design background. These changes close identified prototype logic gaps, not all legal/regulatory requirements or authenticated governance approval.

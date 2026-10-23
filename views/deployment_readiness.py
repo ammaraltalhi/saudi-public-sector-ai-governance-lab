@@ -126,6 +126,9 @@ st.write("**RET-01:** Lifecycle / Not Due — Does not block initial deployment 
 readiness = evaluate_readiness(
     assessments, plans, has_complete_risk_answers(risk_answers),
     st.session_state.get("corrective_actions", []),
+    st.session_state.get("risk_register", []),
+    st.session_state.get("risk_decisions", {}),
+    use_case,
 )
 st.subheader("Readiness summary")
 st.write(f"**Number of blocking controls:** {len(readiness['blocking_controls'])}")
@@ -139,5 +142,8 @@ if readiness["blocking_actions"]:
 for error in readiness["action_errors"]:
     st.error(error)
 st.caption("Action closure and readiness-impact choices are user-recorded attestations. They do not establish regulatory compliance or acceptance of residual risk.")
+st.subheader("Residual-risk review")
+for blocker in readiness["risk_review_blockers"]:
+    st.warning(blocker)
 st.subheader(readiness["status"])
 st.info("Final deployment approval remains a human governance decision.")

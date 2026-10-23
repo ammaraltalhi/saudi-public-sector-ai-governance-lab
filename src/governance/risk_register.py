@@ -1,5 +1,6 @@
 """Versioned per-risk assessments; unmarked legacy records remain illustrative."""
 from datetime import date
+from .corrective_actions import meaningful
 from .saudi_risk_method import (METHOD_ID, NATIONAL_FIELDS, CATEGORIES, TREATMENTS, RESIDUAL_BASES, matrix_result)
 
 TEXT_FIELDS = ("risk_id", "description", "cause", "consequence", "owner", "controls", "treatment", "due_date", "status", "evidence", "reviewer", "review_date")
@@ -54,7 +55,7 @@ def validate_register(records):
                     raise ValueError
             except ValueError:
                 errors.append(f"{prefix}: {field} must use YYYY-MM-DD.")
-        if record["status"] == "Closed" and any(not record[field].strip() for field in ("evidence", "reviewer", "review_date")):
+        if record["status"] == "Closed" and any(not meaningful(record[field]) for field in ("evidence", "reviewer", "review_date")):
             errors.append(f"{prefix}: closure needs evidence, reviewer and review date.")
     return errors
 
