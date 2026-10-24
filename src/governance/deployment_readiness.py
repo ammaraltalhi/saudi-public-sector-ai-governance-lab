@@ -1,4 +1,5 @@
 from .risk_decisions import review_blockers
+from .use_case_context import context_errors
 from .corrective_actions import action_summary
 from .constants import PRE_DEPLOYMENT_CONTROL_IDS
 
@@ -42,6 +43,9 @@ def evaluate_readiness(
     risk_blockers = [] if risk_register is None else review_blockers(
         risk_register, {} if risk_decisions is None else risk_decisions, use_case,
     )
+
+    if risk_register is not None:
+        risk_blockers = context_errors(use_case) + risk_blockers
 
     status = (
         "Ready for Deployment Approval"

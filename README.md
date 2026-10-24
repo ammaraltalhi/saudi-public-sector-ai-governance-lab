@@ -1,10 +1,12 @@
 # Saudi Public Sector AI Governance Lab
 
+[Open the public synthetic demo](https://saudi-public-sector-ai-governance-lab-7ojjpkfw2zji8abx75sbnc.streamlit.app/)
+
 **A self-directed portfolio prototype for AI Governance, Responsible AI and GRC workflow design.**
 
 This Streamlit lab demonstrates how a governance team could organize intake, illustrative risk screening, ownership, control documentation and readiness review for a **fictional Citizen Request Prioritisation AI** scenario. It is a workflow-design exercise—not a live client implementation, operational AI system, government partnership, legal opinion or framework-conformity assessment.
 
-> **Synthetic use only.** Do not enter real citizen information, confidential organizational data or actual agency decisions. Cases are stored as local JSON without application-level encryption, authentication or access controls. Do not expose a shared or public writable instance.
+> **Synthetic use only.** Do not enter real citizen information, confidential organizational data or actual agency decisions. Default case snapshots are session-isolated and can be downloaded/imported as JSON. This is not authenticated production evidence storage.
 
 **Portfolio materials:** [Synthetic case study](docs/synthetic_case_study.md) · [Five-minute demo script](docs/demo_script.md) · [Governance design decisions](docs/design_decisions.md) · [Portfolio summary](docs/portfolio_summary.md)
 
@@ -20,7 +22,7 @@ The governance problem explored is how to make responsibilities, evidence expect
 
 Assessment forms record proposed governance documentation. An **Available** evidence status means that the prototype's configured record is complete, marked Reviewed and explicitly saved where required. It does not prove that technical validation, monitoring, security testing, incident response, or any other activity has occurred in production.
 
-Do not enter real citizen personal data, confidential information or operational incident details. Case files are stored as local JSON and are not an access-controlled evidence repository.
+Do not enter real citizen personal data, confidential information or operational incident details. Session snapshots and downloaded JSON are not an authenticated evidence repository.
 
 ## 3. Demonstration Use Case: Citizen Request Prioritisation AI
 
@@ -37,7 +39,7 @@ The example is illustrative. It does not describe a deployed Saudi public-sector
 - **Control Library:** review catalogue controls and complete structured assessments for privacy/data (DAT-01), fairness (FAI-01), security (SEC-01), transparency (TRN-01), validation planning (VAL-01), monitoring planning (MON-01), and incident management planning (INC-01). Assessments use explicit save actions and canonical control evidence; loaded-case fields are hydrated back into the forms.
 - **Deployment Readiness:** identify pending required pre-deployment controls and assess five operational requirements. The first four are derived from a complete, Reviewed, explicitly saved MON-01 assessment; incident response and escalation readiness is derived from INC-01.
 - **Executive Governance Dashboard:** read-only overview of the current case, risk state, shared control assessments, MON-01/INC-01 operational readiness and deployment-readiness result.
-- **Case Management:** save and load case documents locally as JSON, including across application restarts.
+- **Case Management:** save/load session snapshots and download/import validated JSON across browser sessions, including saved case-specific RACI.
 
 The prototype supports governance documentation and readiness review; it does not execute an approval decision or deploy an AI system.
 
@@ -52,7 +54,7 @@ The prototype includes separately documented impact assessments, structured FAI-
 - [Governance design decisions](docs/design_decisions.md) — assessment, evidence and decision controls.
 - [Portfolio summary](docs/portfolio_summary.md) — short project description.
 
-For a local walkthrough, use synthetic inputs and a private local environment. A recording can be used instead of hosting an interactive demo. **Do not host the current writable case workflow publicly:** local JSON storage has no authentication, role-based access or per-user isolation.
+For a public walkthrough, use the default session-only mode and invented inputs. Download a case to retain it beyond the session. The optional filesystem mode is for private local use only.
 
 ## 5. Architecture and Repository Structure
 
@@ -168,20 +170,17 @@ Deployment readiness combines required pre-deployment controls with five operati
 
 The result **Ready for Deployment Approval** means only that the prototype found no configured pre-deployment blockers or incomplete operational requirements. It is not **Approved for Deployment**. Final deployment approval remains a human governance decision.
 
-## 9. Local Case Save/Load and Data Handling
+## 9. Case Save/Load and Data Handling
 
-Use **Save Case** and **Load Case** in the application sidebar. Cases are written as JSON files under `data/cases/`, with a versioned case document containing:
+The default public demo stores saved snapshots in the visitor's Streamlit session, not shared server case files. **Save Case** creates or updates a snapshot; **Load Case** restores a selected session snapshot. Use **Download Case JSON** before refreshing or closing the browser. In a new session, choose that file and **Import and load case** to resume. Downloads contain the selected saved snapshot: save again after edits. Imports are schema-validated, limited to 2 MiB, and do not execute file content. A session can hold up to 20 saved cases.
 
-- Use-case intake fields.
-- The eight boolean risk-screening answers.
-- The canonical `control_evidence` mapping, including explicitly saved structured control assessments.
-- Deployment-readiness plan state included in the case format.
-- Optional SDAIA impact assessment documentation, when saved.
-- Case ID, case name and save timestamp.
+The versioned JSON includes use-case context, eight screening answers, control evidence, operational plan state, and saved optional risk records, corrective actions, residual-risk decisions, impact assessments and case-specific RACI. Use **Save RACI to case** before **Save Case**; unsaved grid edits are marked. Exactly one Accountable role is required per activity, with valid R/A/C/I codes. Repository inventory/control/RACI CSV baselines are not modified.
 
-On load, risk results are recalculated from the saved screening answers and the saved control evidence is restored to the current session. Individual edits in the RACI editor are **not** included in case persistence; the RACI CSV remains the baseline. Inventory and control catalogue CSVs are repository data, not per-case copies.
+All intake context fields must contain meaningful text before a new context is saved. Incomplete legacy cases remain importable but block readiness until their context is completed. Existing version-1 cases without a RACI matrix use the repository baseline; loading them clears any preceding case-specific matrix.
 
-Case JSON is stored locally without application-level encryption, authentication, role-based access controls or per-user isolation. Anyone with access to a shared runtime or its filesystem may be able to access case records. Protect the workspace accordingly and use synthetic data only. The current implementation is suitable for a private local walkthrough, not a public shared writable demo.
+This is synthetic demonstration software, without authenticated users, verified authorizations, production evidence storage or durable hosted persistence. Session separation is not an enterprise security assurance. Never enter citizen information or confidential data. Browser refresh, server restarts and platform sleep can clear sessions; retain downloaded JSON locally.
+
+For a private local walkthrough only, explicitly set `GOVERNANCE_CASE_STORAGE=local` before running Streamlit. This opt-in compatibility mode lists and writes JSON under `data/cases/` and shows a warning. **Do not enable local storage mode on a public host.** Existing server-side files are not deleted or exposed by default session mode; privately retain any old files you need before a platform redeploy.
 
 ## 10. Installation and Run Instructions
 
@@ -230,16 +229,16 @@ The tests cover the illustrative risk heuristic, control applicability and evide
 
 1. Start the app and review the simulated Citizen Request Prioritisation AI intake.
 2. Review the eight-factor risk screening and resulting illustrative tier.
-3. Explore the inventory baseline and RACI matrix; note that RACI edits are not persisted.
+3. Explore the inventory baseline and RACI matrix; use Save RACI to case to retain validated responsibility edits.
 4. Open the Control Library to review control applicability and, if desired, complete a structured assessment using synthetic information only.
-5. Save the case, restart the app, and load it to demonstrate local JSON persistence and evidence restoration.
+5. Save and download the case, refresh the app, then import the JSON to demonstrate restoration of evidence and responsibilities.
 6. Review Deployment Readiness and the Executive Governance Dashboard. Show how MON-01 and INC-01 evidence contributes to readiness, and distinguish **Ready for Deployment Approval** from actual human approval.
 
-For a timed interview walkthrough, use [`docs/demo_script.md`](docs/demo_script.md). Save only invented synthetic case details; case saves write JSON under `data/cases/`.
+For a timed interview walkthrough, use [`docs/demo_script.md`](docs/demo_script.md). Save only invented synthetic case details; download JSON before the session ends.
 
 Suggested portfolio description:
 
-> Designed a self-directed AI governance prototype for a simulated public-sector use case, translating governance concepts into use-case intake, illustrative risk screening, accountability roles, structured control documentation, local case persistence and evidence-derived readiness reporting, with a source-referenced Saudi national risk matrix, corrective-action tracking and documented residual-risk review.
+> Designed a self-directed AI governance prototype for a simulated public-sector use case, translating governance concepts into use-case intake, illustrative risk screening, accountability roles, structured control documentation, session-isolated case snapshots, JSON export/import and evidence-derived readiness reporting, with a source-referenced Saudi national risk matrix, corrective-action tracking and documented residual-risk review.
 
 ## 13. Known Limitations and Future Improvements
 
@@ -247,7 +246,7 @@ Suggested portfolio description:
 - Use-case and assessment content is illustrative and user-entered. The repository does not establish factual performance, model behavior, dataset quality, fairness outcomes, security posture or operational effectiveness.
 - There is no deployed AI model, production integration, live monitoring, tested incident-response operation, formal validation program, authentication, role-based access control or centralized evidence store.
 - Readiness is a prototype workflow output, not legal or regulatory conformity, certification, risk acceptance or deployment approval.
-- Case files are local JSON; RACI edits are not persisted, and inventory/RACI CSVs are baselines rather than controlled registries.
+- Case snapshots use session memory by default; downloaded JSON supports resumption. Saved RACI edits are included per case. Repository CSVs remain sample baselines, not controlled enterprise registries.
 - Historical conceptual sources are attributed in the design background; the current operational reference model is Saudi.
 
 Potential future work includes controlled multi-user storage and access, versioned and auditable evidence records, configurable organization-approved risk methods, evidence provenance, and a formally reviewed mapping to applicable organizational and regulatory requirements. These are future possibilities, not implemented features.
