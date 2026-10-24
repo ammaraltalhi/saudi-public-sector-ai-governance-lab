@@ -34,7 +34,7 @@ Answer the application's eight screening questions against the fictional scenari
 
 ### 3. Ownership and accountability
 
-Review the inventory baseline and RACI roles as prompts for identifying system ownership and responsibilities. The inventory is a sample CSV, not a managed register. RACI editor changes are transient and are not saved by the application; the CSV remains the baseline.
+Review the inventory baseline and RACI roles as prompts for identifying system ownership and responsibilities. The inventory is a sample CSV, not a managed register. Use Save RACI to case to retain validated responsibility edits in case JSON; the repository CSV remains the baseline.
 
 ### 4. Control assessments
 

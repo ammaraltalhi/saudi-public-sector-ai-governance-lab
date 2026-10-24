@@ -8,6 +8,7 @@ import tempfile
 from uuid import UUID, uuid4
 
 from .risk import RISK_WEIGHTS, calculate_risk
+from .raci import raci_errors
 from .risk_register import validate_register
 from .risk_decisions import validate_decisions
 from .corrective_actions import validate_actions
@@ -305,6 +306,11 @@ def validate_case_document(document):
     if decision_errors:
         raise CasePersistenceError("; ".join(decision_errors))
 
+    if "raci_matrix" in document:
+        errors = raci_errors(document["raci_matrix"])
+        if errors:
+            raise CasePersistenceError("; ".join(errors))
+
     expected_fields = {
         "schema_version",
         "case_id",
@@ -315,7 +321,7 @@ def validate_case_document(document):
         "control_evidence",
         "deployment_readiness_plans",
     }
-    if not expected_fields <= set(document) or set(document) - expected_fields - {"sdaia_impact_assessments", "risk_register", "corrective_actions", "risk_decisions"}:
+    if not expected_fields <= set(document) or set(document) - expected_fields - {"sdaia_impact_assessments", "risk_register", "corrective_actions", "risk_decisions", "raci_matrix"}:
         raise CasePersistenceError("Case document contains missing or unsupported fields.")
     return document
 
@@ -340,6 +346,8 @@ def build_case_document(session_state, case_id=None, saved_at=None):
         document["corrective_actions"] = deepcopy(session_state["corrective_actions"])
     if "risk_decisions" in session_state:
         document["risk_decisions"] = deepcopy(session_state["risk_decisions"])
+    if "raci_matrix" in session_state:
+        document["raci_matrix"] = deepcopy(session_state["raci_matrix"])
     assessments = deepcopy(session_state.get("sdaia_impact_assessments", {}))
     invalid = deepcopy(session_state.get("_sdaia_impact_assessment_invalid", {}))
     if not isinstance(assessments, dict):
@@ -476,5 +484,9 @@ def restore_case(session_state, document):
         "risk_breakdown": risk_breakdown,
     }
     restored_values.update(widget_values)
+    if "raci_matrix" in session_state:
+        del session_state["raci_matrix"]
+    if "raci_matrix" in document:
+        restored_values["raci_matrix"] = deepcopy(document["raci_matrix"])
     for key, value in restored_values.items():
         session_state[key] = value

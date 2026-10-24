@@ -363,6 +363,7 @@ def test_trn01_save_case_restart_load_and_resave_preserves_every_field(
 ):
     import src.governance.case_persistence as case_persistence
 
+    monkeypatch.setenv("GOVERNANCE_CASE_STORAGE", "local")
     original_save_case = case_persistence.save_case
     original_load_case = case_persistence.load_case
     original_list_saved_cases = case_persistence.list_saved_cases
@@ -546,6 +547,7 @@ def test_trn01_save_case_restart_load_and_resave_preserves_every_field(
 def test_mon01_save_case_restart_load_and_readiness_integration(tmp_path, monkeypatch):
     import src.governance.case_persistence as case_persistence
 
+    monkeypatch.setenv("GOVERNANCE_CASE_STORAGE", "local")
     original_save_case = case_persistence.save_case
     original_load_case = case_persistence.load_case
     original_list_saved_cases = case_persistence.list_saved_cases
@@ -756,6 +758,7 @@ def test_mon01_save_case_restart_load_and_readiness_integration(tmp_path, monkey
 def test_inc01_save_restart_load_hydration_navigation_and_readiness(tmp_path, monkeypatch):
     import src.governance.case_persistence as case_persistence
 
+    monkeypatch.setenv("GOVERNANCE_CASE_STORAGE", "local")
     original_save_case = case_persistence.save_case
     original_load_case = case_persistence.load_case
     original_list_saved_cases = case_persistence.list_saved_cases

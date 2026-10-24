@@ -10,7 +10,7 @@ The project explores a practical governance question: how can teams make use-cas
 
 - Streamlit intake for use-case purpose, users, affected people, data categories, AI role and human oversight.
 - Separate illustrative intake screening and source-referenced national per-risk assessments, treatment plans and residual-risk decisions.
-- A CSV-backed AI inventory and RACI matrix. The inventory reflects the current session risk tier when the case name matches; RACI editor changes are **not persisted**.
+- A CSV-backed AI inventory and RACI matrix. The inventory reflects the current session risk tier when the case name matches; Validated RACI changes saved to the case are included in downloaded case JSON.
 - A control library with shared applicability/evidence-status logic and structured DAT-01, FAI-01, SEC-01, TRN-01, VAL-01, MON-01 and INC-01 assessments.
 - Optional structured SDAIA impact, fairness, validation and explainability documentation, including Planned/Performed distinctions where supported.
 - Deployment-readiness blockers derived from control evidence, operational plans, corrective actions and residual-risk review.
@@ -32,7 +32,7 @@ The current workflow uses SDAIA-P145 v1 (April 2026), including its page-25 like
 
 Install the dependencies from `requirements.txt`, start Streamlit with `python -m streamlit run app.py`, and use only invented synthetic information. See [the five-minute demo script](demo_script.md), [the synthetic case study](synthetic_case_study.md) and [design decisions](design_decisions.md).
 
-Cases are local JSON files without application-level encryption, authentication, role-based access or per-user isolation. Use a private local walkthrough or a recording; do not expose a shared writable instance. RACI edits are session-only and do not persist.
+Default snapshots are isolated to the visitor session. Download case JSON before refreshing; import it to resume. Saved RACI edits are included. No authenticated roles, verified approvals or production storage are provided. The optional filesystem mode is for private local use only.
 
 ## Important limitations
 

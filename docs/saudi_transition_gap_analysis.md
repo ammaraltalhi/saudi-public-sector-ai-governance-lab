@@ -8,7 +8,7 @@ This is a developer gap analysis, not a completed regulatory assessment. The exi
 | Saudi references | SDAIA AI Ethics crosswalk | National matrix/scales now checked against supplied PDF; see the source-based comparison. PDPL/NDMO/NCA/DGA applicability and detailed mappings remain pending |
 | Evidence | Reviewed forms and supplementary planned/performed records | Add substantive acceptance decisions and corrective-action verification |
 | Readiness | Evidence availability and operational plans | Open corrective actions marked as blockers now prevent readiness; residual-risk acceptance decisions remain future work |
-| Responsibility | RACI editor is not saved | Future change: persist case-specific ownership |
+| Responsibility | Validated RACI edits are saved per case | Implemented: session snapshots and JSON export/import; no authenticated appointments |
 | Privacy | DAT-01 documentation | Future change: processing records and impact-assessment applicability, followed by a documented assessment where relevant |
 
 ## First increment (historical baseline)

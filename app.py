@@ -1,4 +1,6 @@
 from pathlib import Path
+import os
+import json
 
 import streamlit as st
 
@@ -9,26 +11,29 @@ from src.governance.case_persistence import (
     restore_case,
     save_case,
 )
+from src.governance.session_cases import (
+    save_session_case, load_session_case, list_session_cases, parse_case_upload, remember_case,
+)
 
 st.set_page_config(page_title="Saudi Public Sector AI Governance Lab", page_icon="⚖️", layout="wide")
 
+LOCAL_STORAGE = os.environ.get("GOVERNANCE_CASE_STORAGE") == "local"
 CASES_DIR = Path(__file__).resolve().parent / "data" / "cases"
 
 with st.sidebar:
     st.header("Case Management")
     current_case = st.session_state.get("use_case", {})
     st.write(f"**Current case name:** {current_case.get('name', 'Not saved to session')}")
-    st.caption(
-        "Case files are stored locally as JSON for this portfolio prototype. "
-        "Do not enter real citizen personal data."
-    )
-    st.caption(
-        "RACI editor changes are not persisted; data/raci.csv remains the baseline."
-    )
+    if LOCAL_STORAGE:
+        st.warning("Private local storage mode: case files are shared by this runtime. Do not enable this mode on a public host.")
+    else:
+        st.caption("Public synthetic demo: saved snapshots belong to this session only. No shared server case files are listed or written. Download Case JSON before refreshing or closing; import it to resume later.")
+    st.caption("Use invented data only. No authentication, verified approvals or production storage is provided. RACI changes saved to the case are included in case JSON.")
 
     if st.button("Save Case", use_container_width=True):
         try:
-            saved_document = save_case(st.session_state, CASES_DIR)
+            saved_document = (save_case(st.session_state, CASES_DIR) if LOCAL_STORAGE
+                              else save_session_case(st.session_state))
             st.session_state["current_case_id"] = saved_document["case_id"]
             st.session_state["case_management_message"] = (
                 "success",
@@ -38,7 +43,8 @@ with st.sidebar:
             st.session_state["case_management_message"] = ("error", str(error))
         st.rerun()
 
-    saved_cases = list_saved_cases(CASES_DIR)
+    saved_cases = (list_saved_cases(CASES_DIR) if LOCAL_STORAGE
+                   else list_session_cases(st.session_state))
     saved_case_ids = [case["case_id"] for case in saved_cases]
     case_names = {case["case_id"]: case["case_name"] for case in saved_cases}
     current_case_id = st.session_state.get("current_case_id")
@@ -57,7 +63,8 @@ with st.sidebar:
     )
     if st.button("Load Case", disabled=not saved_case_ids, use_container_width=True):
         try:
-            case_document = load_case(selected_case_id, CASES_DIR)
+            case_document = (load_case(selected_case_id, CASES_DIR) if LOCAL_STORAGE
+                             else load_session_case(st.session_state, selected_case_id))
             restore_case(st.session_state, case_document)
             st.session_state["case_management_message"] = (
                 "success",
@@ -67,6 +74,28 @@ with st.sidebar:
         except CasePersistenceError as error:
             st.session_state["case_management_message"] = ("error", str(error))
             st.rerun()
+
+    if selected_case_id:
+        try:
+            snapshot = (load_case(selected_case_id, CASES_DIR) if LOCAL_STORAGE
+                        else load_session_case(st.session_state, selected_case_id))
+            st.download_button("Download Case JSON", json.dumps(snapshot, ensure_ascii=False, indent=2),
+                               file_name=f"governance-case-{selected_case_id}.json", mime="application/json")
+            st.caption("Download contains the selected saved snapshot. Save Case again to include newer edits.")
+        except CasePersistenceError as error:
+            st.warning(str(error))
+    uploaded = st.file_uploader("Import Case JSON (synthetic data only, max 2 MiB)", type=["json"])
+    if st.button("Import and load case", disabled=uploaded is None):
+        try:
+            if uploaded.size > 2 * 1024 * 1024:
+                raise CasePersistenceError("Upload a JSON case no larger than 2 MiB.")
+            document = parse_case_upload(uploaded.getvalue())
+            remember_case(st.session_state, document)
+            restore_case(st.session_state, document)
+            st.session_state["case_management_message"] = ("success", f"Imported case '{document['case_name']}'.")
+            st.rerun()
+        except CasePersistenceError as error:
+            st.error(str(error))
 
     message = st.session_state.pop("case_management_message", None)
     if message:

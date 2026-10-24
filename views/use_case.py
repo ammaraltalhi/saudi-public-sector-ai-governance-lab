@@ -1,5 +1,6 @@
 import streamlit as st
 from src.governance.case_persistence import USE_CASE_WIDGET_KEYS
+from src.governance.use_case_context import context_errors
 
 st.title("AI Use Case Intake")
 st.write("Capture the business context before assessing AI risk.")
@@ -53,20 +54,27 @@ with st.form("use_case_form"):
     submitted = st.form_submit_button("Save to session")
 
 if submitted:
-    st.session_state["use_case"] = {
-    "name": name,
-    "owner": owner,
-    "purpose": purpose,
-    "users": users,
-    "affected_people": affected_people,
-    "data": data,
-    "decision": decision,
-    "ai_role": ai_role,
-    "human_oversight": human_oversight,
-    "potential_impact": potential_impact,
-    "incident_response": incident_response,
-}
-    st.success("Use case saved for this session.")
+    candidate = {
+        "name": name,
+        "owner": owner,
+        "purpose": purpose,
+        "users": users,
+        "affected_people": affected_people,
+        "data": data,
+        "decision": decision,
+        "ai_role": ai_role,
+        "human_oversight": human_oversight,
+        "potential_impact": potential_impact,
+        "incident_response": incident_response,
+    }
+    errors = context_errors(candidate)
+    if errors:
+        for error in errors:
+            st.error(error)
+        st.info("The current saved context was kept. Complete the fields and save again.")
+    else:
+        st.session_state["use_case"] = {key: value.strip() for key, value in candidate.items()}
+        st.success("Use case saved for this session.")
 
 if "use_case" in st.session_state:
     st.subheader("Current use case")

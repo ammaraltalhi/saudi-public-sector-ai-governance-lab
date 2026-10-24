@@ -20,4 +20,4 @@ The deployment page and dashboard use the same control, corrective-action and re
 
 ## Preserve traceability and scope
 
-Records are version-labelled and saved with their case. Evidence remains user-reported, and case storage is local JSON without multi-user isolation or authentication. The [national framework comparison](saudi_national_framework_comparison.md) distinguishes selected implemented components from remaining framework and regulatory gaps. The [design background](design_background.md) attributes the earlier prototype's conceptual sources.
+Records are version-labelled and saved with their case. Default snapshots are session-isolated; downloaded/imported JSON supports resumption after refresh. Saved RACI is case-specific. Evidence and decisions remain user-reported without authentication or verified authorization. The [national framework comparison](saudi_national_framework_comparison.md) distinguishes selected implemented components from remaining framework and regulatory gaps. The [design background](design_background.md) attributes the earlier prototype's conceptual sources.
