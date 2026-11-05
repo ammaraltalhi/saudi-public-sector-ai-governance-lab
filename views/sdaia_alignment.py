@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 import pandas as pd
-import streamlit as st
+from src.ui.localization import st, tr
 
 from src.governance.fairness_evaluation import validate_fairness_evaluation
 from src.governance.sdaia_impact import validate_impact_assessments
@@ -71,7 +71,7 @@ def load_alignment_data(alignment_path=ALIGNMENT_PATH, controls_path=CONTROLS_PA
     for principle in principles:
         if any(field not in principle for field in required_fields):
             raise ValueError(
-                f"SDAIA alignment data for {principle['name']} is incomplete."
+                f"SDAIA alignment data for {tr(principle['name'])} is incomplete."
             )
         if (
             not isinstance(principle["controls"], list)
@@ -83,7 +83,7 @@ def load_alignment_data(alignment_path=ALIGNMENT_PATH, controls_path=CONTROLS_PA
             )
         ):
             raise ValueError(
-                f"SDAIA alignment data for {principle['name']} has invalid fields."
+                f"SDAIA alignment data for {tr(principle['name'])} has invalid fields."
             )
         references = principle["references"]
         if (
@@ -95,7 +95,7 @@ def load_alignment_data(alignment_path=ALIGNMENT_PATH, controls_path=CONTROLS_PA
             or any(not isinstance(item, str) for item in references["annexure_c"])
         ):
             raise ValueError(
-                f"SDAIA references for {principle['name']} have an invalid structure."
+                f"SDAIA references for {tr(principle['name'])} have an invalid structure."
             )
 
     try:
@@ -176,7 +176,7 @@ for assessment_type, principle in (
     ("social_environmental", "Social & Environmental Benefits"),
 ):
     assessment = impact_assessments.get(assessment_type)
-    st.markdown(f"**{principle}:**")
+    st.markdown(f"**{tr(principle)}:**")
     invalid = invalid_impact_assessments.get(assessment_type)
     if invalid:
         st.caption(
@@ -321,14 +321,14 @@ else:
 for principle in alignment["principles"]:
     st.subheader(principle["name"])
     labels = [
-        f"{control_id} — {control_areas[control_id]}"
+        f"{control_id} — {tr(control_areas[control_id])}"
         for control_id in principle["controls"]
     ]
     st.caption("Related existing controls: " + "; ".join(labels))
-    st.markdown(f"**Alignment rationale:** {principle['rationale']}")
-    st.markdown(f"**Documented coverage:** {principle['coverage']}")
-    st.markdown(f"**Known evidence gaps:** {principle['gaps']}")
-    with st.expander(f"References and limitations — {principle['name']}"):
+    st.markdown(f"**Alignment rationale:** {tr(principle['rationale'])}")
+    st.markdown(f"**Documented coverage:** {tr(principle['coverage'])}")
+    st.markdown(f"**Known evidence gaps:** {tr(principle['gaps'])}")
+    with st.expander(f"References and limitations — {tr(principle['name'])}"):
         references = principle["references"]
         checklist_ids = ", ".join(references["annexure_c"])
         pages = ", ".join(str(page) for page in references["printed_pages"])
@@ -337,6 +337,6 @@ for principle in alignment["principles"]:
             f"(printed pages {pages})"
         )
         st.markdown(f"**Annexure C checklist IDs:** {checklist_ids}")
-        st.markdown(f"**Limitations:** {principle['limitations']}")
+        st.markdown(f"**Limitations:** {tr(principle['limitations'])}")
 
 st.caption(source["reference_note"])

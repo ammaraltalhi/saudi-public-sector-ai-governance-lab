@@ -1,7 +1,7 @@
 import json
 from datetime import date
 
-import streamlit as st
+from src.ui.localization import st
 
 from src.governance.risk_register import validate_register, score_record
 from src.governance.risk_decisions import DECISIONS, fingerprint, validate_decisions, review_blockers

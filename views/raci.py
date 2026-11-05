@@ -1,7 +1,7 @@
 from pathlib import Path
 from copy import deepcopy
 import pandas as pd
-import streamlit as st
+from src.ui.localization import st
 from src.governance.raci import COLUMNS, normalize_raci, raci_errors
 
 st.title("RACI Accountability Matrix")

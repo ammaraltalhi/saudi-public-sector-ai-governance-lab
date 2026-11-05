@@ -1,4 +1,4 @@
-import streamlit as st
+from src.ui.localization import st
 from src.governance.saudi_risk_method import STAGES, SOURCE_URL
 
 st.title("Saudi Public Sector AI Governance Lab")

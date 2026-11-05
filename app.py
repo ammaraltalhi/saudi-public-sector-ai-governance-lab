@@ -2,7 +2,7 @@ from pathlib import Path
 import os
 import json
 
-import streamlit as st
+from src.ui.localization import language_picker, st, tr
 
 from src.governance.case_persistence import (
     CasePersistenceError,
@@ -15,7 +15,8 @@ from src.governance.session_cases import (
     save_session_case, load_session_case, list_session_cases, parse_case_upload, remember_case,
 )
 
-st.set_page_config(page_title="Saudi Public Sector AI Governance Lab", page_icon="⚖️", layout="wide")
+st.set_page_config(page_title=tr("Saudi Public Sector AI Governance Lab"), page_icon="⚖️", layout="wide")
+language_picker()
 
 LOCAL_STORAGE = os.environ.get("GOVERNANCE_CASE_STORAGE") == "local"
 CASES_DIR = Path(__file__).resolve().parent / "data" / "cases"
@@ -106,7 +107,7 @@ with st.sidebar:
             st.error(text)
 
 pages = {
-    "Governance Lab": [
+    tr("Governance Lab"): [
         st.Page("views/home.py", title="Overview"),
         st.Page("views/use_case.py", title="AI Use Case Intake"),
         st.Page("views/risk_assessment.py", title="Risk Screening"),

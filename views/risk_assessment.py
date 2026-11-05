@@ -1,4 +1,4 @@
-import streamlit as st
+from src.ui.localization import arabic, st, tr
 from src.governance.risk import RISK_WEIGHTS, calculate_risk
 
 st.title("AI Risk Assessment")
@@ -71,7 +71,8 @@ if "risk_result" in st.session_state:
     result = st.session_state["risk_result"]
     st.subheader("Risk score breakdown")
     for factor, points in st.session_state["risk_breakdown"]:
-        st.write(f"- {factor}: {points} point{'s' if points != 1 else ''}")
+        st.write(f"- {tr(factor)}: {points} نقطة" if arabic()
+                 else f"- {factor}: {points} point{'s' if points != 1 else ''}")
 
     st.write(f"**Total illustrative risk score:** {result.score}")
     st.write(f"**Governance tier:** {result.level}")

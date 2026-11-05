@@ -2,6 +2,7 @@
 
 [Open the public synthetic demo](https://saudi-public-sector-ai-governance-lab-7ojjpkfw2zji8abx75sbnc.streamlit.app/)
 
+**النسخة العربية:** افتح التطبيق واختر **العربية** من قائمة **اللغة / Language** في الشريط الجانبي. تتغيّر لغة الواجهة فقط؛ يمكنك فتح ملفات الحالات بصيغة JSON في كلتا اللغتين. استخدم بيانات افتراضية في العرض التجريبي.
 **A self-directed portfolio prototype for AI Governance, Responsible AI and GRC workflow design.**
 
 This Streamlit lab demonstrates how a governance team could organize intake, illustrative risk screening, ownership, control documentation and readiness review for a **fictional Citizen Request Prioritisation AI** scenario. It is a workflow-design exercise—not a live client implementation, operational AI system, government partnership, legal opinion or framework-conformity assessment.
