@@ -1,7 +1,7 @@
 import json
 from uuid import uuid4
 
-import streamlit as st
+from src.ui.localization import st, tr
 
 from src.governance.risk_register import TEXT_FIELDS, STATUSES, validate_register, score_record
 from src.governance.saudi_risk_method import (
@@ -46,7 +46,7 @@ with st.form(f"risk_record_{generation}_{selected}_{method}"):
         record[field] = st.number_input(field.replace("_", " ").capitalize(), min_value=1, max_value=4, value=existing.get(field, 1), step=1)
         if method == METHOD_ID:
             labels = LIKELIHOOD if "likelihood" in field else IMPACT
-            st.caption(" · ".join(f"{value}: {label}" for value, label in labels.items()))
+            st.caption(" · ".join(f"{value}: {tr(label)}" for value, label in labels.items()))
     if method == METHOD_ID:
         record["methodology"] = METHOD_ID
         for field, choices in (("category", CATEGORIES), ("treatment_strategy", TREATMENTS), ("residual_basis", RESIDUAL_BASES)):

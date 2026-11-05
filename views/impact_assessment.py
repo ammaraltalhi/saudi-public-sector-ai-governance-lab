@@ -1,6 +1,6 @@
 from copy import deepcopy
 
-import streamlit as st
+from src.ui.localization import st
 
 from src.governance.sdaia_impact import (
     ASSESSMENT_FIELDS,

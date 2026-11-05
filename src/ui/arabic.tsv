@@ -1,0 +1,781 @@
+# English interface text, tab, Arabic interface text.
+Saudi Public Sector AI Governance Lab	مختبر حوكمة الذكاء الاصطناعي للقطاع العام السعودي
+Governance Lab	مختبر الحوكمة
+Overview	نظرة عامة
+AI Use Case Intake	تسجيل حالة استخدام الذكاء الاصطناعي
+Risk Screening	الفحص الأولي للمخاطر
+Saudi National Risk Method	المنهجية الوطنية السعودية لتقييم المخاطر
+Risk Register & Treatment	سجل المخاطر ومعالجتها
+Corrective Actions	الإجراءات التصحيحية
+Residual Risk Decisions	قرارات المخاطر المتبقية
+Deployment Readiness	جاهزية النشر
+RACI Matrix	مصفوفة المسؤوليات RACI
+AI Inventory	سجل أنظمة الذكاء الاصطناعي
+Control Library	مكتبة الضوابط
+Governance Dashboard	لوحة الحوكمة
+SDAIA Framework Alignment	المواءمة مع مبادئ سدايا
+SDAIA Impact Assessment	تقييم الأثر وفق مبادئ سدايا
+Case Management	إدارة الحالات
+Current case name	اسم الحالة الحالية
+Not saved to session	لا توجد حالة محفوظة في الجلسة
+Save Case	حفظ الحالة
+Saved cases	الحالات المحفوظة
+No saved cases	لا توجد حالات محفوظة
+Load Case	تحميل الحالة
+Import Case JSON (synthetic data only, max 2 MiB)	استيراد ملف حالة JSON (بيانات افتراضية فقط، بحد أقصى 2 ميبي بايت)
+Import and load case	استيراد الحالة وتحميلها
+Download Case JSON	تنزيل ملف الحالة JSON
+Saved case '{value}'.	حُفظت الحالة «{value}».
+Loaded case '{value}'.	حُمّلت الحالة «{value}».
+Imported case '{value}'.	استُوردت الحالة «{value}».
+Use invented data only. No authentication, verified approvals or production storage is provided. RACI changes saved to the case are included in case JSON.	استخدم بيانات افتراضية فقط. لا تتوفر مصادقة أو اعتمادات موثقة أو تخزين تشغيلي. يتضمن ملف الحالة JSON تعديلات RACI المحفوظة فيها.
+Private local storage mode: case files are shared by this runtime. Do not enable this mode on a public host.	وضع التخزين المحلي الخاص: ملفات الحالات مشتركة داخل بيئة التشغيل. لا تفعّل هذا الوضع على استضافة عامة.
+Public synthetic demo: saved snapshots belong to this session only. No shared server case files are listed or written. Download Case JSON before refreshing or closing; import it to resume later.	عرض عام ببيانات افتراضية: الحفظ خاص بهذه الجلسة. لا تُعرض أو تُكتب ملفات مشتركة على الخادم. نزّل ملف الحالة قبل تحديث الصفحة أو إغلاقها، واستورده عند العودة.
+Download contains the selected saved snapshot. Save Case again to include newer edits.	يتضمن التنزيل النسخة المحفوظة المحددة. احفظ الحالة مجددًا لتضمين آخر التعديلات.
+Upload a JSON case no larger than 2 MiB.	ارفع ملف حالة JSON لا يتجاوز 2 ميبي بايت.
+Self-directed portfolio case study — simulated environment, not a live client implementation.	دراسة حالة مستقلة ضمن معرض الأعمال، في بيئة محاكاة دون تشغيل لدى جهة فعلية.
+This prototype demonstrates how an organisation could operationalise AI governance for a simulated Saudi public-sector AI use case. It turns governance principles into practical artefacts: an AI inventory, risk assessment, RACI accountability model, lifecycle gates, controls, evidence requirements and monitoring.	يوضح هذا النموذج تطبيق حوكمة الذكاء الاصطناعي على حالة افتراضية في القطاع العام السعودي، من خلال سجل الأنظمة وتقييم المخاطر ومصفوفة المسؤوليات RACI وبوابات دورة الحياة والضوابط ومتطلبات الأدلة والمتابعة.
+Primary risk workflow: Saudi National Framework	مسار إدارة المخاطر وفق الإطار الوطني السعودي
+[SDAIA-P145, version 1, April 2026]({value}) — selected scoring and documentation components, not a complete conformity implementation.	[سدايا SDAIA-P145، الإصدار الأول، أبريل 2026]({value}) — تطبيق عناصر مختارة من التقييم والتوثيق دون ادعاء المطابقة الشاملة.
+Use Saudi National Risk Method for definitions and the verified matrix. Risk Screening remains a separate illustrative intake aid; national per-risk assessment is recorded in Risk Register & Treatment.	تتضمن صفحة المنهجية الوطنية التعريفات والمصفوفة المراجعة. الفحص الأولي أداة استرشادية مستقلة، ويُوثق التقييم الوطني لكل خطر في سجل المخاطر ومعالجتها.
+Saudi AI Ethics Principles	مبادئ أخلاقيات الذكاء الاصطناعي السعودية
+Source: SDAIA-P145, pp. 14–15. The separate SDAIA Framework Alignment page documents the ethics crosswalk and its evidence gaps.	المصدر: SDAIA-P145، ص 14–15. تعرض صفحة المواءمة مع مبادئ سدايا الربط التحليلي وفجوات الأدلة.
+The eight-question screening is an illustrative intake aid. National matrix assessments and residual-risk decisions are separate records; neither a score nor a completed form establishes legal compliance or deployment approval.	الفحص المكون من ثمانية أسئلة أداة استرشادية. تُوثق تقييمات المصفوفة الوطنية وقرارات المخاطر المتبقية بشكل مستقل. لا تثبت الدرجة أو تعبئة النموذج الامتثال القانوني أو اعتماد النشر.
+Capture the business context before assessing AI risk.	وثّق سياق العمل قبل تقييم مخاطر الذكاء الاصطناعي.
+AI system name	اسم نظام الذكاء الاصطناعي
+Business owner	مالك العمل
+Intended purpose	الغرض المقصود
+Primary users	المستخدمون الرئيسيون
+Affected people	الأشخاص المتأثرون
+AI role in decision-making	دور الذكاء الاصطناعي في اتخاذ القرار
+Human oversight	الإشراف البشري
+Potential impact if the AI is wrong	الأثر المحتمل في حال أخطأ النظام
+Incident response considerations	اعتبارات الاستجابة للحوادث
+Main data categories	فئات البيانات الرئيسية
+Decision or output	القرار أو المخرج
+Save to session	حفظ في الجلسة
+Current use case	حالة الاستخدام الحالية
+Current AI use case	حالة استخدام الذكاء الاصطناعي الحالية
+The current saved context was kept. Complete the fields and save again.	احتُفظ بالسياق المحفوظ. أكمل الحقول ثم أعد الحفظ.
+Use case saved for this session.	حُفظت حالة الاستخدام في هذه الجلسة.
+Recommendation only	توصية فقط
+Decision support	دعم القرار
+Automated decision	قرار آلي
+Required before action	مطلوب قبل التنفيذ
+Human review after action	مراجعة بشرية بعد التنفيذ
+No human review	دون مراجعة بشرية
+AI Risk Assessment	تقييم مخاطر الذكاء الاصطناعي
+Answer the screening questions. The score is an illustrative portfolio heuristic, not a legal classification.	أجب عن أسئلة الفحص. الدرجة مؤشر استرشادي لدراسة الحالة ولا تمثل تصنيفًا قانونيًا.
+Does the system process personal data?	هل يعالج النظام بيانات شخصية؟
+Does it process sensitive or highly sensitive data?	هل يعالج بيانات حساسة أو شديدة الحساسية؟
+Could it materially affect an individual's access, priority, rights or opportunities?	هل قد يؤثر جوهريًا في وصول الفرد إلى خدمة أو في أولويته أو حقوقه أو فرصه؟
+Could it affect vulnerable groups?	هل قد يؤثر في الفئات الأكثر عرضة للضرر؟
+Is it used by or directly exposed to external users?	هل يستخدمه مستخدمون خارجيون أو يتعاملون معه مباشرة؟
+Can it trigger an action without meaningful human review?	هل يستطيع بدء إجراء دون مراجعة بشرية فعلية؟
+Does it rely on a third-party AI model or API?	هل يعتمد على نموذج أو واجهة برمجة تطبيقات لطرف ثالث؟
+Could failure create a significant security or safety impact?	هل قد يؤدي إخفاقه إلى أثر كبير على الأمن أو السلامة؟
+Calculate governance risk	احسب درجة الفحص
+Risk score breakdown	تفصيل درجة المخاطر
+Total illustrative risk score	إجمالي درجة المخاطر الاسترشادية
+Governance tier	مستوى الحوكمة
+Governance Tier	مستوى الحوكمة
+Risk score	درجة المخاطر
+Risk Score	درجة المخاطر
+Required governance gates	بوابات الحوكمة المطلوبة
+Business Owner Approval	موافقة مالك العمل
+AI Governance Review	مراجعة حوكمة الذكاء الاصطناعي
+Privacy Review	مراجعة الخصوصية
+Security Review	مراجعة الأمن
+Privacy/Security Review as applicable	مراجعة الخصوصية والأمن حسب الانطباق
+Fairness & Performance Validation	التحقق من الإنصاف والأداء
+Executive Deployment Approval	الموافقة التنفيذية على النشر
+Enhanced Post-Deployment Monitoring	متابعة معززة بعد النشر
+Performance Validation	التحقق من الأداء
+Deployment Approval	الموافقة على النشر
+Periodic Monitoring	متابعة دورية
+Basic Governance Review	مراجعة الحوكمة الأساسية
+Basic Validation	تحقق أساسي
+Low	منخفض
+Medium	متوسط
+High	مرتفع
+Catastrophic	كارثي
+Not specified	غير محدد
+AI system not specified	لم يُحدد نظام الذكاء الاصطناعي
+Not evaluated	لم يُقيّم
+Not calculated	لم يُحسب
+Required	مطلوب
+Not Applicable	غير منطبق
+Not applicable	غير منطبق
+Applicable	منطبق
+Available	متاح
+Pending	معلّق
+Not Due	غير مستحق حاليًا
+Lifecycle	دورة الحياة
+Complete	مكتمل
+Incomplete	غير مكتمل
+Open	مفتوح
+In progress	قيد التنفيذ
+Awaiting verification	بانتظار التحقق
+Closed	مغلق
+Draft	مسودة
+Reviewed	تمت المراجعة
+Planned	مخطط
+Performed	منفذ
+Missing	غير متوفر
+Invalid	غير صالح
+Accept	قبول
+Escalate	تصعيد
+Reject	رفض
+Mitigate	تخفيف
+New risk	خطر جديد
+New action	إجراء جديد
+Illustrative (legacy)	استرشادي (قديم)
+Planned estimate	تقدير مخطط
+Post-treatment reassessment	إعادة التقييم بعد المعالجة
+All	الكل
+Record	السجل
+Assessment method	منهجية التقييم
+Status	الحالة
+Description	الوصف
+Cause	السبب
+Consequence	النتيجة المحتملة
+Owner	المالك
+Controls	الضوابط
+Treatment	المعالجة
+Due date	تاريخ الاستحقاق
+Evidence	الدليل
+Reviewer	المراجع
+Review date	تاريخ المراجعة
+Likelihood	الاحتمالية
+Impact	الأثر
+Residual likelihood	الاحتمالية المتبقية
+Residual impact	الأثر المتبقي
+Category	الفئة
+Treatment strategy	استراتيجية المعالجة
+Residual basis	أساس التقييم المتبقي
+Assessment horizon	الأفق الزمني للتقييم
+Likelihood rationale	مبررات الاحتمالية
+Impact rationale	مبررات الأثر
+Residual rationale	مبررات المخاطر المتبقية
+Assessment evidence	أدلة التقييم
+Risk id	معرّف الخطر
+Control id	معرّف الضابط
+Risk to review	الخطر المراد مراجعته
+Decision	القرار
+Authority	صاحب الصلاحية
+Decision date	تاريخ القرار
+Tolerance reference	مرجع تحمّل المخاطر
+Rationale	المبررات
+Next review date	تاريخ المراجعة التالية
+Finding	الملاحظة
+Action record	سجل الإجراء
+Action plan	خطة الإجراء
+Verification notes	ملاحظات التحقق
+Readiness rationale	مبررات الأثر على الجاهزية
+Save the AI Use Case Intake first.	احفظ نموذج حالة الاستخدام أولًا.
+Save risk record	حفظ سجل الخطر
+Export risk register JSON	تصدير سجل المخاطر بصيغة JSON
+Record residual-risk decision	تسجيل قرار المخاطر المتبقية
+Export risk decisions	تصدير قرارات المخاطر
+Save corrective action	حفظ الإجراء التصحيحي
+Export corrective-action report	تصدير تقرير الإجراءات التصحيحية
+Blocks deployment readiness until closed	يمنع جاهزية النشر حتى إغلاقه
+Open actions	إجراءات مفتوحة
+Overdue actions	إجراءات متأخرة
+Readiness blockers	عوائق الجاهزية
+Overdue actions exclude closed records and actions due today.	لا تشمل الإجراءات المتأخرة ما أُغلق أو ما يحل موعده اليوم.
+Ready for Deployment Approval	جاهز لطلب الموافقة على النشر
+Not Ready for Deployment Approval	غير جاهز لطلب الموافقة على النشر
+Executive Governance Dashboard	لوحة الحوكمة التنفيذية
+AI Use Case Summary	ملخص حالة الاستخدام
+Executive Snapshot	ملخص تنفيذي
+Governance Controls	ضوابط الحوكمة
+Operational Readiness	الجاهزية التشغيلية
+Operational readiness	الجاهزية التشغيلية
+Outstanding Governance Actions	إجراءات الحوكمة المعلقة
+Load or complete an AI use case to view its governance overview.	حمّل حالة استخدام أو أكمل تسجيلها لعرض ملخص الحوكمة.
+Complete the AI Risk Assessment to evaluate controls and readiness.	أكمل تقييم المخاطر لتحديد الضوابط والجاهزية.
+Complete the AI Risk Assessment before evaluating applicable controls.	أكمل تقييم المخاطر قبل تقييم الضوابط المنطبقة.
+Complete the AI Use Case Intake and AI Risk Assessment before evaluating deployment readiness.	أكمل تسجيل حالة الاستخدام وتقييم المخاطر قبل تقييم جاهزية النشر.
+Blocking controls	الضوابط المانعة
+Incomplete operational requirements	المتطلبات التشغيلية غير المكتملة
+Required Controls	الضوابط المطلوبة
+Evidence Available	الأدلة المتاحة
+Pending Controls	الضوابط المعلّقة
+Triggered risk factors	عوامل الخطر المحددة
+Monitoring plan	خطة المتابعة
+Metrics defined	المقاييس محددة
+Thresholds defined	العتبات محددة
+Responsibilities defined	المسؤوليات محددة
+Incident response and escalation plan	خطة الاستجابة للحوادث والتصعيد
+Incident response and escalation plan approved	خطة الاستجابة للحوادث والتصعيد معتمدة
+Pre-deployment controls	ضوابط ما قبل النشر
+Readiness summary	ملخص الجاهزية
+Number of blocking controls	عدد الضوابط المانعة
+Number of incomplete operational requirements	عدد المتطلبات التشغيلية غير المكتملة
+Open blocking corrective actions	الإجراءات التصحيحية المفتوحة المانعة
+Resolve and verify these actions	عالج هذه الإجراءات وتحقق منها
+Residual-risk review	مراجعة المخاطر المتبقية
+Final deployment approval remains a human governance decision.	تبقى الموافقة النهائية على النشر قرارًا بشريًا في إطار الحوكمة.
+Control ID	معرّف الضابط
+Control	الضابط
+Governance Area	مجال الحوكمة
+Applicability	الانطباق
+Evidence Status	حالة الدليل
+Readiness Impact	الأثر على الجاهزية
+Blocks readiness	يمنع الجاهزية
+Does not block	لا يمنع الجاهزية
+Operational requirement	المتطلب التشغيلي
+Current blockers and actions	العوائق والإجراءات الحالية
+Lifecycle follow-up	متابعة دورة الحياة
+Stage	المرحلة
+Printed source pages	صفحات المصدر المطبوعة
+National risk-management workflow	مسار إدارة المخاطر الوطني
+Likelihood × impact matrix — page 25	مصفوفة الاحتمالية × الأثر — ص 25
+Risk identification categories — pages 18–20	فئات تحديد المخاطر — ص 18–20
+Treatment — pages 26–27	المعالجة — ص 26–27
+RACI Accountability Matrix	مصفوفة الأدوار والمساءلة RACI
+R = Responsible, A = Accountable, C = Consulted, I = Informed	R = المنفذ، A = المسؤول عن المساءلة، C = المستشار، I = من يجب إبلاغه
+Activity	النشاط
+Business Owner	مالك العمل
+AI/Product Team	فريق الذكاء الاصطناعي أو المنتج
+AI Governance	حوكمة الذكاء الاصطناعي
+Data Owner / Data Governance	مالك البيانات أو حوكمة البيانات
+Privacy / DPO	الخصوصية أو مسؤول حماية البيانات
+Information Security	أمن المعلومات
+Executive Sponsor	الراعي التنفيذي
+Internal Audit	المراجعة الداخلية
+Validate accountable ownership	تحقق من تحديد مسؤول المساءلة
+Save RACI to case	احفظ مصفوفة RACI في الحالة
+Unsaved RACI edits. Save this matrix before leaving the page.	توجد تعديلات غير محفوظة على المصفوفة. احفظها قبل مغادرة الصفحة.
+Each activity has one clear Accountable role.	لكل نشاط مسؤول مساءلة واحد محدد.
+RACI saved to this case. Use Save Case, then Download Case JSON to retain it after this session.	حُفظت المصفوفة في الحالة. اختر «حفظ الحالة» ثم «تنزيل ملف الحالة JSON» للاحتفاظ بها بعد الجلسة.
+Keep one Accountable role per activity. Use A, R, C, I or combinations such as A/R. Save RACI to case before saving or downloading the whole case. The repository baseline is unchanged.	عيّن مسؤول مساءلة واحدًا لكل نشاط. استخدم A أو R أو C أو I أو تركيبات مثل A/R. احفظ المصفوفة في الحالة قبل حفظ ملف الحالة أو تنزيله. يظل القالب الأساسي كما هو.
+AI System	نظام الذكاء الاصطناعي
+Risk Level	مستوى المخاطر
+Risk Level Source	مصدر مستوى المخاطر
+Use case	حالة الاستخدام
+Risk level for {value} is from the current session risk assessment.	مستوى مخاطر «{value}» مستمد من تقييم الجلسة الحالية.
+In a real implementation this register would have controlled ownership, versioning, evidence links and lifecycle status.	في التطبيق الفعلي، يتطلب السجل إدارة الملكية والإصدارات وروابط الأدلة وحالة دورة الحياة.
+AI Governance Control Library	مكتبة ضوابط حوكمة الذكاء الاصطناعي
+Control assessment for the current AI use case	تقييم الضوابط لحالة الاستخدام الحالية
+Filter by governance area	التصفية حسب مجال الحوكمة
+Baseline control catalogue	كتالوج الضوابط الأساسي
+DAT-01 Privacy & Data Governance Assessment	DAT-01 — تقييم الخصوصية وحوكمة البيانات
+FAI-01 Fairness Assessment	FAI-01 — تقييم الإنصاف
+SEC-01 AI Security Assessment	SEC-01 — تقييم أمن الذكاء الاصطناعي
+TRN-01 Transparency Assessment	TRN-01 — تقييم الشفافية
+VAL-01 AI Validation Assessment	VAL-01 — تقييم التحقق من النظام
+MON-01 AI Monitoring Plan	MON-01 — خطة متابعة النظام
+INC-01 AI Incident Management & Escalation Plan	INC-01 — خطة إدارة الحوادث والتصعيد
+Illustrative governance assessment only; this is not a legal compliance determination or a DPIA.	تقييم حوكمة استرشادي؛ لا يُعد إثباتًا للامتثال القانوني أو تقييمًا لأثر حماية البيانات.
+Illustrative governance assessment only; this does not claim that a real-world statistical fairness audit has been completed.	تقييم حوكمة استرشادي؛ لا يثبت إجراء تدقيق إحصائي فعلي للإنصاف.
+Illustrative governance assessment only; this is not evidence of a completed technical security test or production security approval.	تقييم حوكمة استرشادي؛ لا يثبت إجراء اختبار أمني تقني أو الحصول على اعتماد أمني للتشغيل.
+Illustrative governance assessment only; this does not prove that real-world disclosures or communications have occurred.	تقييم حوكمة استرشادي؛ لا يثبت تنفيذ إفصاحات أو اتصالات فعلية.
+Illustrative governance assessment only; this does not demonstrate completed real-world model validation or production performance.	تقييم حوكمة استرشادي؛ لا يثبت تحققًا فعليًا من النموذج أو أداءه في التشغيل.
+Illustrative governance monitoring plan only; this does not represent live production monitoring or actual operational metrics.	خطة متابعة استرشادية؛ لا تمثل متابعة حية أو مقاييس تشغيل فعلية.
+Illustrative governance incident-response plan only; this does not represent actual production incidents or completed real-world incident response.	خطة استرشادية للاستجابة للحوادث؛ لا تمثل حوادث تشغيل حقيقية أو استجابة فعلية مكتملة.
+#### Optional fairness metrics & evaluation documentation	#### توثيق اختياري لمقاييس الإنصاف وتقييمه
+Planned records document a design only. Performed records are user-reported test documentation; this app does not verify results or statistical validity. Use synthetic information only.	توثّق السجلات المخططة تصميم التقييم. أما السجلات المنفذة فيوثّقها المستخدم ولا يتحقق التطبيق من النتائج أو صلاحيتها الإحصائية. استخدم بيانات افتراضية فقط.
+**Thresholds for this single declared metric**	**عتبات المقياس المحدد**
+Numeric thresholds and subgroup results must use the same metric unit and scale. Qualitative criteria require human review.	يجب أن تستخدم العتبات العددية ونتائج المجموعات الفرعية وحدة المقياس ونطاقه نفسيهما. تتطلب المعايير النوعية مراجعة بشرية.
+Add threshold	إضافة عتبة
+Remove threshold {value}	حذف العتبة {value}
+Threshold {value}	العتبة {value}
+**Subgroup results for the declared metric**	**نتائج المجموعات الفرعية للمقياس المحدد**
+Add subgroup result	إضافة نتيجة مجموعة فرعية
+Remove subgroup result {value}	حذف نتيجة المجموعة الفرعية {value}
+Subgroup result {value}	نتيجة المجموعة الفرعية {value}
+Save FAI-01 fairness evaluation	حفظ تقييم الإنصاف FAI-01
+#### Optional structured explainability evidence	#### أدلة منظّمة اختيارية لقابلية التفسير
+Record synthetic, user-reported examples only. The application does not generate or verify explanations. A saved example does not establish correctness, accessibility, usefulness, or audience understanding. Evidence references are user-reported and are not independently authenticated.	سجّل أمثلة افتراضية فقط. لا يولّد التطبيق التفسيرات أو يتحقق منها. حفظ المثال لا يثبت صحته أو سهولة الوصول إليه أو فائدته أو فهم الجمهور له. مراجع الأدلة يدوّنها المستخدم ولا تُوثّق بصورة مستقلة.
+**Synthetic explanation examples**	**أمثلة تفسير افتراضية**
+Add explanation example	إضافة مثال تفسير
+**Accessibility and usefulness feedback records**	**سجلات الملاحظات حول سهولة الوصول والفائدة**
+These records document review activity only; their presence does not establish accessibility, usefulness, understanding, or acceptance.	توثق هذه السجلات نشاط المراجعة فقط، ولا تثبت سهولة الوصول أو الفائدة أو الفهم أو القبول.
+Add audience review	إضافة مراجعة الجمهور
+Save TRN-01 explainability evidence	حفظ أدلة قابلية التفسير TRN-01
+#### Optional structured validation evaluation	#### تقييم تحقق منظّم اختياري
+Planned records describe intended validation. Performed records are user-reported documentation and do not independently verify model performance, safety, or compliance. Use synthetic information only.	تصف السجلات المخططة التحقق المزمع. والسجلات المنفذة توثيق يقدمه المستخدم ولا يثبت أداء النموذج أو سلامته أو امتثاله بصورة مستقلة. استخدم بيانات افتراضية فقط.
+**Validation metrics and planned acceptance thresholds**	**مقاييس التحقق وعتبات القبول المخططة**
+Each metric has its own identifier, threshold, unit, and scale. Result rows select a metric and must match its unit and scale. No official pass threshold is supplied.	لكل مقياس معرّف وعتبة ووحدة ونطاق. يجب ربط كل نتيجة بمقياس ومطابقة وحدته ونطاقه. لا يتضمن التطبيق عتبة نجاح رسمية.
+Add validation metric	إضافة مقياس تحقق
+**Performed metric results**	**نتائج المقاييس المنفذة**
+Add validation result	إضافة نتيجة تحقق
+Save VAL-01 validation evaluation	حفظ تقييم التحقق VAL-01
+Personal data categories	فئات البيانات الشخصية
+Purpose and necessity	الغرض والضرورة
+Data minimisation measures	تدابير تقليل البيانات
+Sensitive data is used	تُستخدم بيانات حساسة
+Sensitive data categories/details	فئات البيانات الحساسة وتفاصيلها
+Who can access the data	من يمكنه الوصول إلى البيانات
+Responsible data/business owner	مالك البيانات أو العمل المسؤول
+Retention or deletion approach	نهج الاحتفاظ أو الحذف
+Privacy risks	مخاطر الخصوصية
+Mitigations	تدابير التخفيف
+Privacy/DPO reviewer	مراجع الخصوصية أو مسؤول حماية البيانات
+Assessment status	حالة التقييم
+Affected groups	الفئات المتأثرة
+Fairness risk	مخاطر الإنصاف
+Evaluation approach	نهج التقييم
+Data / evaluation limitations	قيود البيانات أو التقييم
+Findings / observations	النتائج أو الملاحظات
+Mitigation actions	إجراءات التخفيف
+Responsible owner	المالك المسؤول
+Fairness / AI Governance reviewer	مراجع الإنصاف أو حوكمة الذكاء الاصطناعي
+Threshold type	نوع العتبة
+System / AI security scope	نطاق أمن النظام
+Key security risks	المخاطر الأمنية الرئيسية
+Access control approach	نهج ضبط الوصول
+Data protection / secure handling measures	تدابير حماية البيانات والتعامل الآمن معها
+Third-party / dependency considerations	اعتبارات الأطراف الثالثة والتبعيات
+Security monitoring approach	نهج المتابعة الأمنية
+Incident / escalation approach	نهج الاستجابة والتصعيد
+Security limitations / outstanding actions	القيود الأمنية والإجراءات المعلقة
+Security reviewer	مراجع الأمن
+AI system purpose	غرض نظام الذكاء الاصطناعي
+Intended users / affected stakeholders	المستخدمون المقصودون والأطراف المتأثرة
+Key system limitations	قيود النظام الرئيسية
+Human oversight approach	نهج الإشراف البشري
+Information to be communicated	المعلومات المراد إيصالها
+Communication / disclosure approach	نهج التواصل والإفصاح
+Transparency limitations / outstanding actions	قيود الشفافية والإجراءات المعلقة
+Responsible transparency owner	المسؤول عن الشفافية
+Transparency / AI Governance reviewer	مراجع الشفافية أو حوكمة الذكاء الاصطناعي
+Planned documentation records example context above; add example rows only after documenting a performed example.	يتضمن التوثيق المخطط سياق المثال أعلاه. لا تضف صفوفًا للأمثلة إلا بعد توثيق مثال منفذ.
+Validation scope	نطاق التحقق
+Intended performance / acceptance criteria	الأداء المستهدف ومعايير القبول
+Validation approach	نهج التحقق
+Data / test-set considerations	اعتبارات البيانات ومجموعة الاختبار
+Human oversight validation	التحقق من الإشراف البشري
+Validation findings / current evidence	نتائج التحقق والأدلة الحالية
+Limitations / outstanding validation actions	القيود وإجراءات التحقق المعلقة
+Responsible validation owner	المسؤول عن التحقق
+Validation reviewer	مراجع التحقق
+Metric ID	معرّف المقياس
+Metric name	اسم المقياس
+Metric definition	تعريف المقياس
+Metric unit	وحدة المقياس
+Metric scale	نطاق المقياس
+Acceptance comparator	عامل مقارنة القبول
+Acceptance threshold rationale	مبررات عتبة القبول
+Result metric ID	معرّف مقياس النتيجة
+Measured value	القيمة المقاسة
+Result unit	وحدة النتيجة
+Result scale	نطاق النتيجة
+Sample size / denominator (optional)	حجم العينة أو المقام (اختياري)
+Test date (YYYY-MM-DD)	تاريخ الاختبار (YYYY-MM-DD)
+Result evidence reference	مرجع دليل النتيجة
+Monitoring objectives	أهداف المتابعة
+Performance metrics to monitor	مقاييس الأداء المطلوب متابعتها
+Fairness / disparity monitoring	متابعة الإنصاف والتفاوت
+Human override / review monitoring	متابعة التدخل والمراجعة البشرية
+Incident and complaint indicators	مؤشرات الحوادث والشكاوى
+Data / model drift indicators	مؤشرات انجراف البيانات أو النموذج
+Monitoring thresholds / trigger conditions	عتبات المتابعة وشروط التنبيه
+Monitoring frequency	دورية المتابعة
+Monitoring responsibilities	مسؤوليات المتابعة
+Escalation when thresholds are breached	التصعيد عند تجاوز العتبات
+Monitoring limitations / outstanding actions	قيود المتابعة والإجراءات المعلقة
+Responsible monitoring owner	المسؤول عن المتابعة
+Monitoring reviewer	مراجع المتابعة
+Incident definition / scope	تعريف الحادث ونطاقه
+Incident detection and reporting channels	قنوات اكتشاف الحوادث والإبلاغ عنها
+Initial assessment and triage approach	نهج التقييم الأولي والفرز
+Severity / impact classification	تصنيف الشدة والأثر
+Immediate containment / protective actions	إجراءات الاحتواء والحماية الفورية
+Human review and correction of affected decisions	المراجعة البشرية وتصحيح القرارات المتأثرة
+Escalation criteria	معايير التصعيد
+Escalation roles / notification responsibilities	أدوار التصعيد ومسؤوليات الإخطار
+Investigation and root-cause approach	نهج التحقيق وتحليل السبب الجذري
+Corrective and preventive actions	الإجراءات التصحيحية والوقائية
+Recovery / return-to-service criteria	معايير التعافي واستئناف الخدمة
+Incident documentation / record keeping	توثيق الحوادث وحفظ السجلات
+Post-incident review / lessons learned	مراجعة ما بعد الحادث والدروس المستفادة
+Incident-response limitations / outstanding actions	قيود الاستجابة للحوادث والإجراءات المعلقة
+Responsible incident-response owner	المسؤول عن الاستجابة للحوادث
+Incident-response reviewer	مراجع الاستجابة للحوادث
+Evaluation stage	مرحلة التقييم
+Subgroup name	اسم المجموعة الفرعية
+Metric value	قيمة المقياس
+Event numerator (optional)	عدد الحالات المرصودة أو البسط (اختياري)
+Subgroup evidence reference	مرجع دليل المجموعة الفرعية
+Validation evaluation stage	مرحلة تقييم التحقق
+No numeric threshold is recorded; this metric requires human review.	لا توجد عتبة عددية مسجلة؛ يتطلب المقياس مراجعة بشرية.
+Planned acceptance threshold	عتبة القبول المخططة
+Evaluation documentation status	حالة توثيق التقييم
+Comparator	عامل المقارنة
+Threshold value	قيمة العتبة
+Threshold rationale	مبررات العتبة
+Qualitative criterion description	وصف المعيار النوعي
+Human-review rationale	مبررات المراجعة البشرية
+Human review is required for this criterion	يتطلب المعيار مراجعة بشرية
+Validation documentation status	حالة توثيق التحقق
+Dataset source	مصدر مجموعة البيانات
+Dataset timeframe	الفترة الزمنية للبيانات
+Fairness metric name	اسم مقياس الإنصاف
+Evaluation responsible owner	المسؤول عن التقييم
+Evaluation reviewer	مراجع التقييم
+Evaluation review date (YYYY-MM-DD)	تاريخ مراجعة التقييم (YYYY-MM-DD)
+Explainability documentation stage	مرحلة توثيق قابلية التفسير
+Explainability documentation status	حالة توثيق قابلية التفسير
+Explanation method	أسلوب التفسير
+Method description	وصف الأسلوب
+Intended audiences	الجمهور المقصود
+Planned example/context (synthetic)	المثال أو السياق المخطط (افتراضي)
+Planned accessibility/usefulness feedback collection	خطة جمع ملاحظات سهولة الوصول والفائدة
+Human review approach	نهج المراجعة البشرية
+Challenge and correction process	مسار الاعتراض والتصحيح
+Explainability limitations	قيود قابلية التفسير
+Outstanding actions	الإجراءات المعلقة
+Explainability evidence owner	مالك أدلة قابلية التفسير
+Explainability evidence reviewer	مراجع أدلة قابلية التفسير
+Documentation review date (YYYY-MM-DD)	تاريخ مراجعة التوثيق (YYYY-MM-DD)
+Synthetic decision/reference ID	معرّف القرار أو المرجع الافتراضي
+Example intended audience	الجمهور المقصود بالمثال
+Synthetic input / relevant factor summary	ملخص المدخلات الافتراضية والعوامل ذات الصلة
+Recommendation or decision-support output	التوصية أو مخرج دعم القرار
+Human-readable explanation	تفسير مفهوم للقارئ
+Example evidence reference	مرجع دليل المثال
+Example date (YYYY-MM-DD)	تاريخ المثال (YYYY-MM-DD)
+Human review findings/reference (optional)	نتائج أو مرجع المراجعة البشرية (اختياري)
+Review intended audience	الجمهور المقصود بالمراجعة
+Accessibility / usefulness review method	أسلوب مراجعة سهولة الوصول والفائدة
+Synthetic findings / feedback summary	ملخص النتائج أو الملاحظات الافتراضية
+Review evidence reference	مرجع دليل المراجعة
+Audience review date (YYYY-MM-DD)	تاريخ مراجعة الجمهور (YYYY-MM-DD)
+Review limitations / corrective actions	قيود المراجعة والإجراءات التصحيحية
+Dataset / test-set source	مصدر مجموعة البيانات أو الاختبار
+Dataset / test-set purpose	غرض مجموعة البيانات أو الاختبار
+Dataset / test-set population	المجتمع الذي تمثله مجموعة البيانات أو الاختبار
+Dataset / test-set scope	نطاق مجموعة البيانات أو الاختبار
+Dataset / test-set timeframe	الفترة الزمنية لمجموعة البيانات أو الاختبار
+Dataset limitations	قيود مجموعة البيانات
+Validation method	منهج التحقق
+Test objectives	أهداف الاختبار
+Human oversight testing approach	نهج اختبار الإشراف البشري
+Human oversight test observations	ملاحظات اختبار الإشراف البشري
+Validation observations (no overall pass/fail claim)	ملاحظات التحقق (دون حكم عام بالنجاح أو الإخفاق)
+Validation limitations	قيود التحقق
+Humanity	الإنسانية
+Social & Environmental Benefits	المنافع الاجتماعية والبيئية
+Human & Dignity Impact Assessment	تقييم الأثر على الإنسان والكرامة
+Social & Environmental Impact Assessment	تقييم الأثر الاجتماعي والبيئي
+Affected stakeholder groups	فئات الأطراف المتأثرة
+Potential effects on human dignity, rights, choice, accessibility, and Saudi cultural context	الآثار المحتملة على الكرامة والحقوق وحرية الاختيار وسهولة الوصول والسياق الثقافي السعودي
+Potential adverse outcomes	النتائج السلبية المحتملة
+Human oversight, correction, or remedy mechanisms	آليات الإشراف البشري أو التصحيح أو الإنصاف
+Intended community or public-service benefits	المنافع المستهدفة للمجتمع أو الخدمات العامة
+Potential social harms and mitigation actions	الأضرار الاجتماعية المحتملة وإجراءات التخفيف
+Environmental/resource impacts	الأثر البيئي والأثر على الموارد
+Potential environmental, resource, or energy impacts	الآثار المحتملة على البيئة أو الموارد أو الطاقة
+Reason environmental impacts are Not Applicable	مبرر عدم انطباق الآثار البيئية
+Proposed impact indicators	مؤشرات الأثر المقترحة
+Follow-up responsibilities	مسؤوليات المتابعة
+Evidence references (do not include sensitive data)	مراجع الأدلة (دون بيانات حساسة)
+Evidence type	نوع الدليل
+Evidence limitations	قيود الأدلة
+Review date (YYYY-MM-DD)	تاريخ المراجعة (YYYY-MM-DD)
+Save Humanity Impact Assessment	حفظ تقييم أثر الإنسانية
+Save Social & Environmental Benefits Impact Assessment	حفظ تقييم أثر المنافع الاجتماعية والبيئية
+Select applicability	حدد الانطباق
+Numeric threshold	عتبة عددية
+Qualitative criterion	معيار نوعي
+Human review required	المراجعة البشرية مطلوبة
+unbounded	دون نطاق محدد
+percentage_0_100	نسبة مئوية (0–100)
+proportion_0_1	نسبة عشرية (0–1)
+DAT-01 assessment status	حالة تقييم DAT-01
+Save DAT-01 assessment	حفظ تقييم DAT-01
+DAT-01 assessment saved.	حُفظ تقييم DAT-01.
+FAI-01 assessment status	حالة تقييم FAI-01
+Save FAI-01 assessment	حفظ تقييم FAI-01
+FAI-01 assessment saved.	حُفظ تقييم FAI-01.
+SEC-01 assessment status	حالة تقييم SEC-01
+Save SEC-01 assessment	حفظ تقييم SEC-01
+SEC-01 assessment saved.	حُفظ تقييم SEC-01.
+TRN-01 assessment status	حالة تقييم TRN-01
+Save TRN-01 assessment	حفظ تقييم TRN-01
+TRN-01 assessment saved.	حُفظ تقييم TRN-01.
+VAL-01 assessment status	حالة تقييم VAL-01
+Save VAL-01 assessment	حفظ تقييم VAL-01
+VAL-01 assessment saved.	حُفظ تقييم VAL-01.
+MON-01 assessment status	حالة تقييم MON-01
+Save MON-01 assessment	حفظ تقييم MON-01
+MON-01 assessment saved.	حُفظ تقييم MON-01.
+INC-01 assessment status	حالة تقييم INC-01
+Save INC-01 assessment	حفظ تقييم INC-01
+INC-01 assessment saved.	حُفظ تقييم INC-01.
+Synthetic case workflow. Review fields record user attestations; reviewer identities and evidence authenticity are not independently verified.	مسار حالة افتراضية. تسجّل حقول المراجعة إقرارات المستخدم دون تحقق مستقل من هوية المراجعين أو صحة الأدلة.
+Explain the readiness impact in Readiness rationale. Dates use YYYY-MM-DD. Closure requires evidence, reviewer, review date and verification notes. Save Case persists records to disk.	وضّح أثر الإجراء في حقل مبررات الجاهزية. استخدم صيغة YYYY-MM-DD للتواريخ. يتطلب الإغلاق دليلًا ومراجعًا وتاريخ مراجعة وملاحظات تحقق. احفظ الحالة ثم نزّلها للاحتفاظ بالسجلات بعد الجلسة.
+Illustrative portfolio governance prototype; this is not a legal compliance determination, certification, or automatic deployment approval.	نموذج حوكمة استرشادي لمعرض الأعمال. لا يُعد إثبات امتثال أو شهادة أو موافقة تلقائية على النشر.
+Risk Score and Governance Tier above refer only to the illustrative eight-factor screening. National matrix results are per-risk assessments in Risk Register & Treatment; they are not inferred from this screening score.	تشير درجة المخاطر ومستوى الحوكمة أعلاه إلى الفحص الاسترشادي ذي العوامل الثمانية. يُقيّم كل خطر وفق المصفوفة الوطنية في سجل المخاطر، بصورة مستقلة عن درجة الفحص.
+Readiness is not evaluated until the risk assessment is complete.	يبدأ تقييم الجاهزية بعد اكتمال تقييم المخاطر.
+No current governance-readiness blockers are identified. This is not a legal compliance, certification, or production-approval determination.	لم تُحدد عوائق جاهزية حوكمة حالية. لا تثبت هذه النتيجة الامتثال ولا تمنح شهادة أو اعتمادًا للتشغيل.
+**Lifecycle follow-up — not a current readiness blocker**	**متابعة دورة الحياة — لا تمنع الجاهزية الحالية**
+Outstanding actions will be shown after risk assessment is complete.	تظهر الإجراءات المعلقة بعد اكتمال تقييم المخاطر.
+This is an illustrative governance workflow, not a legal compliance determination and not automatic deployment approval.	مسار حوكمة استرشادي؛ لا يحدد الامتثال القانوني ولا يمنح موافقة تلقائية على النشر.
+These summary values are the illustrative screening score and tier, not national-framework per-risk ratings. Readiness does not automatically accept residual risk.	تعرض هذه القيم درجة الفحص الاسترشادي ومستواه، بينما يُقيّم كل خطر وفق الإطار الوطني بصورة مستقلة. لا تؤدي الجاهزية إلى قبول المخاطر المتبقية تلقائيًا.
+The first four monitoring requirements are derived from a complete, Reviewed MON-01 assessment. Incident response readiness is derived from a complete, Reviewed INC-01 plan.	تُستمد متطلبات المتابعة الأربعة الأولى من تقييم MON-01 المكتمل والمراجع، وجاهزية الاستجابة للحوادث من خطة INC-01 المكتملة والمراجعة.
+**RET-01:** Lifecycle / Not Due — Does not block initial deployment readiness.	**RET-01:** ضابط دورة حياة غير مستحق حاليًا ولا يمنع جاهزية النشر الأولية.
+Action closure and readiness-impact choices are user-recorded attestations. They do not establish regulatory compliance or acceptance of residual risk.	إغلاق الإجراءات وتحديد أثرها على الجاهزية إقرارات يدوّنها المستخدم. لا تثبت الامتثال التنظيمي أو قبول المخاطر المتبقية.
+Illustrative documentation for the Humanity and Social & Environmental Benefits principles. Use synthetic information only; do not enter real citizen personal data, confidential details, or actual incident records.	توثيق استرشادي لمبدأ الإنسانية والمنافع الاجتماعية والبيئية. استخدم معلومات افتراضية فقط، دون بيانات شخصية حقيقية أو تفاصيل سرية أو سجلات حوادث فعلية.
+A planned activity is not work performed. Evidence type is user-entered and not independently verified. Do not invent stakeholder consultation, test results, environmental measurements, or approvals. A Reviewed assessment is a documentation status, not implementation evidence or SDAIA conformity.	النشاط المخطط لم يُنفذ بعد. يحدد المستخدم نوع الدليل دون تحقق مستقل. لا تسجّل مشاورات أو اختبارات أو قياسات بيئية أو موافقات لم تحدث. «تمت المراجعة» حالة توثيق ولا تثبت التنفيذ أو المطابقة مع سدايا.
+Use Save Case in the sidebar after saving an assessment to persist it locally and make it available after restarting the application.	بعد حفظ التقييم، اختر «حفظ الحالة» من الشريط الجانبي ثم نزّل ملفها للاحتفاظ به بعد انتهاء الجلسة.
+One or more loaded SDAIA impact assessments are Invalid and will not be treated as reviewed documentation. Save a corrected assessment explicitly to replace its invalid record.	يوجد تقييم أثر غير صالح في الحالة المحملة، ولن يُعامل على أنه توثيق مراجع. احفظ تقييمًا مصححًا لاستبدال السجل غير الصالح.
+Document the human decision after reassessment (SDAIA-P145, p. 27). A record here is a user attestation, not authenticated sign-off, legal compliance or final deployment approval.	وثّق القرار البشري بعد إعادة التقييم (SDAIA-P145، ص 27). يسجل النموذج إقرار المستخدم دون توقيع موثق أو إثبات امتثال أو اعتماد نهائي للنشر.
+Document the approved tolerance reference and authorized decision-maker. The app does not invent a tolerance threshold or assume that low scores are acceptable.	وثّق مرجع تحمّل المخاطر المعتمد وصاحب صلاحية القرار. لا يحدد التطبيق عتبة تحمّل ولا يفترض قبول الدرجات المنخفضة.
+Changes to a risk or its use-case context invalidate the previous decision for readiness. Save Case persists decision records; retain supporting review evidence separately.	أي تغيير في الخطر أو سياق الحالة يتطلب إعادة مراجعة القرار لأغراض الجاهزية. احفظ الحالة لتضمين القرارات واحتفظ بالأدلة الداعمة بصورة منفصلة.
+Complete the use-case intake and a national risk record first.	أكمل تسجيل حالة الاستخدام وأضف سجل خطر بالمنهجية الوطنية أولًا.
+This is a legacy illustrative record. Review and resave it using the national method first.	هذا سجل استرشادي قديم. راجعه وأعد حفظه وفق المنهجية الوطنية أولًا.
+A planned residual estimate cannot support an acceptance record. Complete and document post-treatment reassessment first.	لا يكفي التقدير المخطط لتسجيل القبول. أكمل إعادة التقييم بعد المعالجة ووثّقها أولًا.
+Current risk-decision records satisfy this prototype's review gate. Other controls and actions may still block readiness.	تستوفي قرارات المخاطر الحالية بوابة المراجعة في النموذج. قد تظل ضوابط أو إجراءات أخرى مانعة للجاهزية.
+A completed decision cannot have a future decision date.	لا يمكن أن يكون تاريخ القرار المكتمل في المستقبل.
+Set a next review date after today.	حدّد تاريخ المراجعة التالية بعد اليوم.
+Synthetic portfolio records. The national method implements the verified SDAIA-P145 v1 matrix (page 25), not framework-wide conformity. Residual values remain user estimates or reported reassessments, not proof of effectiveness or acceptance.	سجلات افتراضية لمعرض الأعمال. تطبق المنهجية الوطنية مصفوفة SDAIA-P145 الإصدار الأول (ص 25). قيم المخاطر المتبقية تقديرات أو نتائج إعادة تقييم يدوّنها المستخدم ولا تثبت الفعالية أو القبول.
+This saved record is illustrative. To migrate, explicitly select the national method, review all ratings against its definitions, document the assessment basis, and save. Previous scores are not automatically reclassified.	هذا سجل استرشادي. للانتقال، اختر المنهجية الوطنية وراجع جميع التقديرات وفق تعريفاتها ووثّق أساس التقييم ثم احفظ. لا يُعاد تصنيف الدرجات السابقة تلقائيًا.
+Likelihood: 1 Rare, 2 Unlikely, 3 Likely, 4 Almost certain (pp. 22–23). Impact: 1 Low, 2 Medium, 3 High, 4 Catastrophic (pp. 23–24). Use evidence and a defined time horizon; percentage ranges in the source are contextual references, not a required probability input.	الاحتمالية: 1 نادر، 2 غير مرجح، 3 مرجح، 4 شبه مؤكد (ص 22–23). الأثر: 1 منخفض، 2 متوسط، 3 مرتفع، 4 كارثي (ص 23–24). استخدم أدلة وأفقًا زمنيًا محددًا؛ النسب في المصدر مرجعية للسياق ولا يلزم إدخالها.
+Dates: YYYY-MM-DD. Closing requires evidence, reviewer and review date. Save Case persists records to disk.	صيغة التواريخ YYYY-MM-DD. يتطلب الإغلاق دليلًا ومراجعًا وتاريخ مراجعة. احفظ الحالة ثم نزّلها للاحتفاظ بالسجلات بعد الجلسة.
+Document exposure, preventive controls, ease of occurrence or precedents for likelihood; harm, scope, sensitivity or recovery for impact. Explain catastrophic impact only in the extreme context defined on pp. 23–24. An Accept strategy is not an approval record.	لتبرير الاحتمالية، وثّق التعرض والضوابط الوقائية وسهولة الحدوث أو السوابق. ولتبرير الأثر، وثّق الضرر والنطاق والحساسية أو التعافي. خصّص الأثر الكارثي للسياق الجسيم المحدد في ص 23–24. اختيار استراتيجية القبول لا يسجل موافقة.
+Verified against the supplied 48-page Arabic publication, including visual checks of the page-25 matrix. English labels are project translations. This prototype implements selected documentary and scoring components; it is not a conformity assessment.	رُوجعت المنهجية بالاستناد إلى المنشور العربي ذي 48 صفحة، بما في ذلك مصفوفة ص 25. المصطلحات الإنجليزية ترجمات للمشروع. يطبق النموذج عناصر مختارة من التوثيق والتقييم ولا يُعد تقييم مطابقة.
+The four reference pillars (pp. 14–16) are general principles, AI regulations, data regulations and sector regulations. Each source still needs an applicability and evidence assessment.	الركائز المرجعية الأربع (ص 14–16) هي المبادئ العامة، وتنظيمات الذكاء الاصطناعي، وتنظيمات البيانات، وتنظيمات القطاع. يلزم تقييم انطباق كل مرجع وأدلته.
+Low: 1–2 · Medium: 3–6 · High: 8–12 · Catastrophic: 16. With integer inputs 1–4, scores 5, 7, 10, 11 and 13–15 cannot occur.	منخفض: 1–2، متوسط: 3–6، مرتفع: 8–12، كارثي: 16. عند ضرب قيم صحيحة من 1 إلى 4، لا تنتج الدرجات 5 أو 7 أو 10 أو 11 أو 13–15.
+The eight-question Risk Screening remains an illustrative intake aid. It is separate from the national per-risk matrix. Existing records retain their methodology until explicitly reviewed and resaved.	الفحص الأولي ذو الأسئلة الثمانية أداة استرشادية مستقلة عن المصفوفة الوطنية لكل خطر. تحتفظ السجلات السابقة بمنهجيتها حتى مراجعتها وإعادة حفظها صراحةً.
+Transfer does not remove entity accountability. Residual risk must be reassessed using the same method; acceptance or escalation depends on approved risk tolerance and governance decisions, not the product score alone. This app does not authenticate approvals or automatically accept risk.	نقل الخطر لا يعفي الجهة من المساءلة. أعد تقييم الخطر المتبقي بالمنهجية نفسها. يعتمد القبول أو التصعيد على تحمّل المخاطر المعتمد وقرار الحوكمة، إضافة إلى الدرجة. لا يوثّق التطبيق الموافقات ولا يقبل المخاطر تلقائيًا.
+Illustrative analytical crosswalk to SDAIA's AI Ethics Principles. This is not SDAIA certification, official conformity assessment, legal compliance, or deployment approval.	ربط تحليلي استرشادي بمبادئ أخلاقيات الذكاء الاصطناعي لدى سدايا. لا يمثل شهادة أو تقييم مطابقة رسميًا أو إثبات امتثال أو موافقة على النشر.
+This page maps documented governance coverage and known gaps. A mapped control, completed form, or Reviewed status is not proof that a practice was implemented, tested, or effective.	تعرض الصفحة التغطية الموثقة وفجوات الأدلة. ربط ضابط أو إكمال نموذج أو اختيار «تمت المراجعة» لا يثبت تنفيذ الممارسة أو اختبارها أو فعاليتها.
+### Principle-specific impact documentation	### توثيق الأثر حسب المبدأ
+Open the SDAIA Impact Assessment page from app navigation to create or review these records.	افتح صفحة تقييم الأثر وفق مبادئ سدايا لإنشاء هذه السجلات أو مراجعتها.
+### Supplementary FAI-01 fairness evaluation documentation	### توثيق إضافي لتقييم الإنصاف FAI-01
+### Supplementary VAL-01 validation evaluation documentation	### توثيق إضافي لتقييم التحقق VAL-01
+### Supplementary TRN-01 explainability documentation	### توثيق إضافي لقابلية التفسير TRN-01
+Missing — no saved supplementary fairness evaluation.	غير متوفر — لا يوجد تقييم إنصاف إضافي محفوظ.
+Missing — no saved supplementary validation evaluation.	غير متوفر — لا يوجد تقييم تحقق إضافي محفوظ.
+Missing — no saved supplementary explainability documentation.	غير متوفر — لا يوجد توثيق إضافي لقابلية التفسير.
+Missing — no saved assessment documentation.	غير متوفر — لا يوجد توثيق تقييم محفوظ.
+Source	المصدر
+Alignment rationale	مبررات المواءمة
+Documented coverage	التغطية الموثقة
+Known evidence gaps	فجوات الأدلة المعروفة
+Official principle	المبدأ الرسمي
+Annexure C checklist IDs	معرّفات قائمة التحقق في الملحق ج
+Limitations	القيود
+References and limitations — {value}	المراجع والقيود — {value}
+Related existing controls: {value}	الضوابط الحالية ذات الصلة: {value}
+{value} needs meaningful text.	أدخل نصًا واضحًا في حقل «{value}».
+Select a valid AI role.	اختر دورًا صالحًا للذكاء الاصطناعي.
+Select a valid human oversight approach.	اختر نهجًا صالحًا للإشراف البشري.
+Complete the AI Use Case Intake first.	أكمل تسجيل حالة الاستخدام أولًا.
+Required controls: {value} | Evidence available: {value} | Evidence pending: {value} | Controls not due: {value}	الضوابط المطلوبة: {value} | الأدلة المتاحة: {value} | الأدلة المعلقة: {value} | ضوابط غير مستحقة: {value}
+Required: {value} · Available: {value} · Pending: {value} · Lifecycle / Not Due: {value}	المطلوبة: {value} · المتاحة: {value} · المعلقة: {value} · دورة الحياة أو غير مستحقة: {value}
+{value}: required control evidence is Pending.	{value}: دليل الضابط المطلوب معلّق.
+{value}: corrective action requires verified closure.	{value}: يتطلب الإجراء التصحيحي تحققًا من الإغلاق.
+Example {value}	المثال {value}
+Remove explanation example {value}	حذف مثال التفسير {value}
+Audience review {value}	مراجعة الجمهور {value}
+Remove audience review {value}	حذف مراجعة الجمهور {value}
+Metric {value}	المقياس {value}
+Remove validation metric {value}	حذف مقياس التحقق {value}
+Validation result {value}	نتيجة التحقق {value}
+Remove validation result {value}	حذف نتيجة التحقق {value}
+Evidence reference	مرجع الدليل
+Dataset scope	نطاق مجموعة البيانات
+Dataset population	المجتمع الذي تمثله البيانات
+Dataset representativeness limitations	قيود تمثيل مجموعة البيانات
+Groups/subgroups and selection basis	المجموعات أو المجموعات الفرعية وأساس اختيارها
+Calculation approach	طريقة الحساب
+Evaluation outcome	نتيجة التقييم
+Observed limitations	القيود الملحوظة
+inherent_score	درجة الخطر الكامن
+residual_score	درجة الخطر المتبقي
+inherent_level	مستوى الخطر الكامن
+residual_level	مستوى الخطر المتبقي
+risk_id	معرّف الخطر
+action_id	معرّف الإجراء
+description	الوصف
+cause	السبب
+consequence	النتيجة المحتملة
+owner	المالك
+controls	الضوابط
+treatment	المعالجة
+due_date	تاريخ الاستحقاق
+status	الحالة
+evidence	الدليل
+reviewer	المراجع
+review_date	تاريخ المراجعة
+likelihood	الاحتمالية
+impact	الأثر
+residual_likelihood	الاحتمالية المتبقية
+residual_impact	الأثر المتبقي
+category	الفئة
+methodology	المنهجية
+assessment_horizon	الأفق الزمني للتقييم
+likelihood_rationale	مبررات الاحتمالية
+impact_rationale	مبررات الأثر
+residual_rationale	مبررات المخاطر المتبقية
+assessment_evidence	أدلة التقييم
+residual_basis	أساس التقييم المتبقي
+treatment_strategy	استراتيجية المعالجة
+finding	الملاحظة
+control_id	معرّف الضابط
+action_plan	خطة الإجراء
+verification_notes	ملاحظات التحقق
+readiness_rationale	مبررات الأثر على الجاهزية
+blocks_readiness	مانع للجاهزية
+• {value} (pp. {value})	• {value} (ص {value})
+Source: [الإطار الوطني لإدارة مخاطر الذكاء الاصطناعي]({value}), SDAIA-P145, version 1, April 2026. Method ID: `{value}`.	المصدر: [الإطار الوطني لإدارة مخاطر الذكاء الاصطناعي]({value})، SDAIA-P145، الإصدار الأول، أبريل 2026. معرّف المنهجية: `{value}`.
+Source: [{value} ({value}, Version {value})]({value}) — {value}, {value}.	المصدر: [{value} ({value}، الإصدار {value})]({value}) — {value}، {value}.
+Context and scope — تحديد السياق والنطاق	تحديد السياق والنطاق
+Risk identification — تحديد المخاطر	تحديد المخاطر
+Risk assessment — تقييم المخاطر	تقييم المخاطر
+Risk treatment — معالجة المخاطر	معالجة المخاطر
+Monitoring and review — المتابعة والمراجعة	المتابعة والمراجعة
+**Required controls:** {value} | **Evidence available:** {value} | **Evidence pending:** {value} | **Controls not due:** {value}	**الضوابط المطلوبة:** {value} | **الأدلة المتاحة:** {value} | **الأدلة المعلقة:** {value} | **غير المستحقة:** {value}
+FAI-01 fairness evaluation saved as {value} documentation.	حُفظ توثيق تقييم الإنصاف FAI-01 بالحالة «{value}».
+TRN-01 explainability documentation saved as {value}.	حُفظ توثيق قابلية التفسير TRN-01 بالحالة «{value}».
+VAL-01 validation evaluation saved as {value} documentation.	حُفظ توثيق تقييم التحقق VAL-01 بالحالة «{value}».
+{value} assessment saved as {value} documentation.	حُفظ توثيق تقييم «{value}» بالحالة «{value}».
+Metric comparison: **{value}**. This is not an overall validation result.	مقارنة المقياس: **{value}**. لا تمثل هذه النتيجة حكمًا عامًا على التحقق.
+Meets threshold	يستوفي العتبة
+Does not meet threshold	لا يستوفي العتبة
+Threshold met	استوفى العتبة
+Threshold not met	لم يستوفِ العتبة
+Not comparable	غير قابل للمقارنة
+Metric: {value} · {value} · {value}	المقياس: {value} · {value} · {value}
+Remove linked result rows first, then remove metric '{value}'.	احذف صفوف النتائج المرتبطة أولًا، ثم احذف المقياس «{value}».
+Result references unknown metric ID '{value}'. Select a defined metric before saving.	تشير النتيجة إلى معرّف مقياس غير معروف «{value}». اختر مقياسًا محددًا قبل الحفظ.
+Assessment documentation saved ({value}); user-entered evidence type: {value}. Reviewed is a user-recorded attestation, not independently verified evidence of implementation or effectiveness.	حُفظ توثيق التقييم ({value})؛ نوع الدليل الذي سجله المستخدم: {value}. حالة المراجعة إقرار من المستخدم دون تحقق مستقل من التنفيذ أو الفعالية.
+Saved evaluation design: Planned ({value}). No performed test results are recorded.	تصميم التقييم المحفوظ: مخطط ({value}). لا توجد نتائج اختبار منفذة مسجلة.
+Saved evaluation documentation: Performed ({value}); test results are user-reported and not independently verified for authenticity, implementation, or statistical validity.	توثيق التقييم المحفوظ: منفذ ({value}). سجّل المستخدم النتائج دون تحقق مستقل من أصالتها أو تنفيذها أو صلاحيتها الإحصائية.
+Saved validation documentation: Planned ({value}). No measured validation results are recorded.	توثيق التحقق المحفوظ: مخطط ({value}). لا توجد نتائج مقاسة مسجلة.
+Saved validation documentation: Performed ({value}); results are user-reported and not independently verified for performance, safety, or compliance.	توثيق التحقق المحفوظ: منفذ ({value}). يدوّن المستخدم النتائج دون تحقق مستقل من الأداء أو السلامة أو الامتثال.
+Saved explainability documentation: Planned ({value}); no performed examples or completed audience reviews are recorded.	توثيق قابلية التفسير المحفوظ: مخطط ({value}). لا توجد أمثلة منفذة أو مراجعات جمهور مكتملة.
+Saved explainability documentation: Performed ({value}); examples are user-reported and not independently verified. Audience accessibility or usefulness is documented separately and is not inferred from examples.	توثيق قابلية التفسير المحفوظ: منفذ ({value}). يدوّن المستخدم الأمثلة دون تحقق مستقل. توثّق سهولة الوصول أو الفائدة للجمهور بصورة منفصلة ولا تُستنتج من الأمثلة.
+**Official principle:** {value} (printed pages {value})	**المبدأ الرسمي:** {value} (الصفحات المطبوعة {value})
+Unable to display SDAIA Framework Alignment: {value}	تعذّر عرض المواءمة مع مبادئ سدايا: {value}
+Complete a national per-risk assessment and record its residual-risk decision. An empty register is not a completed risk review.	أكمل تقييم كل خطر بالمنهجية الوطنية وسجّل قرار المخاطر المتبقية. السجل الفارغ لا يمثل مراجعة مكتملة للمخاطر.
+Document the use-case context before reviewing residual risk.	وثّق سياق حالة الاستخدام قبل مراجعة المخاطر المتبقية.
+{value}: legacy illustrative record needs explicit national reassessment.	{value}: يتطلب السجل الاسترشادي القديم إعادة تقييم صريحة بالمنهجية الوطنية.
+{value}: planned residual estimate needs post-treatment reassessment and evidence.	{value}: يتطلب التقدير المخطط إعادة تقييم بعد المعالجة وأدلة.
+{value}: residual-risk acceptance or escalation has not been recorded.	{value}: لم يُسجل قرار قبول المخاطر المتبقية أو تصعيدها.
+{value}: assessment or context changed; review the decision again.	{value}: تغيّر التقييم أو السياق؛ أعد مراجعة القرار.
+{value}: decision is {value}; resolve before deployment approval.	{value}: حالة القرار «{value}»؛ عالجها قبل الموافقة على النشر.
+{value}: residual-risk decision is due for review.	{value}: حان موعد مراجعة قرار المخاطر المتبقية.
+{value}: decision date is in the future.	{value}: تاريخ القرار في المستقبل.
+{value}: every decision field needs meaningful text.	{value}: أدخل نصًا واضحًا في كل حقول القرار.
+{value}: decision dates must use YYYY-MM-DD.	{value}: استخدم صيغة YYYY-MM-DD لتواريخ القرار.
+{value}: next review must follow the decision date.	{value}: يجب أن يلي موعد المراجعة التالية تاريخ القرار.
+Purpose	الغرض
+Data Categories	فئات البيانات
+Human Oversight	الإشراف البشري
+Next Review	المراجعة التالية
+Frequency	الدورية
+Accountability	المساءلة
+Context	السياق
+Privacy & Data Governance	الخصوصية وحوكمة البيانات
+Privacy/DPO	الخصوصية أو مسؤول حماية البيانات
+Fairness	الإنصاف
+Security	الأمن
+Transparency	الشفافية
+Validation	التحقق
+Monitoring	المتابعة
+Incident Management	إدارة الحوادث
+Privacy & Security	الخصوصية والأمن
+Reliability & Safety	الموثوقية والسلامة
+Transparency & Explainability	الشفافية وقابلية التفسير
+Accountability & Responsibility	المساءلة والمسؤولية
+Governance Review	مراجعة الحوكمة
+Live	قيد التشغيل
+Pilot	تجريبي
+Required for final output	مطلوب للمخرج النهائي
+Escalation to human agent	تصعيد إلى موظف
+Operational review	مراجعة تشغيلية
+CSV baseline sample	عينة من السجل الأساسي
+Current session risk assessment	تقييم المخاطر في الجلسة الحالية
+Citizen Request Prioritisation AI	نظام ترتيب أولويات طلبات المواطنين
+Customer Services	خدمات المستفيدين
+Recommend service-request priority	اقتراح أولوية طلب الخدمة
+Citizen requests; location area; timestamps	طلبات المواطنين؛ النطاق المكاني؛ الطوابع الزمنية
+Internal Policy Summariser	نظام تلخيص السياسات الداخلية
+Corporate Services	الخدمات المؤسسية
+Summarise internal policy documents	تلخيص وثائق السياسات الداخلية
+Internal documents	وثائق داخلية
+Customer Service Chatbot	مساعد محادثة لخدمة المستفيدين
+Customer Experience	تجربة المستفيد
+Answer common service queries	الإجابة عن الاستفسارات الشائعة
+User questions; service information	استفسارات المستخدمين؛ معلومات الخدمات
+Road Maintenance Forecasting	التنبؤ باحتياجات صيانة الطرق
+Operations	العمليات
+Predict maintenance demand	توقع الطلب على الصيانة
+Asset history; sensor data; weather data	سجل الأصول؛ بيانات المستشعرات؛ بيانات الطقس
+Assign a named business owner and accountable governance role for each AI system	عيّن مالك عمل محددًا ودورًا مسؤولًا عن حوكمة كل نظام.
+Document intended purpose users affected stakeholders and reasonably foreseeable misuse	وثّق الغرض والمستخدمين والأطراف المتأثرة وإساءة الاستخدام المتوقعة.
+Review lawful and appropriate use of personal data and minimise data to what is necessary	راجع مشروعية وملاءمة استخدام البيانات الشخصية واقتصر على البيانات اللازمة.
+Assess relevant performance disparities and document mitigation for materially affected groups	قيّم تفاوت الأداء ووثّق التخفيف للفئات المتأثرة جوهريًا.
+Perform AI-specific security review including third-party and access risks	أجرِ مراجعة أمنية للنظام تشمل مخاطر الأطراف الثالثة والوصول.
+Document system purpose limitations human oversight and user-facing disclosure where appropriate	وثّق الغرض والقيود والإشراف البشري والإفصاح للمستخدمين عند الحاجة.
+Define acceptance criteria and validate performance against intended use	حدّد معايير القبول وتحقق من الأداء وفق الاستخدام المقصود.
+Monitor performance incidents complaints overrides and drift against defined thresholds	تابع الأداء والحوادث والشكاوى والتدخلات والانجراف مقابل عتبات محددة.
+Maintain escalation and response process for AI incidents and material failures	حافظ على آلية للتصعيد والاستجابة لحوادث الذكاء الاصطناعي والإخفاقات الجوهرية.
+Define conditions for suspension retirement or replacement of the AI system	حدّد شروط تعليق النظام أو إيقافه نهائيًا أو استبداله.
+RACI and AI inventory	مصفوفة المسؤوليات وسجل الأنظمة
+At intake and on role change	عند التسجيل وتغيير الأدوار
+Use-case assessment	تقييم حالة الاستخدام
+Before development or procurement	قبل التطوير أو الشراء
+Privacy assessment	تقييم الخصوصية
+Before deployment and on material change	قبل النشر وعند تغير جوهري
+Fairness evaluation report	تقرير تقييم الإنصاف
+Before deployment and periodically	قبل النشر وبصورة دورية
+Security assessment	تقييم الأمن
+System/model documentation	توثيق النظام أو النموذج
+Validation report	تقرير التحقق
+Before deployment	قبل النشر
+Monitoring dashboard	لوحة المتابعة
+Ongoing	مستمر
+Incident log and response record	سجل الحوادث والاستجابة
+Retirement decision record	سجل قرار الإيقاف النهائي
+At review or trigger event	عند المراجعة أو وقوع حدث محفّز
+The use-case context, data considerations, fairness assessment, validation plan, and monitoring plan provide places to document potential differential impacts and planned responses.	تتيح نماذج سياق الاستخدام والبيانات والإنصاف والتحقق والمتابعة توثيق تفاوت الأثر والاستجابات المخططة.
+FAI-01 records affected groups, fairness risks, evaluation approach and limitations, observations, mitigations, owner, reviewer, and assessment status. An optional nested evaluation record can document selected groups, dataset context, metric definitions, proposed thresholds and rationale, subgroup results, test outcome, evidence references, limitations, and review roles. MAP-01 and intake add purpose and affected-people context; MON-01 includes planned disparity monitoring.	يوثّق FAI-01 الفئات المتأثرة ومخاطر الإنصاف ونهج التقييم وقيوده والملاحظات والتخفيف والمالك والمراجع والحالة. يمكن إضافة سجل يتضمن سياق البيانات وتعريف المقاييس والعتبات ومبرراتها ونتائج المجموعات والأدلة وأدوار المراجعة. يضيف MAP-01 سياق الغرض والأشخاص المتأثرين، ويتضمن MON-01 خطة متابعة التفاوت.
+The optional FAI-01 evaluation record is user-entered documentation, not an independently verified statistical assessment. It does not establish metric suitability, dataset representativeness, threshold appropriateness, subgroup result validity, or operational monitoring outcomes. No official SDAIA score or pass threshold is implemented.	سجل FAI-01 توثيق يدخله المستخدم دون تحقق إحصائي مستقل. لا يثبت ملاءمة المقاييس أو تمثيل البيانات أو مناسبة العتبات أو صحة نتائج المجموعات أو المتابعة التشغيلية. لا يطبق التطبيق درجة أو عتبة نجاح رسمية من سدايا.
+A completed or Reviewed form does not establish that a fairness evaluation was performed or that outcomes are fair.	لا يثبت إكمال النموذج أو مراجعته تنفيذ تقييم الإنصاف أو عدالة النتائج.
+Use-case and data context, privacy/data governance documentation, and security assessment prompts support a documentary view of privacy and security considerations.	يوفّر سياق الاستخدام والبيانات ونماذج الخصوصية وحوكمة البيانات والأمن أساسًا لتوثيق اعتبارات الخصوصية والأمن.
+DAT-01 records data categories, purpose and necessity, minimisation, sensitive-data use, access, retention/deletion, risks, mitigations, owner, and reviewer. SEC-01 documents security scope, risks, access controls, data protection, third parties, planned monitoring, and escalation.	يوثّق DAT-01 فئات البيانات والغرض والضرورة وتقليل البيانات واستخدام البيانات الحساسة والوصول والاحتفاظ أو الحذف والمخاطر والتخفيف والمالك والمراجع. يوثّق SEC-01 نطاق الأمن والمخاطر وضبط الوصول والحماية والأطراف الثالثة والمتابعة المخططة والتصعيد.
+There is no structured evidence of data classification or provenance, de-identification, consent or rights handling, completed security testing, or operational privacy/security monitoring.	لا توجد أدلة منظّمة على تصنيف البيانات أو مصدرها أو إخفاء الهوية أو الموافقة أو معالجة الحقوق أو اكتمال الاختبارات الأمنية أو المتابعة التشغيلية.
+These records are not a privacy impact assessment, legal review, proof of controls operating, or evidence that security testing occurred.	لا تُعد السجلات تقييم أثر للخصوصية أو مراجعة قانونية أو دليلًا على تشغيل الضوابط أو إجراء الاختبارات الأمنية.
+Intake and related assessments capture purpose, affected people, decision role, human oversight, validation planning, and incident correction considerations relevant to human-centered use.	توثّق النماذج الغرض والأشخاص المتأثرين ودور النظام في القرار والإشراف البشري والتحقق وتصحيح القرارات عند الحوادث.
+Intake records affected people, potential impact, AI role, and oversight. TRN-01 and VAL-01 describe oversight, while INC-01 includes human review and correction of affected decisions. A dedicated optional Humanity assessment records adverse outcomes, dignity/rights/choice/accessibility/cultural considerations, oversight/remedy mechanisms, indicators, evidence limitations, owner and review fields; it distinguishes planned, performed and operational user-entered evidence types.	يسجّل نموذج الحالة الأشخاص المتأثرين والأثر المحتمل ودور النظام والإشراف. يصف TRN-01 وVAL-01 الإشراف، ويشمل INC-01 المراجعة البشرية وتصحيح القرارات. يسجّل تقييم الإنسانية الاختياري النتائج السلبية والكرامة والحقوق والاختيار وسهولة الوصول والسياق الثقافي وآليات الإنصاف والمؤشرات والقيود والأدوار، ويميز أنواع الأدلة التي يسجلها المستخدم.
+Dedicated documentary prompts exist, but substantive rights and cultural-impact analysis, effectiveness of remedy mechanisms and operational human intervention remain unverified. These records are not an independent assessment.	توجد حقول توثيق مخصصة، لكن تحليل الحقوق والأثر الثقافي وفعالية آليات الإنصاف والتدخل البشري التشغيلي لم تُتحقق بصورة مستقلة.
+Human-oversight descriptions are proposed governance documentation; they do not demonstrate effective human intervention in an operating system.	توثيق الإشراف البشري المقترح لا يثبت فعالية التدخل البشري في نظام قيد التشغيل.
+Intake and related controls frame impacts; a separate optional social/environmental assessment provides dedicated documentary prompts.	تحدد حالة الاستخدام والضوابط ذات الصلة نطاق الأثر، ويوفر تقييم اجتماعي وبيئي اختياري حقولًا مخصصة لتوثيقه.
+Use-case intake captures intended purpose, affected people, and potential impact; FAI-01 and MON-01 provide limited places to describe impacts on affected groups. The dedicated optional assessment records intended benefits, social harms and mitigations, impact indicators, follow-up responsibilities, environmental applicability, resource impacts or a non-applicability justification, and evidence/review limitations.	تسجل حالة الاستخدام الغرض والأشخاص المتأثرين والأثر المحتمل. يتيح FAI-01 وMON-01 وصف أثر الفئات ضمن نطاق محدود. يسجل تقييم الأثر المنافع والأضرار والتخفيف والمؤشرات ومسؤوليات المتابعة وانطباق الأثر البيئي وأثر الموارد أو مبرر عدم الانطباق وقيود الأدلة والمراجعة.
+The assessment stores user-entered documentation; independently measured benefits, environmental resource consumption, indicator outcomes and mitigation effectiveness are not verified.	يخزّن التقييم ما يدخله المستخدم. لا يتحقق من المنافع المقاسة بصورة مستقلة أو استهلاك الموارد أو نتائج المؤشرات أو فعالية التخفيف.
+The mapping does not assert that the example use case produces social benefits or has been assessed for environmental impact.	لا يثبت الربط أن الحالة تحقق منافع اجتماعية أو أن أثرها البيئي خضع للتقييم.
+Security assessment, validation planning, monitoring plans, and incident-response planning provide documentation points for reliability, safety, escalation, and recovery considerations.	تدعم نماذج الأمن والتحقق والمتابعة والاستجابة للحوادث توثيق الموثوقية والسلامة والتصعيد والتعافي.
+VAL-01 captures validation scope, criteria, approach, test-set considerations, findings/evidence, oversight, and limitations. Its optional nested evaluation record distinguishes Planned work from user-reported Performed validation and can record dataset context, metric-specific thresholds and results, test dates, and evidence references. MON-01 records planned metrics, thresholds, frequency, ownership, and escalation; INC-01 describes triage, containment, correction, and recovery.	يسجّل VAL-01 نطاق التحقق ومعاييره ونهجه وبيانات الاختبار والأدلة والإشراف والقيود. ويميز السجل الإضافي التحقق المخطط من المنفذ الذي يدوّنه المستخدم، ويتضمن سياق البيانات والعتبات والنتائج والتواريخ والمراجع. يسجّل MON-01 المقاييس والعتبات والدورية والمسؤوليات والتصعيد، ويصف INC-01 الفرز والاحتواء والتصحيح والتعافي.
+The supplementary VAL-01 evaluation is structural documentation only. It does not verify unexpected/extreme-scenario testing, fallback behavior, system-failure results, methodological validity, or completed stakeholder sign-off.	التقييم الإضافي توثيق منظّم فقط. لا يتحقق من اختبار السيناريوهات غير المتوقعة أو القصوى أو أداء البدائل أو نتائج الإخفاق أو صلاحية المنهجية أو اكتمال موافقات الأطراف.
+Plans and user-reported results do not prove technical robustness, safe operation, independently validated performance, or production readiness.	لا تثبت الخطط والنتائج المدخلة متانة النظام أو سلامة تشغيله أو صحة أدائه بصورة مستقلة أو جاهزيته للإنتاج.
+Use-case context, transparency documentation, and planned monitoring and incident records provide limited documentation of system purpose, limitations, communication, feedback, and issue handling.	يدعم سياق الحالة وتوثيق الشفافية وخطط المتابعة والحوادث توثيق الغرض والقيود والتواصل والملاحظات ومعالجة المشكلات.
+TRN-01 records purpose, AI decision role, users and stakeholders, limitations, oversight, information to communicate, disclosure approach, and outstanding actions. Its optional explainability record can document Planned or user-reported Performed synthetic examples, intended audiences, explanation method, human review, challenge/correction processes, and separate accessibility/usefulness feedback records. MON-01 includes complaint indicators; INC-01 includes incident documentation.	يوثّق TRN-01 الغرض ودور النظام في القرار والمستخدمين والأطراف والقيود والإشراف والمعلومات والإفصاح والإجراءات المعلقة. ويسجّل نموذج التفسير أمثلة افتراضية مخططة أو منفذة والجمهور والأسلوب والمراجعة والاعتراض والتصحيح، وملاحظات سهولة الوصول والفائدة بصورة منفصلة. يتضمن MON-01 مؤشرات الشكاوى ويوثّق INC-01 الحوادث.
+The optional explainability record does not generate or verify explanations, prove input-to-output traceability, establish explanation correctness, or establish that disclosures were delivered. Accessibility, usefulness, audience understanding, and feedback quality remain user-reported and unverified.	لا يولّد نموذج التفسير تفسيرات ولا يتحقق منها أو يثبت تتبع المدخلات إلى المخرجات أو صحة التفسير أو حصول الإفصاح. يسجّل المستخدم سهولة الوصول والفائدة وفهم الجمهور وجودة الملاحظات دون تحقق مستقل.
+A completed or Reviewed record does not establish that affected people were informed, that an explanation is accurate or useful, or that an individual can understand or challenge an outcome.	لا يثبت النموذج المكتمل أو المراجع إبلاغ المتأثرين أو دقة التفسير أو فائدته أو قدرة الفرد على فهم النتيجة أو الاعتراض عليها.
+The inventory/use-case ownership and RACI baseline, together with named assessment owners/reviewers and lifecycle plans, offer traceability points for responsibility and governance roles.	يتيح سجل الأنظمة وملكية الحالة ومصفوفة RACI والمالكون والمراجعون المسمّون وخطط دورة الحياة تتبع المسؤوليات.
+GOV-01 draws on inventory and RACI baselines; intake records a business owner; structured evidence records responsible owners and reviewers. RACI identifies roles for use-case approval, risk, privacy, security, monitoring, incidents, and independent assurance.	يستند GOV-01 إلى سجل الأنظمة ومصفوفة RACI. يوثّق التسجيل مالك العمل وتحدد سجلات الأدلة المالك والمراجع. تحدد المصفوفة أدوار اعتماد الحالة والمخاطر والخصوصية والأمن والمتابعة والحوادث والمراجعة المستقلة.
+The RACI editor is not persisted. The app does not establish appointed entity-level SDAIA roles, completed independent audits, third-party contractual due diligence, training, or implemented redress mechanisms.	يحفظ التطبيق مصفوفة RACI داخل الحالة؛ لكنه لا يثبت تعيين أدوار فعلية في الجهة أو اكتمال تدقيق مستقل أو عناية تعاقدية تجاه الأطراف الثالثة أو تدريب أو تنفيذ آليات إنصاف.
+A role matrix and readiness result do not evidence approval, audit, legal accountability, effective redress, or conformity with SDAIA requirements.	مصفوفة الأدوار ونتيجة الجاهزية لا تثبتان موافقة أو تدقيقًا أو مساءلة قانونية أو إنصافًا فعالًا أو مطابقة لمتطلبات سدايا.
+{value}: {value} is required.	{value}: حقل «{value}» مطلوب.
+{value}: {value} is required for the national method.	{value}: حقل «{value}» مطلوب للمنهجية الوطنية.
+{value}: {value} must be an integer from 1 to 4.	{value}: يجب أن يكون «{value}» عددًا صحيحًا من 1 إلى 4.
+{value}: {value} must use YYYY-MM-DD.	{value}: استخدم صيغة YYYY-MM-DD في «{value}».
+{value}: closure requires {value}.	{value}: يتطلب الإغلاق حقل «{value}».
+{value}: closure needs evidence, reviewer and review date.	{value}: يتطلب الإغلاق دليلًا ومراجعًا وتاريخ مراجعة.
+{value}: link a risk or control.	{value}: اربط الإجراء بخطر أو ضابط.
+{value}: invalid status.	{value}: الحالة غير صالحة.
+RACI needs 1–200 activity rows.	تتطلب مصفوفة RACI من صف واحد إلى 200 صف نشاط.
+RACI row {value}: use the expected text columns.	صف RACI رقم {value}: استخدم الأعمدة النصية المحددة.
+RACI row {value}: activity must be non-empty and unique.	صف RACI رقم {value}: يجب تحديد نشاط غير مكرر.
+RACI row {value}: {value} must use A, R, C, I or slash-separated combinations.	صف RACI رقم {value}: استخدم في «{value}» الرموز A أو R أو C أو I أو تركيبات تفصل بينها شرطة مائلة.
+RACI row {value}: expected one Accountable role; found {value}.	صف RACI رقم {value}: المطلوب مسؤول مساءلة واحد، والعدد الحالي {value}.
+No role or activity	لا يوجد دور أو نشاط
+Accountable	مسؤول عن المساءلة
+Operational	تشغيلي

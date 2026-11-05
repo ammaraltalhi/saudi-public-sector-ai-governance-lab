@@ -1,4 +1,4 @@
-import streamlit as st
+from src.ui.localization import st
 from src.governance.case_persistence import USE_CASE_WIDGET_KEYS
 from src.governance.use_case_context import context_errors
 

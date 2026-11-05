@@ -2,7 +2,7 @@ from pathlib import Path
 import math
 from uuid import UUID, uuid4
 import pandas as pd
-import streamlit as st
+from src.ui.localization import st
 from src.governance.control_assessment import (
     assess_control,
     control_is_required,

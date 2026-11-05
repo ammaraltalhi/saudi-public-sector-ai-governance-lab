@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd
-import streamlit as st
+from src.ui.localization import st
 
 st.title("AI Inventory")
 path = Path(__file__).resolve().parents[1] / "data" / "ai_inventory.csv"

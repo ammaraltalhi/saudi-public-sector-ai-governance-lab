@@ -2,7 +2,7 @@ import json
 from datetime import date
 from uuid import uuid4
 
-import streamlit as st
+from src.ui.localization import st
 
 from src.governance.corrective_actions import (
     CONTROL_IDS, STATUSES, TEXT_FIELDS, action_summary, validate_actions,

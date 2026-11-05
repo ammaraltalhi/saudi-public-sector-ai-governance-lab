@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pandas as pd
-import streamlit as st
+from src.ui.localization import st
 
 from src.governance.control_assessment import (
     assess_control,
